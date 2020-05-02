@@ -1,0 +1,10 @@
+version: "3"
+services:
+  web:
+    build: .
+    container_name: moto-web
+    command: "npm run prod:start"
+    volumes:
+      - .:/moto
+    ports:
+      - "7777:7777"

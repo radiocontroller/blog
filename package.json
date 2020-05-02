@@ -1,0 +1,31 @@
+{
+  "dependencies": {
+    "@vuepress/plugin-active-header-links": "^1.4.1",
+    "@vuepress/plugin-back-to-top": "^1.4.1",
+    "@vuepress/plugin-blog": "^1.4.1",
+    "@vuepress/plugin-medium-zoom": "^1.4.1",
+    "@vuepress/plugin-pagination": "^1.0.0-alpha.50",
+    "@vuepress/plugin-search": "^1.4.1",
+    "express": "^4.17.1",
+    "moment": "^2.24.0",
+    "pm2": "^4.4.0",
+    "vue-toasted": "^1.1.28",
+    "vuepress": "^1.4.1"
+  },
+  "scripts": {
+    "dev": "vuepress dev docs",
+    "build": "vuepress build docs",
+    "prod:start": "npm run build && pm2 start server.js && pm2 logs",
+    "prod:stop": "pm2 stop server.js"
+  },
+  "devDependencies": {
+    "@vuepress/plugin-active-header-links": "^1.4.1",
+    "@vuepress/plugin-back-to-top": "^1.4.1",
+    "@vuepress/plugin-blog": "^1.4.1",
+    "@vuepress/plugin-medium-zoom": "^1.4.1",
+    "@vuepress/plugin-pagination": "^1.0.0-alpha.50",
+    "@vuepress/plugin-search": "^1.4.1",
+    "vue-toasted": "^1.1.28",
+    "vuepress": "^1.4.1"
+  }
+}
