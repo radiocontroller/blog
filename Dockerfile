@@ -1,6 +1,6 @@
 FROM node
-RUN mkdir /moto
-WORKDIR /moto
+RUN mkdir /motor
+WORKDIR /motor
 COPY package*.json ./
 RUN npm install
-COPY . /moto
+COPY . /motor

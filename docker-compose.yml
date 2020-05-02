@@ -2,9 +2,9 @@ version: "3"
 services:
   web:
     build: .
-    container_name: moto-web
+    container_name: motor-web
     command: "npm run prod:start"
     volumes:
-      - .:/moto
+      - .:/motor
     ports:
       - "7777:7777"
