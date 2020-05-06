@@ -7,13 +7,13 @@
 
 :::
 
-![osmo](https://moto-1252807079.cos.ap-shanghai.myqcloud.com/osmo2.jpg)
+![osmoaction](https://moto-1252807079.cos.ap-shanghai.myqcloud.com/osmo2.jpg)
 
-![osmo](https://moto-1252807079.cos.ap-shanghai.myqcloud.com/osmo1.jpg)
+![osmoaction](https://moto-1252807079.cos.ap-shanghai.myqcloud.com/osmo1.jpg)
 
-![osmo](https://moto-1252807079.cos.ap-shanghai.myqcloud.com/osmo3.jpg)
+![osmoaction](https://moto-1252807079.cos.ap-shanghai.myqcloud.com/osmo3.jpg)
 
-![osmo](https://moto-1252807079.cos.ap-shanghai.myqcloud.com/osmo4.jpg)
+![osmoaction](https://moto-1252807079.cos.ap-shanghai.myqcloud.com/osmo4.jpg)
 
 ### 附上一段骑行效果
 ---
@@ -24,7 +24,3 @@
         width: 100%; height: 100%;">
     </iframe>
 </div>
-
-
-
-
