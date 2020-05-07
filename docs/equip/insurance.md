@@ -5,4 +5,4 @@
 ---
 
 #### 以下是我购买的商业险
-![商业险](https://moto-1252807079.cos.ap-shanghai.myqcloud.com/insurance.png)
+![商业险](http://cdn.rcer666.cn/insurance.png)
