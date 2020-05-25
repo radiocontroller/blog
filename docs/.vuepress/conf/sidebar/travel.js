@@ -5,5 +5,12 @@ module.exports = [
         children: [
             ''
         ]
-    }
+    },
+    {
+        title: 'MC俱乐部活动',
+        collapsable: false,
+        children: [
+            'mc/524'
+        ]
+    },
 ];

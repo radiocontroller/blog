@@ -3,7 +3,7 @@
 
 :::tip 大疆osmo action
 
-最近入手了osmo action，也对比了gopro8，主要还是看重性价比，挺香的，接下来可以抛弃我的山狗sj4000了，哈哈哈
+最近入手了osmo action，也对比了gopro8，还是挺香的，接下来可以抛弃我的山狗sj4000了，哈哈哈
 
 :::
 
