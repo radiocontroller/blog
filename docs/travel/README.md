@@ -21,8 +21,6 @@
 
 ![40](http://cdn.rcer666.cn/40_007.jpg)
 
-![40](http://cdn.rcer666.cn/40_001.jpeg)
-
 ![40](http://cdn.rcer666.cn/40_010.jpg)
 
 ![40](http://cdn.rcer666.cn/40_011.jpg)
