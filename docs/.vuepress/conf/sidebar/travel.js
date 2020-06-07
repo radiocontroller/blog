@@ -1,5 +1,12 @@
 module.exports = [
     {
+        title: 'MC俱乐部活动',
+        collapsable: false,
+        children: [
+            'mc/524'
+        ]
+    },
+    {
         title: '余杭',
         collapsable: false,
         children: [
@@ -7,10 +14,10 @@ module.exports = [
         ]
     },
     {
-        title: 'MC俱乐部活动',
+        title: '富阳',
         collapsable: false,
         children: [
-            'mc/524'
+            'fuyang/andingshan'
         ]
-    },
+    }
 ];
