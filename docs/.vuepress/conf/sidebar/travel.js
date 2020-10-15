@@ -7,17 +7,17 @@ module.exports = [
         ]
     },
     {
-        title: '余杭',
+        title: '杭州',
         collapsable: false,
         children: [
-            ''
+            'hangzhou/andingshan'
         ]
     },
     {
-        title: '富阳',
+        title: '温州',
         collapsable: false,
         children: [
-            'fuyang/andingshan'
+            'wenzhou/national_day'
         ]
     }
 ];
