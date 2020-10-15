@@ -10,6 +10,7 @@ module.exports = [
         title: '杭州',
         collapsable: false,
         children: [
+            '',
             'hangzhou/andingshan'
         ]
     },
