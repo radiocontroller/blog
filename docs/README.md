@@ -1,12 +1,12 @@
 ---
 home: true
-heroImage: http://cdn.rcer666.cn/rc390.jpeg
-heroText: 骑摩托的rcer
+heroImage:
+heroText: 山路老头乐
 footer: MIT Licensed | Copyright © 2020
 ---
 
-::: tip 本人座驾：nk400，记录日常溜车
+::: tip 日常骑行：nk400，运动相机：大疆osmo action
 
-**天下摩友是一家！** :+1:
+记录摩托骑行和程序相关分享
 
 :::
