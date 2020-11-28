@@ -16,7 +16,7 @@
 
 * 我们通过代码来看下两个的区别
 
-```
+```rb
 module MyModule
   def self.append_features(base)
     puts "IN 'append_features':"
@@ -46,9 +46,9 @@ end
 
 * 通过这个输出，我们能够看到append_features在included之前执行
 
-### 源码分析(copy自ruby-2.5.1，puts是我加的，用于后面的测试)
+### 源码分析(copy自ruby-2.5.1，puts是我加的，用于后面查看输出结果)
 
-```
+```rb
 module Concern
   def self.extended(base)
     puts "extended, self: #{self}, base: #{base}"
@@ -64,7 +64,6 @@ module Concern
       return false if base < self
       @_dependencies.each { |dep| base.include(dep) }
       super
-      puts '------ after super ------'
       base.extend const_get(:ClassMethods) if const_defined?(:ClassMethods)
       base.class_eval(&@_included_block) if instance_variable_defined?(:@_included_block)
     end
@@ -101,13 +100,13 @@ end
 * 然后我们分析included，触发它有两种情况
 
   1. 一种是
-     ```
+     ```rb
      klass.include(module)
      ```
      这个时候base就是这个klass，然后执行super（ruby中定义的included本身是空方法，其实这里不调用super也可以，但是为了完整性还是加上）
     
   2. 另一种是
-     ```
+     ```rb
      included do
        
      end
@@ -129,7 +128,7 @@ end
 
 * 最后是我测试的用例，加了puts输出
 
-```
+```rb
 puts '--------------Foo1 Module--------------'
 module Foo1
   extend Concern
@@ -164,7 +163,7 @@ end
 
 * 运行后我们直接看结果，就能很好的理解这个源码了
 
-```
+```rb
 --------------Foo1 Module--------------
 extended, self: Concern, base: Foo1
 included, self: Foo1, base:
@@ -181,11 +180,8 @@ included, self: Bar, base:
 append_features, self: Bar, base: Host
 append_features, self: Foo2, base: Host
 append_features, self: Foo1, base: Host
------- after super ------
 included, self: Foo1, base: Host
------- after super ------
 included, self: Foo2, base: Host
------- after super ------
 included, self: Bar, base: Host
 ```
 
