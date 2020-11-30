@@ -20,5 +20,12 @@ module.exports = [
         children: [
             'wechat/oauth/'
         ]
+    },
+    {
+        title: 'redis',
+        collapsable: false,
+        children: [
+            'redis/interview'
+        ]
     }
 ];
