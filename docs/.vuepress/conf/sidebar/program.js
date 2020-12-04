@@ -25,7 +25,7 @@ module.exports = [
         title: 'redis',
         collapsable: false,
         children: [
-            'redis/interview'
+            'redis/faq'
         ]
     }
 ];
