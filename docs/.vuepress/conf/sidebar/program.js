@@ -22,10 +22,18 @@ module.exports = [
         ]
     },
     {
-        title: 'redis',
+        title: 'Redis',
         collapsable: false,
         children: [
             'redis/faq'
+        ]
+    },
+    {
+        title: 'Mysql',
+        collapsable: false,
+        children: [
+            'mysql/faq',
+            'mysql/b+'
         ]
     }
 ];
