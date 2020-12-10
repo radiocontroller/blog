@@ -33,7 +33,8 @@ module.exports = [
         collapsable: false,
         children: [
             'mysql/faq',
-            'mysql/b+'
+            'mysql/b+',
+            'mysql/lock'
         ]
     }
 ];
