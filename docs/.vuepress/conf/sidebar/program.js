@@ -34,7 +34,8 @@ module.exports = [
         children: [
             'mysql/faq',
             'mysql/b+',
-            'mysql/lock'
+            'mysql/lock',
+            'mysql/transaction'
         ]
     }
 ];
