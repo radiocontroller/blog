@@ -33,6 +33,6 @@
 
 ::: tip 相关链接
 
-[【BAT面试题系列】面试官：你了解乐观锁和悲观锁吗？](https://www.cnblogs.com/kismetv/p/10787228.html)
+[https://www.cnblogs.com/kismetv/p/10787228.html](https://www.cnblogs.com/kismetv/p/10787228.html)
 
 :::

@@ -40,6 +40,6 @@
 
 ::: tip 相关链接
 
-[MySQL索引为什么要用B+树实现？](https://juejin.cn/post/6844903692802457607)
+[https://juejin.cn/post/6844903692802457607](https://juejin.cn/post/6844903692802457607)
 
 :::
