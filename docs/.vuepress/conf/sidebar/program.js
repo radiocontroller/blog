@@ -4,7 +4,8 @@ module.exports = [
         collapsable: false,
         children: [
             '',
-            'ruby_utils',
+            'rails/doorkeeper',
+            'ruby/utils',
         ]
     },
     {
