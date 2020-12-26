@@ -1,38 +1,38 @@
 # doorkeeper使用
 ---
 
-### config/initializers/doorkeeper.rb先加以下配置，支持三种模式
-* grant_flows %w[authorization_code client_credentials password]
-
-#### 一、Authorization Code（授权码模式）
-* 先通过授权拿到code：[http://localhost:3000/oauth/authorize?client_id=g_mPbdbAzKnxh40bELkzFM1LdOXehg_80F-A2p17bic&redirect_uri=urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob&response_type=code&scope=public](http://localhost:3000/oauth/authorize?client_id=g_mPbdbAzKnxh40bELkzFM1LdOXehg_80F-A2p17bic&redirect_uri=urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob&response_type=code&scope=public)
-* 然后根据code拿token
+### 前置说明 
+* config/initializers/doorkeeper.rb添加以下配置，支持四种模式
 ```ruby
-body = {
-  "code"=>"rd3Ned3A-SszIHYLYkwb3ofHqKoHxwYdaFD7O67Zxas",
-  "grant_type"=>"authorization_code",
-  "redirect_uri"=>"urn:ietf:wg:oauth:2.0:oob",
-  "client_id"=>"g_mPbdbAzKnxh40bELkzFM1LdOXehg_80F-A2p17bic",
-  "client_secret"=>"_AipOvmDrY86vDTsGFbnn771ihCKwEvmbbK-gEoHW5w"
-}
-JSON.parse(RestClient.post('http://localhost:3000/oauth/token', body))
-
-返回
-{
-    "access_token": "nL4rKlvzEuBS25BnvsUoBOCn0pmLbUUJCKrnI3xbajE",
-    "token_type": "Bearer",
-    "expires_in": 7200,
-    "refresh_token": "9_A-B-K2OIu9pQS56ZB2sF7oVf4vMVX2398h4W6UWNY",
-    "scope": "code",
-    "created_at": 1608803274
-}
+grant_flows %w[authorization_code client_credentials password implicit]
 ```
-* 创建application时，其中的scope是和doorkeeper_authorize!(:xx)配合使用的
-* [https://github.com/doorkeeper-gem/doorkeeper/wiki/Authorization-Code-Flow](https://github.com/doorkeeper-gem/doorkeeper/wiki/Authorization-Code-Flow)
+* 回跳地址为了方便测试，我们使用：urn:ietf:wg:oauth:2.0:oob
+* 客户端调用我们使用[oauth2](https://github.com/oauth-xx/oauth2)这个gem获取clent，后续我们用它进行处理
+```ruby
+client_id = 'g_mPbdbAzKnxh40bELkzFM1LdOXehg_80F-A2p17bic'
+client_secret = '_AipOvmDrY86vDTsGFbnn771ihCKwEvmbbK-gEoHW5w'
+client = OAuth2::Client.new(client_id, client_secret, :site => 'http://localhost:3000')
+```
 ---
 
-#### 二、Password Credentials（密码模式，不关联application）
-* 使用时添加配置来查询用户名密码对应的用户
+#### 一、Authorization Code（授权码模式，支持刷新token）
+* 获取授权url，打开url即可获得code
+```ruby
+client.auth_code.authorize_url(redirect_uri: 'urn:ietf:wg:oauth:2.0:oob')
+# => http://localhost:3000/oauth/authorize?client_id=g_mPbdbAzKnxh40bELkzFM1LdOXehg_80F-A2p17bic&redirect_uri=urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob&response_type=code
+```
+
+* 再根据code拿token
+```ruby
+code = '9biPPhdbw19txt6nNGTwZbHrvbNPrKOkm5eP1So9mtM' # 上面授权得到的code
+token = client.auth_code.get_token(code, :redirect_uri => 'urn:ietf:wg:oauth:2.0:oob')
+token.token         # => "KHoUWPyjbkUGGvswC6JcJvrkvjmfoUZIJBeVXqgMGH4"
+token.refresh_token # => "71ChQ2BTO0SrQpS2II2pIyjIjSwKX8xSjteZ3CMxCKI"
+```
+---
+
+#### 二、Password Credentials（密码模式，支持刷新token）
+* config/initializers/doorkeeper.rb处理resource_owner_from_credentials
 ```ruby
 resource_owner_from_credentials do |routes|
   User.authenticate!(params[:username], params[:password])
@@ -40,48 +40,51 @@ end
 ```
 * 请求token
 ```ruby
-body = { grant_type: 'password', username: 'y', password: '123456' }
-JSON.parse(RestClient.post('http://localhost:3000/oauth/token', body))
-
-返回
-{
-  "access_token"=>"Zco7lhMF_HezKHOrQjh52B0egSGmpTpYplj1toJr9bs",
-  "token_type"=>"Bearer",
-  "expires_in"=>7200,
-  "refresh_token"=>"-54ZQ2rDQrFUM5HIRVTdJOI2Km_sJ7gNQWM16GL-ZFY",
-  "created_at"=>1608799840
-}
+token = client.password.get_token('username', 'password')
 ```
-* [https://github.com/doorkeeper-gem/doorkeeper/wiki/Client-Credentials-flow](https://github.com/doorkeeper-gem/doorkeeper/wiki/Client-Credentials-flow)
 ---
 
-#### 三、Client Credentials（客户端模式，不关联resource_owner）
+#### 三、Client Credentials（客户端模式，不支持刷新token）
 * 请求token
 ```ruby
-body = {
-  grant_type: 'client_credentials',
-  client_id: 'g_mPbdbAzKnxh40bELkzFM1LdOXehg_80F-A2p17bic',
-  client_secret: '_AipOvmDrY86vDTsGFbnn771ihCKwEvmbbK-gEoHW5w'
-}
-JSON.parse(RestClient.post('http://localhost:3000/oauth/token', body))
-
-返回
-{
-  "access_token"=>"2kuAblp9pej3jh5s5wyUltcETjj17gzVoYvLlxVTtjg",
-  "token_type"=>"Bearer",
-  "expires_in"=>7200,
-  "created_at"=>1608800298
-}
+token = client.client_credentials.get_token
 ```
-* [https://github.com/doorkeeper-gem/doorkeeper/wiki/Client-Credentials-flow](https://github.com/doorkeeper-gem/doorkeeper/wiki/Client-Credentials-flow)
 ---
 
-#### 四、调用接口传递token
-* 在request headers中传
+#### 四、implicit（隐式模式，不支持刷新token）
+* 获取授权url
 ```ruby
+client.implicit.authorize_url(redirect_uri: 'urn:ietf:wg:oauth:2.0:oob')
+# => http://localhost:3000/oauth/authorize?client_id=g_mPbdbAzKnxh40bELkzFM1LdOXehg_80F-A2p17bic&redirect_uri=urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob&response_type=token
+```
+
+* 授权后可得到以下结果
+```json
 {
-  "Authrozation" => "Bearer xbtIoxLhobcLtjagL_8GnEOw_i08sW1XJFzmOaXnd9g"    
+    "resource_owner_id": 1,
+    "scope": [
+        "public"
+    ],
+    "expires_in": 7200,
+    "application": {
+        "uid": "g_mPbdbAzKnxh40bELkzFM1LdOXehg_80F-A2p17bic"
+    },
+    "created_at": 1608958888
 }
 ```
+---
+
+#### 五、刷新token（获取新token）
+```ruby
+new_token = token.refresh!
+```
+
+#### 六、接口调用以及认证
+* 因为在上面我们根据client获取到了token，那么我们直接请求接口
+```ruby
+resp = token.get('users.json')
+resp.parsed # => 得到json解析后结果
+```
 * 在controller中通过doorkeeper_authorize!进行认证
+* 创建application时，其中的scope是和doorkeeper_authorize!(:xx)配合使用的
 ---
