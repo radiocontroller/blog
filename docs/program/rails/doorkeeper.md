@@ -78,6 +78,7 @@ client.implicit.authorize_url(redirect_uri: 'urn:ietf:wg:oauth:2.0:oob')
 ```ruby
 new_token = token.refresh!
 ```
+---
 
 #### 六、接口调用以及认证
 * 因为在上面我们根据client获取到了token，那么我们直接请求接口
@@ -87,4 +88,4 @@ resp.parsed # => 得到json解析后结果
 ```
 * 在controller中通过doorkeeper_authorize!进行认证
 * 创建application时，其中的scope是和doorkeeper_authorize!(:xx)配合使用的
----
+
