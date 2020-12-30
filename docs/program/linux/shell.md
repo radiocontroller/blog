@@ -1,0 +1,8 @@
+# 命令行
+---
+
+#### 1. gunzip filename.gz（gz文件解压）
+
+#### 2. grep -C 5 foo file（显示file文件里匹配foo字串那行以及上下5行）
+
+#### 3. ps auxw|head -1;ps auxw|sort -rn -k4|head -20（内存占用前20）

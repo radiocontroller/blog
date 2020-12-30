@@ -46,5 +46,12 @@ module.exports = [
             'alogrithm/order_traversal',
             'alogrithm/stack',
         ]
+    },
+    {
+        title: 'Linux',
+        collapsable: false,
+        children: [
+            'linux/shell',
+        ]
     }
 ];
