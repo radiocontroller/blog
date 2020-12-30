@@ -38,5 +38,13 @@ module.exports = [
             'mysql/lock',
             'mysql/transaction'
         ]
+    },
+    {
+        title: '算法',
+        collapsable: true,
+        children: [
+            'alogrithm/order_traversal',
+            'alogrithm/stack',
+        ]
     }
 ];
