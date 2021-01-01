@@ -41,10 +41,12 @@ module.exports = [
     },
     {
         title: '算法',
-        collapsable: true,
+        collapsable: false,
         children: [
+            'alogrithm/dp',
             'alogrithm/order_traversal',
             'alogrithm/stack',
+            'alogrithm/hash',
         ]
     },
     {
