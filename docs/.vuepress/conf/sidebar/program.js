@@ -47,6 +47,15 @@ module.exports = [
             'alogrithm/order_traversal',
             'alogrithm/stack',
             'alogrithm/hash',
+            'alogrithm/lru',
+        ]
+    },
+    {
+        title: 'Git',
+        collapsable: false,
+        children: [
+            'git/alias',
+            'git/skill',
         ]
     },
     {

@@ -14,3 +14,6 @@
 
 ### 3、Mysql中的MRR是什么
 * [https://zhuanlan.zhihu.com/p/110154066](https://zhuanlan.zhihu.com/p/110154066)
+
+### 4、Mysql buffer pool以及LRU
+* [https://juejin.cn/post/6844903874172551181](https://juejin.cn/post/6844903874172551181)
