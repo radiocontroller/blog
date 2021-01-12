@@ -11,4 +11,4 @@
 
 #### 5. rails console -- --nomultiline(解决rails console多行加载太慢)
 
-#### 6. --nomultiline(解决ruby irb多行加载太慢)
+#### 6. irb --nomultiline(解决ruby irb多行加载太慢)
