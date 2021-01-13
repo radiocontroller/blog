@@ -8,6 +8,12 @@ module.exports = {
   markdown: {
     lineNumbers: false
   },
+  plugins: [
+    '@vuepress/active-header-links',
+    '@vuepress/pagination',
+    '@vuepress/medium-zoom',
+    '@vuepress/back-to-top',
+  ],
   themeConfig: {
     repo: 'radiocontroller/motor',
     // editLinks: true,

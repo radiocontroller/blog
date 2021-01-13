@@ -6,10 +6,10 @@ module.exports = (options, ctx) => {
 
   // resolve algolia
   const isAlgoliaSearch = (
-    themeConfig.algolia
-    || Object
-        .keys(siteConfig.locales && themeConfig.locales || {})
-        .some(base => themeConfig.locales[base].algolia)
+      themeConfig.algolia
+      || Object
+          .keys(siteConfig.locales && themeConfig.locales || {})
+          .some(base => themeConfig.locales[base].algolia)
   )
 
   const enableSmoothScroll = themeConfig.smoothScroll === true
@@ -18,8 +18,8 @@ module.exports = (options, ctx) => {
     alias () {
       return {
         '@AlgoliaSearchBox': isAlgoliaSearch
-          ? path.resolve(__dirname, 'components/AlgoliaSearchBox.vue')
-          : path.resolve(__dirname, 'noopModule.js')
+            ? path.resolve(__dirname, 'components/AlgoliaSearchBox.vue')
+            : path.resolve(__dirname, 'noopModule.js')
       }
     },
 
@@ -48,7 +48,7 @@ module.exports = (options, ctx) => {
           '/zh/': '警告'
         }
       }],
-      ['smooth-scroll', enableSmoothScroll]
+      ['smooth-scroll', enableSmoothScroll],
     ]
   }
 }
