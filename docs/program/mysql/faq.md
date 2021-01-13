@@ -9,13 +9,8 @@
 ### 2、Mysql中ACID的D是如何实现的
 * 例如update t set name = 'xx' where id = 1这么一条数据Mysql是如何写到数据库中的
 
-* 首先读取id为1所在页的数据到内存，然后修改内存中的数据，并写入到Mysql redo log中，这时就认为写入完成。
+* 首先读取id为1所在页的数据到内存，然后修改内存中的数据，并写入到redo log中，这时就认为写入完成。
 然后等到空闲的时候再刷到数据库中，这其中有一些优化，要比直接往库中写快一些，本质上还是提高磁盘IO效率。
 
 ### 3、Mysql中的MRR是什么
 * [https://zhuanlan.zhihu.com/p/110154066](https://zhuanlan.zhihu.com/p/110154066)
-
-### 4、Mysql buffer pool以及LRU
-* [https://juejin.cn/post/6844903874172551181](https://juejin.cn/post/6844903874172551181)
-* Innodb_buffer_pool内部结构
-![buffer_pool](https://moto-1252807079.cos.ap-shanghai.myqcloud.com/program/mysql/buffer_pool.png)

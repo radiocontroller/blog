@@ -36,7 +36,8 @@ module.exports = [
             'mysql/faq',
             'mysql/b+',
             'mysql/lock',
-            'mysql/transaction'
+            'mysql/transaction',
+            'mysql/buffer_pool',
         ]
     },
     {
