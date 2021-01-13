@@ -17,3 +17,5 @@
 
 ### 4、Mysql buffer pool以及LRU
 * [https://juejin.cn/post/6844903874172551181](https://juejin.cn/post/6844903874172551181)
+* Innodb_buffer_pool内部结构
+![buffer_pool](https://moto-1252807079.cos.ap-shanghai.myqcloud.com/program/mysql/buffer_pool.png)
