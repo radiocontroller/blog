@@ -35,10 +35,13 @@
   
 ### 索引存储形式
   1. 主键索引：<id, row>
-    ![](https://moto-1252807079.cos.ap-shanghai.myqcloud.com/program/mysql/index1.png)
-    ![](https://moto-1252807079.cos.ap-shanghai.myqcloud.com/program/mysql/index3.png)
+  
+  ![](https://moto-1252807079.cos.ap-shanghai.myqcloud.com/program/mysql/index1.png)
+  ![](https://moto-1252807079.cos.ap-shanghai.myqcloud.com/program/mysql/index3.png)
+  
   2. 普通索引：<index, id>
-    ![](https://moto-1252807079.cos.ap-shanghai.myqcloud.com/program/mysql/index2.png)
+  
+  ![](https://moto-1252807079.cos.ap-shanghai.myqcloud.com/program/mysql/index2.png)
 
 ::: tip 相关链接
 
