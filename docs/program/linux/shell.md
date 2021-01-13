@@ -12,3 +12,10 @@
 #### 5. rails console -- --nomultiline(解决rails console多行加载太慢)
 
 #### 6. irb --nomultiline(解决ruby irb多行加载太慢)
+
+#### 7. 覆盖文件
+```
+cat > filename.txt <<EOF
+......文件内容
+EOF
+```
