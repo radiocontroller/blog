@@ -60,8 +60,8 @@
 * undo log和redo log记录物理日志不一样，它是逻辑日志。**可以认为当delete一条记录时，undo log中会记录一条对应的insert记录，反之亦然。
 当update一条记录时，它记录一条对应相反的update记录。**
 
-* 当执行回滚时，就可以从undo log中的逻辑记录读取到相应的内容并进行回滚。有时候应用到行版本控制的时候，也是通过undo log来实现的：
-当读取的某一行被其他事务锁定时，它可以从undo log中分析出该行记录以前的数据是什么，从而提供该行版本信息，让用户实现非锁定一致性读取。   
+* 当应用到行版本控制的时候，也是通过undo log来实现的：当读取的某一行被其他事务锁定时，它可以从undo log中分析出该行记录以前的数据是什么，
+从而提供该行版本信息，让用户实现非锁定一致性读取。（例如A进行update，B进行select，那么B应该得到A在update前的数据）
 
 * **另外，undo log也会产生redo log，因为undo log也要实现持久性保护。**
 
@@ -72,4 +72,6 @@
 [https://juejin.cn/post/6844903875271475213](https://juejin.cn/post/6844903875271475213)
 
 [https://cloud.tencent.com/developer/article/1497335](https://cloud.tencent.com/developer/article/1497335)
+
+[https://zhuanlan.zhihu.com/p/52977862](https://zhuanlan.zhihu.com/p/52977862)
 :::
