@@ -15,7 +15,7 @@
   "scripts": {
     "dev": "vuepress dev docs",
     "build": "vuepress build docs",
-    "prod:start": "npm run build && pm2 start server.js && pm2 logs",
+    "prod:start": "npm install && npm run build && pm2 start server.js && pm2 logs",
     "prod:stop": "pm2 stop server.js"
   },
   "devDependencies": {

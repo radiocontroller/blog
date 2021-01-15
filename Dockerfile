@@ -1,4 +1,4 @@
-FROM node:8-alpine
+FROM node:alpine
 RUN mkdir -p /motor && chown -R node:node /motor
 WORKDIR /motor
 COPY package*.json ./
