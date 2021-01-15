@@ -2,9 +2,9 @@ version: "3"
 services:
   web:
     build: .
-    container_name: motor-web
+    container_name: blog
     command: "npm run prod:start"
     volumes:
-      - .:/motor
+      - .:/blog
     ports:
       - "7777:7777"
