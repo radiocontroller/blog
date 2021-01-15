@@ -1,6 +1,6 @@
 FROM node:8-alpine
-RUN mkdir -p /motor && chown -R node:node /motor
-WORKDIR /motor
+RUN mkdir -p /blog && chown -R node:node /blog
+WORKDIR /blog
 COPY package*.json ./
 RUN npm install
-COPY . /motor
+COPY . /blog
