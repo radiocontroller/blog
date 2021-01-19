@@ -35,7 +35,7 @@ mysql 通过 sync_binlog 参数控制 binlog 的刷盘时机，取值范围是 0
 * 3. **redo log 是 InnoDB 引擎特有的；binlog 是 MySQL 的 Server 层实现的，所有引擎都可以使用。**
 
 ### 四、undo log
-* **1. 作用于事务回滚时**
+* **1. 实现事务的原子性**
   * 在执行事务的过程中可能会失败，这个时候就可以利用undo log将数据回滚到修改之前的样子
   * 利用undo回滚采取的是类似补偿的方式，比如对每个insert，InnoDB存储引擎会完成一个delete；对每个delete，会完成一个insert；对每个update，
 会执行一个相反的update。也就是说回滚不是物理上的恢复，而是逻辑上的恢复，保证回滚的事务没有更改数据库数据。
@@ -43,7 +43,7 @@ mysql 通过 sync_binlog 参数控制 binlog 的刷盘时机，取值范围是 0
   * 每条数据都会有指向历史数据的undo log指针，并且可以有很多历史版本，其中有事务ID的字段，然后各个事务通过历史版本的事务ID字段进行查找属于自己
   当前事务可见的数据
 
-### 五、这三个log之间的联系
+### 五、三个log之间的联系
 * **假设现在进行一个更新操作：update T set a = 1 where id = 2，顺序为：**
   * 1. 事务开始（任何一个操作都是事务），写**undo log** ，记录上一个版本数据，并更新记录的回滚指针和事务ID；
   * 2. 执行器先调用引擎取id=2这一行。id是主键，引擎直接用树搜索找到这一行；
@@ -60,15 +60,20 @@ mysql 通过 sync_binlog 参数控制 binlog 的刷盘时机，取值范围是 0
 ![更新过程](https://moto-1252807079.cos.ap-shanghai.myqcloud.com/program/mysql/update_process.jpeg)
  
 * **事务的两阶段提交，目的是为了保证redo log和binlog一致（假设binlog开启）**
-  * 1、prepare阶段，写redo log；
-  * 2、commit阶段，写binlog并且将redo log的状态改成commit状态；
+  * 1、prepare阶段，写redo log到磁盘，此时状态为prepared；
+  * 2、commit阶段，写binlog并且将redo log的状态改成commit；
 
 * **为什么是需要两阶段呢？**
-  * 1. 假设是先写edo Log，后写binlog。如果这个时候MySQL发生了进程的异常重启，由于redo Log已经写完，MySQL崩溃之后通过crash_safe能力，
+  * 1. 假设是先写redo log，后写binlog。如果这个时候MySQL发生了进程的异常重启，由于redo Log已经写完，MySQL崩溃之后通过crash_safe能力，
   能够把数据恢复回来。但是由于binlog还没写完就crash了，所以binlog里面并没有记录该SQL语句，所以使用binlog回档数据的时候，
   恢复出来的数据其实是少了一次更新操作的，这样就造成了灾难恢复出来的库和原库数据不一致；
   * 2. 假设是先写binlog，后写redo log。binlog写完之后发生了crash，由于redo log还没有写，崩溃恢复之后这个事务的更新是无效的。
   但是binlog里面记录了这条更新的语句，所以使用binlog回档的时候就多了一条事务的更新。造成回档出来的数据和原库的数据不一致。     
+
+* **redo log和binlog怎么联系起来？**
+  * 1. 它们有一个共同的数据字段，叫XID。
+  * 2. 崩溃恢复的时候，会按顺序扫描redo log。如果碰到既有**prepare**又有**commit**的redo log，就直接提交；如果碰到只有**prepare**
+  而没有**commit**的redo log，就拿着XID去binlog找对应的记录；如果binlog中有完整记录，那么提交事务，否则就回滚事务。
 
 ::: tip 相关链接
 
