@@ -30,3 +30,8 @@
 * 假如有（name，age）联合索引，但是以上sql只会用到name索引，然后获得id回表查询再过滤age和sex，而MySQL 5.6 引入的索引下推优化
 （index condition pushdown)， 可以在索引遍历过程中，对索引中包含的字段先做判断，直接过滤掉不满足条件的记录，减少回表次数。即以上sql
 先通过name查询出来的结果根据age过滤一次，然后回表去过滤sex，加快了查询的速度。
+
+### 5、SQL中过滤条件放在on和where中的区别
+* 对于inner join都一样，对于左连接的话，会得到左表的所有数据。on不会过滤左表的信息，但是on能过滤右表信息。
+
+* [https://pigfly88.github.io/mysql/2020/06/30/mysql-on-vs-where.html](https://pigfly88.github.io/mysql/2020/06/30/mysql-on-vs-where.html)
