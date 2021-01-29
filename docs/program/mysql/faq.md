@@ -35,3 +35,6 @@
 * 对于inner join都一样，对于左连接的话，会得到左表的所有数据。on不会过滤左表的信息，但是on能过滤右表信息。
 
 * [https://pigfly88.github.io/mysql/2020/06/30/mysql-on-vs-where.html](https://pigfly88.github.io/mysql/2020/06/30/mysql-on-vs-where.html)
+
+### 6、MDL元数据锁（metadata lock）
+* [https://juejin.cn/post/6844904014769979400](https://juejin.cn/post/6844904014769979400)
