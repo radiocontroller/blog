@@ -102,3 +102,12 @@ https://www.junmajinlong.com/ruby/ruby_enumerator/
 https://bigbinary.com/blog/ruby-2-7-adds-enumerator-lazy-eager
 ```
 ---
+
+#### in_groups_of(rails c环境下)
+```ruby
+(1..11).to_a.in_groups_of(5)
+# [[1, 2, 3, 4, 5], [6, 7, 8, 9, 10], [11, nil, nil, nil, nil]]
+
+(1..11).to_a.in_groups_of(5, false)
+[[1, 2, 3, 4, 5], [6, 7, 8, 9, 10], [11]]
+```
