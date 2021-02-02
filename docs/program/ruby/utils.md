@@ -109,5 +109,5 @@ https://bigbinary.com/blog/ruby-2-7-adds-enumerator-lazy-eager
 # [[1, 2, 3, 4, 5], [6, 7, 8, 9, 10], [11, nil, nil, nil, nil]]
 
 (1..11).to_a.in_groups_of(5, false)
-[[1, 2, 3, 4, 5], [6, 7, 8, 9, 10], [11]]
+# [[1, 2, 3, 4, 5], [6, 7, 8, 9, 10], [11]]
 ```
