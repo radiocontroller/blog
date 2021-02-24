@@ -131,6 +131,8 @@
 * 整数集合 intset
 * 压缩列表 ziplist
 
+### 12、rehash的实现
+* [https://www.cnblogs.com/goodAndyxublog/p/13635904.html](https://www.cnblogs.com/goodAndyxublog/p/13635904.html)
 
 ::: tip 相关链接
 

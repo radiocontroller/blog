@@ -111,3 +111,33 @@ https://bigbinary.com/blog/ruby-2-7-adds-enumerator-lazy-eager
 (1..11).to_a.in_groups_of(5, false)
 # [[1, 2, 3, 4, 5], [6, 7, 8, 9, 10], [11]]
 ```
+
+#### 自己写的一个retry
+```ruby
+class Retry
+  DEFAULT_TIMES = 3
+  DEFAULT_SECONDS = 1
+  attr_writer :times, :seconds
+
+  def self.exec(options = {})
+    raise 'block not given' unless block_given?
+
+    @times = options[:times] || DEFAULT_TIMES
+    @seconds = options[:seconds] || DEFAULT_SECONDS
+    begin
+      yield
+    rescue StandardError => e
+      if @times.positive?
+        @times -= 1
+        sleep @seconds
+        Rails.logger.info "Retry error: #{e.message}, retry_times: #{@times}"
+        retry
+      end
+      raise e
+    end
+  end
+end
+
+# 使用
+Retry.exec { RestClient.get('https://github.com/radiocontroller/blog') }
+```
