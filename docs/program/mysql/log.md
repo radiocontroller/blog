@@ -31,7 +31,7 @@ mysql 通过 sync_binlog 参数控制 binlog 的刷盘时机，取值范围是 0
     
 ### 三、bin log和redo log的区别
 * 1. **redo log 是物理日志，记录的是【在某个数据页上做了什么修改】；binlog 是逻辑日志，记录的是这个语句的原始逻辑，比如【给 id=2 这一行的 c 字段加 1】。**
-* 2. **redo log 是循环写的，空间固定会用完；binlog 是可以追加写入的。**
+* 2. **redo log 是循环写的，空间固定会用完；binlog 是可以追加写入的（产生新文件）。**
 * 3. **redo log 是 InnoDB 引擎特有的；binlog 是 MySQL 的 Server 层实现的，所有引擎都可以使用。**
 
 ### 四、undo log
