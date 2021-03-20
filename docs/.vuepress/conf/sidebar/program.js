@@ -39,6 +39,7 @@ module.exports = [
             'mysql/buffer_pool',
             'mysql/log',
             'mysql/lock',
+            'mysql/perfect',
         ]
     },
     {
