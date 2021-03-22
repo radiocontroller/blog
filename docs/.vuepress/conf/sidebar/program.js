@@ -1,5 +1,12 @@
 module.exports = [
     {
+        title: 'Web相关',
+        collapsable: false,
+        children: [
+            'web/xss_csrf',
+        ]
+    },
+    {
         title: 'Ruby On Rails',
         collapsable: false,
         children: [
