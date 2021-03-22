@@ -5,6 +5,8 @@ module.exports = [
         children: [
             'web/xss_csrf',
             'web/cors',
+            'web/https',
+            'web/post',
         ]
     },
     {
