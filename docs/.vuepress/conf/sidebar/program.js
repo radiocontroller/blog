@@ -4,6 +4,7 @@ module.exports = [
         collapsable: false,
         children: [
             'web/xss_csrf',
+            'web/cors',
         ]
     },
     {
