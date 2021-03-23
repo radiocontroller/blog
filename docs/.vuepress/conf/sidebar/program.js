@@ -7,6 +7,7 @@ module.exports = [
             'web/cors',
             'web/https',
             'web/post',
+            'web/session_and_cookie',
         ]
     },
     {
