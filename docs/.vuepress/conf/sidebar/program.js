@@ -8,6 +8,8 @@ module.exports = [
             'web/https',
             'web/post',
             'web/session_and_cookie',
+            'web/30x',
+            'web/get_post',
         ]
     },
     {
