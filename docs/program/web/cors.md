@@ -20,3 +20,9 @@ Last-Modified、Pragma。如果想拿到其他字段，就必须在 Access-Contr
 ### ajax请求
 * ajax会自动带上同源的cookie，不会带上不同源的cookie
 * 可以通过前端设置withCredentials为true，后端配置Access-Control-Allow-Credentials的方式来让ajax自动带上不同源的cookie
+
+::: tip 相关链接
+
+[https://zhuanlan.zhihu.com/p/28818954](https://zhuanlan.zhihu.com/p/28818954)
+
+:::
