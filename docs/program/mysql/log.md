@@ -24,10 +24,10 @@
 * **回滚**
   * 在执行事务的过程中可能会失败，这个时候就可以利用undo log将数据回滚到修改之前的样子
   * 利用undo回滚采取的是类似补偿的方式，比如对每个insert，InnoDB存储引擎会完成一个delete；对每个delete，会完成一个insert；对每个update，
-会执行一个相反的update。
+还是执行一个update，只不过set的值是原来的值。
 
-* **作用于MVCC快照读**
-  * [事务隔离级别](/program/mysql/transaction.html) 这一章里有
+* **用于MVCC快照读**
+  * [快照读和当前读](/program/mysql/read.html) 这一章里有
 
 ### 五、三个log之间的联系
 * **假设现在进行一个更新操作：update T set a = 1 where id = 2，顺序为：**
