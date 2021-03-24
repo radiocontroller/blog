@@ -55,3 +55,6 @@ ORDER BY (data_length + index_length) DESC;
 * **using where：一般发生在全表扫描，或走了索引但是有些查询字段不在索引中的情况下，需要回表。它是MySQL服务器层面进行的一层where过滤**
 * **using index condition：索引下推(需要回表)**
 * **using index：使用了覆盖索引**
+
+### 9、MySQL InnoDB锁原理
+* [https://zhuanlan.zhihu.com/p/58695491](https://zhuanlan.zhihu.com/p/58695491)
