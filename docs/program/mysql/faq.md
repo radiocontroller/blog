@@ -58,3 +58,6 @@ ORDER BY (data_length + index_length) DESC;
 
 ### 9、MySQL InnoDB锁原理
 * [https://zhuanlan.zhihu.com/p/58695491](https://zhuanlan.zhihu.com/p/58695491)
+
+### 10、删除
+* 在 InnoDB 的删除操作实现中通常实现为伪删除，仅仅标记delete flag并未真正地物理删除记录，所以需要在Purge阶段对记录和相关索引进行清理.
