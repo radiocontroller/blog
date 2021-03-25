@@ -60,6 +60,7 @@ module.exports = [
         title: '算法',
         collapsable: false,
         children: [
+            'alogrithm/binary_search',
             'alogrithm/dp',
             'alogrithm/order_traversal',
             'alogrithm/stack',
