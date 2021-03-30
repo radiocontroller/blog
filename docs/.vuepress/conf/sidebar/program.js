@@ -22,20 +22,6 @@ module.exports = [
         ]
     },
     {
-        title: '支付宝',
-        collapsable: false,
-        children: [
-            'alipay/alipay_global/'
-        ]
-    },
-    {
-        title: '微信',
-        collapsable: false,
-        children: [
-            'wechat/oauth/'
-        ]
-    },
-    {
         title: 'Redis',
         collapsable: false,
         children: [
@@ -66,6 +52,20 @@ module.exports = [
             'alogrithm/stack',
             'alogrithm/hash',
             'alogrithm/lru',
+        ]
+    },
+    {
+        title: '支付宝',
+        collapsable: false,
+        children: [
+            'alipay/alipay_global/'
+        ]
+    },
+    {
+        title: '微信',
+        collapsable: false,
+        children: [
+            'wechat/oauth/'
         ]
     },
     {
