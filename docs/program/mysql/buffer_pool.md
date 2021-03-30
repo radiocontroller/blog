@@ -5,8 +5,9 @@
 ![buffer_pool](https://moto-1252807079.cos.ap-shanghai.myqcloud.com/program/mysql/buffer_pool.png)
 
 ### 预读以及它和缓冲池的关系
-* 磁盘读写，并不是按需读取，而是按页读取，一次至少读一页数据，如果未来要读取的数据就在页中，就能够省去后续的磁盘IO，提高效率
-* 磁盘访问按页读取能够提高性能，所以缓冲池一般也是按页缓存数据
+* Mysql中的数据页大小是16KB，缓冲池中的缓存页也是16KB，它们一一对应
+* 从磁盘上加载一个数据页的时候，可能会连带着把这个数据页相邻的其他数据页，也加载到缓存里去。如果未来要读取的数据就在这些页中，
+就能够省去后续的磁盘IO，提高效率（**局部性原理**）
 
 ### 缓冲池的管理
 * **Mysql采用的是传统LRU的变种，它解决了两个问题**
@@ -17,7 +18,7 @@
       * 解决办法：加入一个【老生代停留时间窗口】的机制，只有满足【被访问】并且【在老生代停留时间】大于T，才会被放入新生代头部
 
 * **什么时候缓冲池中的页，会刷到磁盘上呢？**
-  * 定期刷磁盘，而不是每次刷磁盘，能够降低磁盘IO，提升MySQL的性能
+  * MySQL 会有一条后台线程，定时地将 Buffer Pool 中的脏页刷回到磁盘文件中
       
 ### 写缓冲（change buffer）
 * 它是一种应用在【**非唯一普通索引页**】不在缓冲池中，对页进行了写操作（insert/update/delete），并不会立刻将磁盘页加载到缓冲池，
@@ -32,16 +33,16 @@
   
 * **是否会出现一致性问题呢？（答：不会）**
   1. 数据库异常奔溃，能够从redo log中恢复数据
-  2. 写缓冲不只是一个内存结构，它也会被定期刷盘到写缓冲系统表空间
+  2. 写缓冲不只是一个内存结构，它也会被定期刷盘到系统表空间
   3. 从磁盘读取数据页到缓冲池时，会有另外的流程，将写缓冲合并到缓冲池
    
 * **假设稍后有请求查询索引页40的数据**
 ![buffer_pool2](https://moto-1252807079.cos.ap-shanghai.myqcloud.com/program/mysql/buffer_pool2.png)
 
 * **此时的流程：**
-  1. 载入索引页，缓冲池未命中，从磁盘中读取页
+  1. 缓冲池未命中，从磁盘中读取数据页
   2. 从写缓冲读取相关信息
-  3. 恢复索引页（磁盘页 + 写缓冲数据），放到缓冲池LRU里
+  3. 恢复索引页（数据页 + 写缓冲数据），放到缓冲池LRU里
   
 * **可以看到，40这一页，在真正被读取时，才会被加载到缓冲池中**
 
@@ -50,11 +51,9 @@
 
 ::: tip 相关链接
 
-[https://juejin.cn/post/6844903874172551181](https://juejin.cn/post/6844903874172551181)
+[缓冲池(buffer pool)，这次彻底懂了！！！](https://juejin.cn/post/6844903874172551181)
 
-[https://juejin.cn/post/6844903875271475213](https://juejin.cn/post/6844903875271475213)
+[写缓冲(change buffer)，这次彻底懂了！！！](https://juejin.cn/post/6844903875271475213)
 
-[https://cloud.tencent.com/developer/article/1497335](https://cloud.tencent.com/developer/article/1497335)
-
-[https://zhuanlan.zhihu.com/p/52977862](https://zhuanlan.zhihu.com/p/52977862)
+[缓冲池](https://github.com/asdbex1078/MySQL/blob/master/mysql-storage-engines/innodb/1.2.0.InnoDB%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84%E2%80%94%E2%80%94%E7%BC%93%E5%86%B2%E6%B1%A0.md)
 :::
