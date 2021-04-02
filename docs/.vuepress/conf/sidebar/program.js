@@ -25,7 +25,8 @@ module.exports = [
         title: 'Redis',
         collapsable: false,
         children: [
-            'redis/faq'
+            'redis/faq',
+            'redis/cow',
         ]
     },
     {
