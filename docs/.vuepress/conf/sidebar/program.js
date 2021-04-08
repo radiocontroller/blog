@@ -53,6 +53,8 @@ module.exports = [
             'alogrithm/stack',
             'alogrithm/hash',
             'alogrithm/lru',
+            'alogrithm/list',
+            'alogrithm/sort',
         ]
     },
     {

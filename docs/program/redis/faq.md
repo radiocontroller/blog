@@ -4,7 +4,7 @@
 ### 1、Redis为什么快
 * 单线程
 * 基于内存操作
-* 利用io多路复用机制 [https://zhuanlan.zhihu.com/p/296484467](https://zhuanlan.zhihu.com/p/296484467)
+* 利用io多路复用机制
 
 ### 2、Redis支持哪几种数据类型？
 * 字符串String
@@ -126,13 +126,11 @@
 ### 11、底层数据结构
 * [sds - 简单动态字符串](https://redisbook.readthedocs.io/en/latest/internal-datastruct/sds.html)
 * [zset - 跳跃表skiplist](https://bex.meishakeji.com/2020/04/08/Redis%E4%B9%8B%E8%B7%B3%E8%B7%83%E8%A1%A8/)
-* 字典
+* [哈希表](https://juejin.cn/post/6844903862961176584)
+  * [rehash的实现](https://www.cnblogs.com/goodAndyxublog/p/13635904.html)
 * 链表
 * 整数集合 intset
 * 压缩列表 ziplist
-
-### 12、rehash的实现
-* [https://www.cnblogs.com/goodAndyxublog/p/13635904.html](https://www.cnblogs.com/goodAndyxublog/p/13635904.html)
 
 ::: tip 相关链接
 
