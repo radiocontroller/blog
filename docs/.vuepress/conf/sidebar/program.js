@@ -55,6 +55,7 @@ module.exports = [
             'alogrithm/lru',
             'alogrithm/list',
             'alogrithm/sort',
+            'alogrithm/heap',
         ]
     },
     {
