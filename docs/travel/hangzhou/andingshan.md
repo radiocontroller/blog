@@ -7,15 +7,15 @@
 
 :::
 
-![安顶山](http://cdn.rcer666.cn/andingshan001.jpg)
+![安顶山](http://motor.rcer666.cn/andingshan001.jpg)
 
-![安顶山](http://cdn.rcer666.cn/andingshan002.jpg)
+![安顶山](http://motor.rcer666.cn/andingshan002.jpg)
 
-![安顶山](http://cdn.rcer666.cn/andingshan003.jpg)
+![安顶山](http://motor.rcer666.cn/andingshan003.jpg)
 
-![安顶山](http://cdn.rcer666.cn/andingshan004.jpg)
+![安顶山](http://motor.rcer666.cn/andingshan004.jpg)
 
-![安顶山](http://cdn.rcer666.cn/andingshan005.jpg)
+![安顶山](http://motor.rcer666.cn/andingshan005.jpg)
 
 ### 骑行视频
 ---

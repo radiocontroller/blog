@@ -10,13 +10,13 @@
 * **roll_pointer**：每次对记录进行修改的时候，都会把老版本写入undo log中。这个roll_pointer就是存了一个指针，
 它指向这条记录的上一个版本，通过它来获得上一个版本的记录信息。(**注意insert操作的undo log没有这个属性，因为它没有老版本**)
 
-![mvcc](https://moto-1252807079.cos.ap-shanghai.myqcloud.com/program/mysql/mvcc1.png)
+![mvcc](http://motor.rcer666.cn/program/mysql/mvcc1.png)
 
 假设有个**事务id是60**执行这条记录的修改语句：**update set name = '张三1' where id = 1**
 
 此时的版本链变成
 
-![mvcc](https://moto-1252807079.cos.ap-shanghai.myqcloud.com/program/mysql/mvcc2.png)
+![mvcc](http://motor.rcer666.cn/program/mysql/mvcc2.png)
 
 ##### 2. ReadView
 * ReadView在生成时会有以下几个属性
@@ -42,7 +42,7 @@
 ##### 3. 下面重点讲下读已提交隔离级别和可重复读隔离级别下select查询区别的原理
 如果此时开启了一个事务id为100的**事务A**，将name改为**张三2**，但是事务还没提交，则此时的版本链为
 
-![mvcc](https://moto-1252807079.cos.ap-shanghai.myqcloud.com/program/mysql/mvcc3.png)
+![mvcc](http://motor.rcer666.cn/program/mysql/mvcc3.png)
 
 此时另一个**事务B**发起了select语句要查询id为1的记录，**此时生成的ReadView列表只有[100]**。接着去版本链找可见记录版本，首先肯定找最近的一条，
 发现trx_id是100，也就是**张三2**的那条记录，发现在列表内，所以不可见。
@@ -51,7 +51,7 @@
 
 那这时候我们把事务id为100的**事务A**提交了，并且重新开启了一个事务id为110的**事务C**，同样修改id为1的记录，将name改成**张三3**，并且不提交事务，这时候版本链为
 
-![mvcc](https://moto-1252807079.cos.ap-shanghai.myqcloud.com/program/mysql/mvcc4.png)
+![mvcc](http://motor.rcer666.cn/program/mysql/mvcc4.png)
 
 这时候之前那个**事务B**又执行了一次相同查询，还是查询id为1的记录
 
@@ -75,7 +75,7 @@
   * **delete from table where ?**
 
 * 当前读使用next-key锁，即：行锁 + gap锁。行锁防止别的事务修改或删除，gap锁防止别的事务新增，行锁和gap锁结合**共同解决了rr级别下写数据时的幻读问题**。
-![gap_lock](https://moto-1252807079.cos.ap-shanghai.myqcloud.com/program/mysql/gap_lock.png)
+![gap_lock](http://motor.rcer666.cn/program/mysql/gap_lock.png)
 从图中可以看到，左边的事务通过当前读t_id >= 50的数据，然后锁住了30-50和50-70的区间；因此右边的事务插入t_id=29能成功，但是插入t_id=30会阻塞，
 然后左边再次通过当前读t_id >= 50，得到了相同的数据
 

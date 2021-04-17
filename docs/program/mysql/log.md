@@ -43,7 +43,7 @@
   * 6. 事务的两阶段提交：commit的prepare阶段：引擎把刚刚写入的**redo log**刷盘；
   * 7. 事务的两阶段提交：commit的commit阶段：引擎**binlog**刷盘。
  
-![更新过程](https://moto-1252807079.cos.ap-shanghai.myqcloud.com/program/mysql/update_process.jpeg)
+![更新过程](http://motor.rcer666.cn/program/mysql/update_process.jpeg)
  
 * **事务的两阶段提交，目的是为了保证redo log和binlog一致（假设binlog开启）**
 

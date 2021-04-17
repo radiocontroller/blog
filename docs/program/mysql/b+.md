@@ -28,11 +28,11 @@
 ### 索引存储形式
   * **主键索引：<id, row>**
   
-  ![](https://moto-1252807079.cos.ap-shanghai.myqcloud.com/program/mysql/index1.png)
+  ![](http://motor.rcer666.cn/program/mysql/index1.png)
   
   * **普通索引：<index, id>**
   
-  ![](https://moto-1252807079.cos.ap-shanghai.myqcloud.com/program/mysql/index2.png)
+  ![](http://motor.rcer666.cn/program/mysql/index2.png)
 
 ::: tip 相关链接
 

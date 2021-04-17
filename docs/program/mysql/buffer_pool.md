@@ -2,7 +2,7 @@
 ---
 
 ### 为了减少磁盘IO，加快数据访问，Mysql引入了buffer pool，先看下它的结构
-![buffer_pool](https://moto-1252807079.cos.ap-shanghai.myqcloud.com/program/mysql/buffer_pool.png)
+![buffer_pool](http://motor.rcer666.cn/program/mysql/buffer_pool.png)
 
 ### 预读以及它和缓冲池的关系
 * Mysql中的数据页大小是16KB，缓冲池中的缓存页也是16KB，它们一一对应
@@ -25,7 +25,7 @@
 而仅仅记录缓冲变更，等未来数据被读取时，再将数据合并(merge)恢复到缓冲池中的技术。写缓冲的目的是降低写操作的磁盘IO，提升数据库性能。
 
 * **假如要修改页号为40的索引页，而这个页不在缓冲池内(ps: 如果在缓冲池页中就直接改)**
-![buffer_pool1](https://moto-1252807079.cos.ap-shanghai.myqcloud.com/program/mysql/buffer_pool1.png)
+![buffer_pool1](http://motor.rcer666.cn/program/mysql/buffer_pool1.png)
 
 * **加入写缓冲优化后，流程优化为：**
   1. 在写缓冲中记录这个操作，一次内存操作
@@ -37,7 +37,7 @@
   3. 从磁盘读取数据页到缓冲池时，会有另外的流程，将写缓冲合并到缓冲池
    
 * **假设稍后有请求查询索引页40的数据**
-![buffer_pool2](https://moto-1252807079.cos.ap-shanghai.myqcloud.com/program/mysql/buffer_pool2.png)
+![buffer_pool2](http://motor.rcer666.cn/program/mysql/buffer_pool2.png)
 
 * **此时的流程：**
   1. 缓冲池未命中，从磁盘中读取数据页

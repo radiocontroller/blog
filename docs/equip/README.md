@@ -14,13 +14,13 @@
 一开始没弄懂这个东西，导致很多视频丢了。
 :::
 
-![osmoaction](http://cdn.rcer666.cn/osmo2.jpg)
+![osmoaction](http://motor.rcer666.cn/osmo2.jpg)
 
-![osmoaction](http://cdn.rcer666.cn/osmo1.jpg)
+![osmoaction](http://motor.rcer666.cn/osmo1.jpg)
 
-![osmoaction](http://cdn.rcer666.cn/osmo3.jpg)
+![osmoaction](http://motor.rcer666.cn/osmo3.jpg)
 
-![osmoaction](http://cdn.rcer666.cn/osmo4.jpg)
+![osmoaction](http://motor.rcer666.cn/osmo4.jpg)
 
 ### 附上一段骑行效果
 ---
