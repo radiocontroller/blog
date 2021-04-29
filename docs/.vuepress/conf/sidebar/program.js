@@ -26,7 +26,10 @@ module.exports = [
         collapsable: false,
         children: [
             'redis/faq',
+            'redis/cache',
+            'redis/expire',
             'redis/cow',
+            'redis/cluster',
         ]
     },
     {
