@@ -1,6 +1,24 @@
-# HTTPS实现原理
+# HTTPS原理
 ---
 
-[https://cloud.tencent.com/developer/article/1601995](https://cloud.tencent.com/developer/article/1601995)
+### 主要流程图如下
 
 ![](http://motor.rcer666.cn/program/https.png)
+
+### 数字证书验证细节分析
+* 首先CA机构拥有自己的 非对称加密 密钥，暂称为 CA.pri 和 CA.pub。而 CA.pub 可以通过浏览器（或操作系统）内置的根证书获取。
+* 服务端申请证书时也会生成 非对称加密 密钥，暂称为 S.pri 和 S.pub。
+* 证书内容含有：所有者信息，颁发机构，有效期，**S.pub，摘要算法，数字签名**等。CA机构对证书内容hash后生成摘要digest，
+然后使用 CA.pri 加密生成数字签名。( **hash的主要作用是降低签名长度，加速加密过程** )
+* **证书验证过程**
+  1. 客户端用内置根证书的 CA.pub 对数字签名进行解密获得摘要digest。( **能解密说明签名是没问题的，确实是 CA.pri 加密的** )
+  2. 客户端用同样的摘要算法，对证书内容hash后生成摘要digest1，再与之前解密出来的digest对比，如果两者相等，就表示证书内容没有被篡改，
+  否则就是被人改过了。( **这一步是为了确保证书内容没有被人篡改过** )
+
+::: tip 相关链接
+
+[彻底搞懂HTTPS的加密原理](https://zhuanlan.zhihu.com/p/43789231)
+
+[网络篇：朋友面试之https认证加密过程](https://www.jianshu.com/p/ff5d94d6b0e0)
+
+:::
