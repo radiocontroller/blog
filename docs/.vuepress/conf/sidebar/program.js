@@ -60,6 +60,7 @@ module.exports = [
             'alogrithm/sort',
             'alogrithm/heap',
             'alogrithm/expand',
+            'alogrithm/two_pointer',
         ]
     },
     {
