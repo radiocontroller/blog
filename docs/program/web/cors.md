@@ -48,8 +48,7 @@ Last-Modified、Pragma。如果想拿到其他字段，就必须在 Access-Contr
 |  Image     | \<img src="...">                          | 发送 Cookie | 不发送 |
 
 * **因此针对上面第二种情况，如果想跨站请求自动带上cookie**
-  * 1. 在domain = a.com下设置Cookie时，SameSite设置为None，同时设置Secure
-  * 2. 上https
+  * 在domain = a.com下设置Cookie时，Secure设置为true（表示通过https才能发送）同时上https，然后SameSite设置为None
 
 
 ::: tip 相关链接
