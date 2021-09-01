@@ -31,7 +31,8 @@
 * explain中extra列为：Using Index Condition
 
 ### 5、SQL中过滤条件放在on和where中的区别
-* 对于inner join都一样，对于左连接的话，会得到左表的所有数据。on不会过滤左表的信息，但是on能过滤右表信息。
+* on是在生成临时表时过滤，而where是在生成临时表之后过滤，所以where一定会过滤
+* 对于inner join它们都一样。对于左连接，始终会得到左表的所有数据，on不会过滤左表数据，但是on会过滤右表信息。右连接同理
 
 * [https://pigfly88.github.io/mysql/2020/06/30/mysql-on-vs-where.html](https://pigfly88.github.io/mysql/2020/06/30/mysql-on-vs-where.html)
 

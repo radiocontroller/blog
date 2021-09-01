@@ -19,12 +19,16 @@ func threeSum(nums []int) [][]int {
       break
     }
 
+    // 对于重复的，都是选用第一个（不能选最后一个，因为重复的可以多次利用，比如[-1, -1, 2]，所以不能像下面那么写）
     if i > 0 && nums[i] == nums[i - 1] {
       continue
     }
+    // 不能这么写
+    // if nums[i] == nums[i+1] {
+    //   continue
+    // }
 
-    target := -nums[i]
-    j, k := i + 1, len(nums) - 1
+    j, k, target := i + 1, len(nums) - 1, -nums[i]
 
     for j < k {
       if nums[j] + nums[k] > target {
