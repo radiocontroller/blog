@@ -3,7 +3,9 @@
 
 ### 冒泡排序
 
-* **ruby实现**
+<details>
+
+<summary>点击展开ruby实现</summary>
 
 ```ruby
 def sort_array(nums)
@@ -18,7 +20,11 @@ def sort_array(nums)
 end
 ```
 
-* **go实现**
+</details>
+
+<details>
+
+<summary>点击展开go实现</summary>
 
 ```go
 func sort(nums []int) []int {
@@ -32,3 +38,51 @@ func sort(nums []int) []int {
   return nums
 }
 ```
+
+</details>
+
+### 快速排序
+
+* 最好情况每次中分，时间复杂度O(nlogn)，最坏情况数组已排好序，退化为冒泡排序，时间复杂度O(n^2)
+
+<details>
+
+<summary>点击展开go实现</summary>
+
+```go
+func quickSort(arr []int, left int, right int) {
+  if left >= right {
+    return
+  }
+
+  pivot := arr[left]
+  i, j := left+1, right
+  for {
+    for i < right && arr[i] < pivot {
+      i++
+    }
+
+    for j > left && arr[j] > pivot {
+      j--
+    }
+
+    if i >= j {
+      break
+    }
+    exchange(arr, i, j)
+  }
+  exchange(arr, left, j)
+  fmt.Println("arr: ", arr, "pivot: ", pivot)
+
+  quickSort(arr, left, j-1)
+  quickSort(arr, j+1, right)
+}
+
+func exchange(arr []int, i, j int) {
+  tmp := arr[i]
+  arr[i] = arr[j]
+  arr[j] = tmp
+}
+```
+
+</details>
