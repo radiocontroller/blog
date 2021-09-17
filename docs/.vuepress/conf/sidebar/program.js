@@ -10,6 +10,7 @@ module.exports = [
             'web/session_and_cookie',
             'web/30x',
             'web/get_post',
+            'web/gc',
         ]
     },
     {
