@@ -51,9 +51,10 @@ module.exports = [
         title: '算法',
         collapsable: false,
         children: [
+            'alogrithm/graph_search',
             'alogrithm/binary_search',
             'alogrithm/dp',
-            'alogrithm/order_traversal',
+            'alogrithm/tree_traversal',
             'alogrithm/stack',
             'alogrithm/hash',
             'alogrithm/lru',
