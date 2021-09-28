@@ -2,54 +2,80 @@
 ---
 
 ### 反转链表
-```ruby
-# Definition for singly-linked list.
-# class ListNode
-#     attr_accessor :val, :next
-#     def initialize(val = 0, _next = nil)
-#         @val = val
-#         @next = _next
-#     end
-# end
-# @param {ListNode} head
-# @return {ListNode}
-def reverse_list(head)
-    cur = nil
-    pre = head
-    while(pre) do
-      pre_next = pre.next
+```go
+type ListNode struct {
+   Val int
+   Next *ListNode
+}
 
-      pre.next = cur
-
-      cur = pre
-      pre = pre_next
-    end
-    cur
-end
+func reverseList(cur *ListNode) *ListNode {
+  var prev *ListNode
+  for cur != nil {
+    next := cur.Next // next变量是为了后面赋值给cur进行下一次循环
+    cur.Next = prev  // 反转某一次关系
+    prev = cur      // 反转完成后prev向后移动，对于下一次循环，prev就是cur
+    cur = next
+  }
+  return prev
+}
 ```
 
 ### 合并两个有序链表
-```ruby
-# @param {ListNode} l1
-# @param {ListNode} l2
-# @return {ListNode}
-def merge_two_lists(l1, l2)
-    dummy = ListNode.new
-    l3 = dummy
+```go
+type ListNode struct {
+   Val int
+   Next *ListNode
+}
 
-    while(!l1.nil? && !l2.nil?) do
-        if l1.val <= l2.val
-            l3.next = l1
-            l1 = l1.next
-        else
-            l3.next = l2
-            l2 = l2.next
-        end
-        l3 = l3.next
-    end
+func mergeTwoLists(l1 *ListNode, l2 *ListNode) *ListNode {
+  dummy := &ListNode{}
+  cur := dummy
+  for l1 != nil && l2 != nil {
+    if l1.Val <= l2.Val {
+      cur.Next = l1
+      l1 = l1.Next
+    } else {
+      cur.Next = l2
+      l2 = l2.Next
+    }
+    cur = cur.Next // 指向下个节点
+  }
+  for l1 != nil {
+    cur.Next = l1
+    l1 = l1.Next
+    cur = cur.Next // 指向下个节点
+  }
+  for l2 != nil {
+    cur.Next = l2
+    l2 = l2.Next
+    cur = cur.Next // 指向下个节点
+  }
+  return dummy.Next
+}
+```
 
-    l3.next = l1.nil? ? l2 : l1
+### 两个链表的第一个公共节点
+* 互相走对方的路，如果中间相遇就返回，否则双方最后都是nil
+```go
+type ListNode struct {
+   Val int
+   Next *ListNode
+}
 
-    dummy.next
-end
+func getIntersectionNode(headA, headB *ListNode) *ListNode {
+  curA, curB := headA, headB
+  for curA != curB {
+    if curA == nil {
+      curA = headB
+    } else {
+      curA = curA.Next
+    }
+    if curB == nil {
+      curB = headA
+    } else {
+      curB = curB.Next
+    }
+  }
+  return curA
+}
 ```
