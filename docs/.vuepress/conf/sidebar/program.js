@@ -55,6 +55,7 @@ module.exports = [
             'alogrithm/binary_search',
             'alogrithm/dp',
             'alogrithm/tree_traversal',
+            'alogrithm/backtrace',
             'alogrithm/stack',
             'alogrithm/hash',
             'alogrithm/lru',
