@@ -74,3 +74,50 @@ func Min(x, y int) int {
     return y
 }
 ```
+
+### [最长递增子序列长度](https://leetcode-cn.com/problems/longest-increasing-subsequence)
+
+* dp[i]定义：以下标i为结尾的最长递增子序列长度
+
+```go
+func lengthOfLIS(nums []int) int {
+  dp := make([]int, len(nums))
+  for i := 0; i < len(dp); i++ {
+    dp[i] = 1
+  }
+  for i := 0; i < len(nums); i++ {
+    for j := 0; j < i; j++ {
+      if nums[j] < nums[i] {
+        dp[i] = max(dp[i], dp[j]+1)
+      }
+    }
+  }
+  sort.Ints(dp)
+  return dp[len(dp)-1]
+}
+
+func max(a, b int) int {
+  if a > b {
+    return a
+  }
+  return b
+}
+```
+
+### [最长等差子序列长度](https://leetcode-cn.com/problems/longest-arithmetic-subsequence-of-given-difference)
+
+* 该题和上一题最大的区别为，利用做差可以直接得到等差数列前一个值，不必进行一次循环，否则会超时
+
+```go
+func longestSubsequence(arr []int, difference int) (res int) {
+  m := make(map[int]int)
+  for _, num := range arr {
+    m[num] = m[num - difference] + 1
+    if m[num] > res {
+      res = m[num]
+    }
+    // fmt.Println("m:", m)
+  }
+  return
+}
+```
