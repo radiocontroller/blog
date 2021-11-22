@@ -6,23 +6,27 @@
 * 1. 左括号必须用相同类型的右括号闭合。
 * 2. 左括号必须以正确的顺序闭合。
 
-```ruby
-# @param {String} s
-# @return {Boolean}
-def is_valid(s)
-  stack = []
-  s.each_char do |c|
-    if c == '('
-      stack.push ')'
-    elsif c == '{'
-      stack.push '}'
-    elsif c == '['
-      stack.push ']'
-    elsif stack.size == 0 || c != stack.pop
-      return false
-    else
-    end
-  end
-  stack.size == 0
-end
+```go
+func isValid(s string) bool {
+    if len(s) % 2 == 1 {
+        return false
+    }
+    stack := make([]byte, 0, len(s))
+    pairs := map[byte]byte {
+        ')': '(',
+        ']': '[',
+        '}': '{',
+    }
+    for i := 0; i < len(s); i++ {
+        if pairs[s[i]] > 0 {
+            if len(stack) == 0 || stack[len(stack)-1] != pairs[s[i]] {
+                return false
+            }
+            stack = stack[:len(stack)-1]
+        } else {
+            stack = append(stack, s[i])
+        }
+    }
+    return len(stack) == 0
+}
 ```
