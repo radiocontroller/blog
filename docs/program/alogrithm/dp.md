@@ -28,24 +28,23 @@ func climbStairs(n int) int {
 
 ```go
 func rob(nums []int) int {
-    if len(nums) == 0 {
-        return 0
-    }
-
-    dp := make([]int, len(nums) + 1)
-    dp[0] = 0
-    dp[1] = nums[0]
-    for i := 2; i <= len(nums); i++ {
-        dp[i] = Max(dp[i-1], dp[i-2] + nums[i-1])
-    }
-    return dp[len(nums)]
+	  if len(nums) == 1 {
+	      return nums[0]
+	  }
+	  dp := make([]int, len(nums))
+	  dp[0] = nums[0]
+	  dp[1] = Max(nums[0], nums[1])
+	  for i := 2; i < len(nums); i++ {
+	      dp[i] = Max(nums[i] + dp[i-2], dp[i-1])
+	  }
+	  return dp[len(nums)-1]
 }
 
-func Max(x, y int) int {
-    if x < y {
-        return y
-    }
-    return x
+func Max(a, b int) int {
+  	if a > b {
+    	return a
+  	}
+  	return b
 }
 ```
 
@@ -54,17 +53,15 @@ func Max(x, y int) int {
 * 每当你爬上一个阶梯你都要花费对应的体力值，一旦支付了相应的体力值，你就可以选择向上爬一个阶梯或者爬两个阶梯。
 * 请你找出达到楼层顶部的最低花费。在开始时，你可以选择从下标为 0 或 1 的元素作为初始阶梯。
 
-* dp[i]定义：到达第 i 级阶梯的最小花费（包含 i 级这一层自身的花费）
+* dp[i]定义：到达第 i 级阶梯的最小花费
 
 ```go
 func minCostClimbingStairs(cost []int) int {
-    dp := make([]int, len(cost))
-    dp[0] = cost[0]
-    dp[1] = cost[1]
-    for i := 2; i < len(cost); i ++ {
-        dp[i] = Min(dp[i - 1], dp[i - 2]) + cost[i]
+    dp := make([]int, len(cost)+1)
+    for i := 2; i <= len(cost); i++ {
+        dp[i] = Min(dp[i-1]+cost[i-1], dp[i-2]+cost[i-2])
     }
-    return Min(dp[len(cost) - 1], dp[len(cost) - 2])
+    return dp[len(cost)]
 }
 
 func Min(x, y int) int {
