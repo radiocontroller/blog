@@ -52,8 +52,7 @@ func heapSort(arr []int) {
   length := len(arr)
   for i := length-1; i >= 0; i-- {
     swap(arr, 0, i)
-    arr = arr[:i]
-    heapify(arr, 0)
+    heapify(arr[:i], 0)
   }
   return
 }
@@ -118,8 +117,7 @@ func heapSort(arr []int) {
   length := len(arr)
   for i := length-1; i >= 0; i-- {
     swap(arr, 0, i)
-    arr = arr[:i]
-    heapify(arr, 0)
+    heapify(arr[:i], 0)
   }
   return
 }
