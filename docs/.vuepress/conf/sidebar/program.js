@@ -31,6 +31,7 @@ module.exports = [
             'redis/expire',
             'redis/cow',
             'redis/cluster',
+            'redis/distributed_lock',
         ]
     },
     {

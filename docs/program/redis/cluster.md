@@ -31,11 +31,3 @@ cluster nodes
 * 用redis-cli连接时要加个 -c 参数，否则会报类似错误：(error) MOVED 5798 127.0.0.1:7000
 
 * 报错：[ERR] Node 127.0.0.1:7000 is not empty. Either the node already knows other nodes (check with CLUSTER NODES) or contains some key in database 0. 将 /usr/local/var/db/redis 该目录下内容清空
-
-::: tip 相关链接
-
-[https://github.com/redisson/redisson/issues/956](https://github.com/redisson/redisson/issues/956)
-
-[https://github.com/antirez/redlock-rb/blob/master/redlock.rb](https://github.com/antirez/redlock-rb/blob/master/redlock.rb)
-
-:::
