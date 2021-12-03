@@ -45,6 +45,7 @@ func (q *DeQueue) End() int {
 }
 
 func (q *DeQueue) Pop(target int) {
+  // 只有前部元素等于离开的元素，队列才移除前部元素
   if !q.Empty() && q.Front() == target {
     q.queue = q.queue[1:]
   }
@@ -57,6 +58,7 @@ func (q *DeQueue) Push(target int) {
   // 对于[1, 5, 4]元素，[5, 4]是我们要的，因为在最大值"5"之前的元素，在向右进行滑动直到"5"离开，只可能会去取"5"，不可能取比它小的"1"
   // 而[5, 4]之所以需要保留后面的"4"，是因为，在"5"离开之后，"4"会是接下来的最大值
   for !q.Empty() && target > q.End() {
+    // 从后往前，一个一个弹出
     q.queue = q.queue[:q.Length()-1]
   }
   q.queue = append(q.queue, target)
