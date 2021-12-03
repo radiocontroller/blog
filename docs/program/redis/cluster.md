@@ -1,7 +1,8 @@
-# Redis Cluster原理以及搭建
+# Redis Cluster
 ---
 
 ### 1. 原理
+* redis cluster包含了主从复制，高可用
 * [https://juejin.cn/post/6844903984294002701](https://juejin.cn/post/6844903984294002701)
 
 ### 2. mac环境搭建
@@ -31,3 +32,5 @@ cluster nodes
 * 用redis-cli连接时要加个 -c 参数，否则会报类似错误：(error) MOVED 5798 127.0.0.1:7000
 
 * 报错：[ERR] Node 127.0.0.1:7000 is not empty. Either the node already knows other nodes (check with CLUSTER NODES) or contains some key in database 0. 将 /usr/local/var/db/redis 该目录下内容清空
+
+### 3. 集群在操作多个key时用{key}的形式将多个key分到同一个slot，涉及业务代码更改

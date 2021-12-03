@@ -58,6 +58,7 @@ module.exports = [
             'alogrithm/tree_traversal',
             'alogrithm/backtrace',
             'alogrithm/stack',
+            'alogrithm/queue',
             'alogrithm/hash',
             'alogrithm/lru',
             'alogrithm/list',
