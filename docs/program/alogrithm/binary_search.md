@@ -36,10 +36,10 @@ func firstGteq(arr []int, key int) int {
   left, right := 0, len(arr)-1
   for left <= right {
     mid := (left+right)>>1
-    if key > arr[mid] {
-      left = mid+1
-    } else {
+    if arr[mid] >= key {
       right = mid-1
+    } else {
+      left = mid+1
     }
   }
   return left
@@ -59,10 +59,10 @@ func firstGt(arr []int, key int) int {
   left, right := 0, len(arr)-1
   for left <= right {
     mid := (left+right)>>1
-    if key >= arr[mid] { // 与上一个的区别在于这里是 >=
-      left = mid+1
-    } else {
+    if arr[mid] > key {
       right = mid-1
+    } else {
+      left = mid+1
     }
   }
   return left
@@ -81,10 +81,10 @@ func lastLteq(arr []int, key int) int {
   left, right := 0, len(arr)-1
   for left <= right {
     mid := (left+right)>>1
-    if key < arr[mid] {
-      right = mid-1
-    } else {
+    if arr[mid] <= key {
       left = mid+1
+    } else {
+      right = mid-1
     }
   }
   return right
@@ -104,10 +104,10 @@ func lastLt(arr []int, key int) int {
   left, right := 0, len(arr)-1
   for left <= right {
     mid := (left+right)>>1
-    if key <= arr[mid] { // 与上一个的区别在于这里是 <=
-      right = mid-1
-    } else {
+    if arr[mid] < key {
       left = mid+1
+    } else {
+      right = mid-1
     }
   }
   return right
@@ -128,7 +128,7 @@ func firstEq(arr []int, key int) int {
   left, right := 0, len(arr)-1
   for left <= right {
     mid := (left+right)>>1
-    if key <= arr[mid] {
+    if arr[mid] >= key {
       right = mid-1
     } else {
       left = mid+1
@@ -154,7 +154,7 @@ func lastEq(arr []int, key int) int {
   left, right := 0, len(arr)-1
   for left <= right {
     mid := (left+right)>>1
-    if key >= arr[mid] {
+    if arr[mid] <= key {
       left = mid+1
     } else {
       right = mid-1

@@ -14,10 +14,6 @@
 * 如果大于根节点就说明这10个数构成的堆不是最大的10个数，因此将该数替换根节点，然后对根节点进行堆化
 * 假设n为总数10亿，k为最大的10个数，时间复杂度为：O(nlog k)
 
-<details>
-
-<summary>点击展开go实现</summary>
-
 ```go
 // 从倒数第一个非叶子节点开始，倒着建堆
 func buildHeap(arr []int) {
@@ -41,26 +37,18 @@ func heapify(arr []int, i int) {
     min = c2
   }
   if min != i {
-    swap(arr, min, i)
+    arr[min], arr[i] = arr[i], arr[min]
     heapify(arr, min)
-  }
-  return // 没有进行替换递归出口
-}
-
-// 堆排序：每次将最小值的根节点与最后一个节点互换，然后砍断最后一个节点（即之前的根节点），然后对根节点调用heapify
-func heapSort(arr []int) {
-  length := len(arr)
-  for i := length-1; i >= 0; i-- {
-    swap(arr, 0, i)
-    heapify(arr[:i], 0)
   }
   return
 }
 
-func swap(arr []int, i, j int) {
-  temp := arr[i]
-  arr[i] = arr[j]
-  arr[j] = temp
+// 堆排序：每次将最小值的根节点与最后一个节点互换，然后砍断最后一个节点（即之前的根节点），然后对根节点调用heapify
+func heapSort(arr []int) {
+  for i := len(arr)-1; i >= 0; i-- {
+    arr[0], arr[i] = arr[i], arr[0]
+    heapify(arr[:i], 0)
+  }
   return
 }
 
@@ -73,18 +61,27 @@ func main() {
 
 // 输出
 // buildHeap:  [1 3 2 5 6 4 10]
-// heapSort:  [10 6 5 4 3 2 1]
-```
+// heapSort:   [10 6 5 4 3 2 1]
 
-</details>
+// 自底向上堆化，当向小根堆中添加元素时，添加在最后面，然后和父节点进行递归替换
+func heapifyBottomToUp(arr []int, i int) {
+  for i > 0 {
+    parent := (i-1) / 2
+    if arr[i] >= arr[parent] {
+      return
+    }
+    arr[i], arr[parent] = arr[parent], arr[i]
+    i = parent
+    heapifyBottomToUp(arr, i)
+  }
+  return
+}
+```
 
 ### 大根堆（大顶堆，根节点的值是最大的）
 
-<details>
-
-<summary>点击展开go实现</summary>
-
 ```go
+// 从倒数第一个非叶子节点开始，倒着建堆
 func buildHeap(arr []int) {
   lastNode := (len(arr) - 1) / 2
   for i := lastNode; i >= 0; i-- {
@@ -106,26 +103,18 @@ func heapify(arr []int, i int) {
     max = c2
   }
   if max != i {
-    swap(arr, max, i)
+    arr[max], arr[i] = arr[i], arr[max]
     heapify(arr, max)
-  }
-  return // 没有进行替换递归出口
-}
-
-// 堆排序：每次将最大值的根节点与最后一个节点互换，然后砍断最后一个节点（即之前的根节点），然后对根节点调用heapify
-func heapSort(arr []int) {
-  length := len(arr)
-  for i := length-1; i >= 0; i-- {
-    swap(arr, 0, i)
-    heapify(arr[:i], 0)
   }
   return
 }
 
-func swap(arr []int, i, j int) {
-  temp := arr[i]
-  arr[i] = arr[j]
-  arr[j] = temp
+// 堆排序：每次将最大值的根节点与最后一个节点互换，然后砍断最后一个节点（即之前的根节点），然后对根节点调用heapify
+func heapSort(arr []int) {
+  for i := len(arr)-1; i >= 0; i-- {
+    arr[0], arr[i] = arr[i], arr[0]
+    heapify(arr[:i], 0)
+  }
   return
 }
 
@@ -138,10 +127,22 @@ func main() {
 
 // 输出
 // buildHeap:  [10 6 4 5 3 1 2]
-// heapSort:  [1 2 3 4 5 6 10]
-```
+// heapSort:   [1 2 3 4 5 6 10]
 
-</details>
+// 自底向上堆化，当向大根堆中添加元素时，添加在最后面，然后和父节点进行递归替换
+func heapifyBottomToUp(arr []int, i int) {
+  for i > 0 {
+    parent := (i-1) / 2
+    if arr[i] <= arr[parent] {
+      return
+    }
+    arr[i], arr[parent] = arr[parent], arr[i]
+    i = parent
+    heapifyBottomToUp(arr, i)
+  }
+  return
+}
+```
 
 ::: tip 相关链接
 
