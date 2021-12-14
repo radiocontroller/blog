@@ -1,73 +1,197 @@
-# 二分查找
+# 二分查找及变种
 ---
 
-### 简单二分查找
-* 假设nums已排好序，target为查找目标，找到返回下标，找不到返回-1
+* 假设数组arr已排好序（非递减顺序），key为查找目标
 
-```ruby
-def search(nums, target)
-  l = 0
-  r = nums.length - 1
-  while(l <= r) do
-    mid = (l + r) / 2
-    if nums[mid] < target
-      l = mid + 1
-    elsif nums[mid] > target
-      r = mid - 1
-    else
+### 1. 基础二分查找
+```go
+func binarySearch(arr []int, key int) int {
+  left, right := 0, len(arr)-1
+  // 注意是 <=，例如：arr = [1, 3, 5]，key为5，此时在(left < right)条件下就会找不到
+  for left <= right {
+    mid := (left+right)>>1
+    if arr[mid] == key {
       return mid
-    end
-  end
-  -1
-end
+    }
+    if key > arr[mid] {
+      left = mid+1
+    } else {
+      right = mid-1
+    }
+  }
+  return -1 // 找不到返回-1
+}
+
+func main() {
+  arr := []int{1, 7, 15}
+  fmt.Println(binarySearch(arr, 7)) // 返回：1
+  fmt.Println(binarySearch(arr, 8)) // 返回：-1
+}
 ```
 
-* 每次移动l和r指针的时候，需要在mid的基础上+1或者-1，防止出现死循环
-* 代码中的判断条件必须是while(l <= r)，否则的话判断条件不完整，比如：nums = [1, 3, 5]，target为5，此时在(l < r)条件下就会找不到，
-必须 l == r 才能找到。
+### 2. 查找第一个 >= key 的元素
+* 查找第一个 >= key 的元素，也就是说等于查找key值的元素有好多个，返回这些元素最左边的元素下标；如果没有等于key值的元素，则返回大于key的最左边元素下标。
+```go
+func firstGteq(arr []int, key int) int {
+  left, right := 0, len(arr)-1
+  for left <= right {
+    mid := (left+right)>>1
+    if key > arr[mid] {
+      left = mid+1
+    } else {
+      right = mid-1
+    }
+  }
+  return left
+}
 
-### 查找第一个与key相等的元素
-* 假设nums数组之中的数据可以重复，要求返回匹配的数据的最小下标
-
-```ruby
-def search_first(nums, target)
-  l = 0
-  r = nums.length - 1
-  while(l <= r) do
-    mid = (l + r) / 2
-    if target <= nums[mid]
-      r = mid - 1
-    else
-      l = mid + 1
-    end
-  end
-
-  return l if l < nums.size && nums[l] == target
-  # 上面要判断 l < nums.size，假设nums = [1, 1, 1]，target为2，那么l最终为3，超出数组下标
-  
-  -1
-end
+func main() {
+  arr := []int{1, 7, 7, 15}
+  fmt.Println(firstGteq(arr, 7))  // 返回：1
+  fmt.Println(firstGteq(arr, 10)) // 返回：3
+}
 ```
 
-### 查找最后一个与key相等的元素
-* 假设nums数组之中的数据可以重复，要求返回匹配的数据的最大下标
+### 3. 查找第一个 > key 的元素
+* 查找第一个 > key 的元素，也就是说返回大于key的最左边元素下标。
+```go
+func firstGt(arr []int, key int) int {
+  left, right := 0, len(arr)-1
+  for left <= right {
+    mid := (left+right)>>1
+    if key >= arr[mid] { // 与上一个的区别在于这里是 >=
+      left = mid+1
+    } else {
+      right = mid-1
+    }
+  }
+  return left
+}
 
-```ruby
-def search_last(nums, target)
-  l = 0
-  r = nums.length - 1
-  while(l <= r) do
-    mid = (l + r) / 2
-    if target >= nums[mid]
-      l = mid + 1
-    else
-      r = mid - 1
-    end
-  end
-
-  return r if r >= 0 && nums[r] == target
-  # 上面要判断 r >= 0，假设nums = [1, 1, 1]，target为0，那么r会变成-1
- # 
-  -1
-end
+func main() {
+  arr := []int{1, 7, 7, 15}
+  fmt.Println(firstGt(arr, 5))  // 返回：1
+  fmt.Println(firstGt(arr, 10)) // 返回：3
+}
 ```
+### 4. 查找最后一个 <= key 的元素
+* 查找最后一个 <= key的元素，也就是说等于查找key值的元素有好多个，返回这些元素最右边的元素下标；如果没有等于key值的元素，则返回小于key的最右边元素下标。
+```go
+func lastLteq(arr []int, key int) int {
+  left, right := 0, len(arr)-1
+  for left <= right {
+    mid := (left+right)>>1
+    if key < arr[mid] {
+      right = mid-1
+    } else {
+      left = mid+1
+    }
+  }
+  return right
+}
+
+func main() {
+  arr := []int{1, 7, 7, 15}
+  fmt.Println(lastLteq(arr, 7))   // 返回：2
+  fmt.Println(lastLteq(arr, 10))  // 返回：2
+  fmt.Println(lastLteq(arr, 5))   // 返回：0
+}
+```
+
+### 5. 查找最后一个 < key 的元素
+```go
+func lastLt(arr []int, key int) int {
+  left, right := 0, len(arr)-1
+  for left <= right {
+    mid := (left+right)>>1
+    if key <= arr[mid] { // 与上一个的区别在于这里是 <=
+      right = mid-1
+    } else {
+      left = mid+1
+    }
+  }
+  return right
+}
+
+func main() {
+  arr := []int{1, 7, 7, 15}
+  fmt.Println(lastLt(arr, 7))   // 返回：0
+  fmt.Println(lastLt(arr, 10))  // 返回：2
+  fmt.Println(lastLt(arr, 5))   // 返回：0
+}
+```
+
+### 6. 查找第一个 = key 的元素
+* 查找第一个相等的元素，也就是说等于查找key值的元素有好多个，返回这些元素最左边的元素下标。
+```go
+func firstEq(arr []int, key int) int {
+  left, right := 0, len(arr)-1
+  for left <= right {
+    mid := (left+right)>>1
+    if key <= arr[mid] {
+      right = mid-1
+    } else {
+      left = mid+1
+    }
+  }
+  if (left < len(arr) && arr[left] == key) {
+    return left
+  }
+  return -1
+}
+
+func main() {
+  arr := []int{1, 7, 7, 7, 15}
+  fmt.Println(firstEq(arr, 7))   // 返回：1
+  fmt.Println(firstEq(arr, 5))   // 返回：-1
+}
+```
+
+### 7. 查找最后一个 = key 的元素
+* 查找最后一个相等的元素，也就是说等于查找key值的元素有好多个，返回这些元素最右边的元素下标。
+```go
+func lastEq(arr []int, key int) int {
+  left, right := 0, len(arr)-1
+  for left <= right {
+    mid := (left+right)>>1
+    if key >= arr[mid] {
+      left = mid+1
+    } else {
+      right = mid-1
+    }
+  }
+  if (right >= 0 && arr[right] == key) {
+    return right
+  }
+  return -1
+}
+
+func main() {
+  arr := []int{1, 7, 7, 7, 15}
+  fmt.Println(firstEq(arr, 7))   // 返回：3
+  fmt.Println(firstEq(arr, 5))   // 返回：-1
+}
+```
+
+### 总结
+* 模板
+```go
+func search(arr []int, key int) int {
+  left, right := 0, len(arr)-1
+  for left <= right {
+    mid := (left+right)>>1
+    if key ? arr[mid] {
+      // left = mid+1
+    } else {
+      // right = mid-1
+    }
+  }
+  return left or right
+}
+```
+
+::: tip 相关链接
+
+[https://www.cnblogs.com/luoxn28/p/5767571.html](https://www.cnblogs.com/luoxn28/p/5767571.html)
+
+:::
