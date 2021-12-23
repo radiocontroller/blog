@@ -9,6 +9,48 @@
 * 原来：**select count(*) from flows where type in ('Flow::Income', 'Flow::Expenditure', 'Flow::Points', 'Flow::PartRefund');**
 * 现在：**select sum(f.c) from (select type, count(*) as c from flows group by type) f where type in ('Flow::Income', 'Flow::Expenditure', 'Flow::Points', 'Flow::PartRefund');**
 
+### 3、列为null带来的影响
+```sql
+mysql> select * from users;
++----+--------+------+------+
+| id | name   | age  | num  |
++----+--------+------+------+
+|  1 | 张三   |    1 | 11   |
+|  2 | NULL   |    2 | 22   |
+|  3 | test1  | NULL | 33   |
+|  4 | test2  |    4 | 44   |
+|  5 | test3  |    5 | 55   |
+|  6 | test4  |    6 | 66k  |
++----+--------+------+------+
+
+1. name列为null，将不统计
+mysql> select count(*), count(name) from users;
++----------+-------------+
+| count(*) | count(name) |
++----------+-------------+
+|        6 |           5 |
++----------+-------------+
+
+2. name列或age列为null，将不统计
+mysql> select count(distinct name,age) from users;
++--------------------------+
+| count(distinct name,age) |
++--------------------------+
+|                        4 |
++--------------------------+
+
+3. name列为null，将不统计，null列需要用is null或者函数isnull判断
+mysql> select * from users where name <> 'hello';
++----+--------+------+------+
+| id | name   | age  | num  |
++----+--------+------+------+
+|  1 | 张三   |    1 | 11   |
+|  3 | test1  | NULL | 33   |
+|  4 | test2  |    4 | 44   |
+|  5 | test3  |    5 | 55   |
+|  6 | test4  |    6 | 66k  |
++----+--------+------+------+
+```
 ### 3、查询用户连续日期超过多少天（例如：超过4天）
 * 可用于场景：查询最近3年内连续24个月缴纳社保的用户
 
