@@ -10,7 +10,7 @@
 * 举例：
 
   ![read_uncommitted](http://motor.rcer666.cn/program/mysql/read_uncommitted.png)
-  
+
 ### 2、读已提交（read committed）
 
 * 一个事务只能看见已经提交的事务的修改结果。
@@ -18,7 +18,7 @@
 * 举例：
 
   ![read_committed](http://motor.rcer666.cn/program/mysql/read_committed.png)
-  
+
 * 产生的问题：在同一个事务中的两次相同查询结果可能会不一样，称为【不可重复读】。
 
 ### 3、可重复读（repeatable read，MySQL的默认事务隔离级别）
@@ -31,14 +31,14 @@
 
 * 举例：
   ![repeatable_read](http://motor.rcer666.cn/program/mysql/repeatable_read.png)
-  
+
 * **该隔离级别下到底有没有解决幻读？**
-> 我认为是解决了的，并且是【当前读】的幻读，具体原因看MVCC一章
-  
+> 我认为是解决了的，并且是【当前读】的幻读，具体原因看【快照读与当前读】一章
+
 ### 4、串行化（serializable）
 
 * 它是最高的隔离级别，它通常通过强制事务串行，避免了前面的所有问题。
-    
+
 ::: tip 关于幻读
 
 [https://github.com/Yhzhtk/note/issues/42](https://github.com/Yhzhtk/note/issues/42)

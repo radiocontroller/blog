@@ -36,10 +36,7 @@
 
 * [https://pigfly88.github.io/mysql/2020/06/30/mysql-on-vs-where.html](https://pigfly88.github.io/mysql/2020/06/30/mysql-on-vs-where.html)
 
-### 6、MDL元数据锁（metadata lock）
-* [https://juejin.cn/post/6844904014769979400](https://juejin.cn/post/6844904014769979400)
-
-### 7、数据库中表大小倒序排序
+### 6、数据库中表大小倒序排序
 ```sql
 SET @table=(SELECT DATABASE());
 select @table;
@@ -52,13 +49,19 @@ WHERE table_schema = @table
 ORDER BY (data_length + index_length) DESC;
 ```
 
-### 8、explain extra显示的索引扫描方式
+### 7、explain extra显示的索引扫描方式
 * **using where：一般发生在全表扫描，或走了索引但是有些查询字段不在索引中的情况下，需要回表。它是MySQL服务器层面进行的一层where过滤**
 * **using index condition：索引下推(需要回表)**
 * **using index：使用了覆盖索引**
 
-### 9、MySQL InnoDB锁原理
+### 8、MySQL InnoDB锁原理
 * [https://zhuanlan.zhihu.com/p/58695491](https://zhuanlan.zhihu.com/p/58695491)
 
-### 10、删除
+### 9、删除
 * 在 InnoDB 的删除操作实现中通常实现为伪删除，仅仅标记delete flag并未真正地物理删除记录，所以需要在Purge阶段对记录和相关索引进行清理.
+
+### 10、MDL（元数据锁）
+* 当修改表结构时，例如增删改字段时，会触发MDL锁
+* 1. 假如session1，在事务中先select，那么session2中执行增删改字段会阻塞，直到session1事务提交，否则session1前后select得到的结果会不一致
+* 2. 假如session1，先执行增删改字段，在这之间session2执行select，不会阻塞，但是会过滤掉session1中修改字段不为null的数据（但是session2执行更新就会阻塞）
+* [https://juejin.cn/post/7038096395248599053](https://juejin.cn/post/7038096395248599053)
