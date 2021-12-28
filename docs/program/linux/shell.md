@@ -19,3 +19,8 @@ cat > filename.txt <<EOF
 ......文件内容
 EOF
 ```
+
+#### 8. 提取文本中数字
+```
+cat tag |grep -oE '[0-9]+'
+```
