@@ -49,4 +49,25 @@ func twoSum(nums []int, target int) []int {
     return result
 }
 ```
-  
+
+### [1995. 统计特殊四元组](https://leetcode-cn.com/problems/count-special-quadruplets/)
+* 给你一个 下标从 0 开始 的整数数组 nums ，返回满足下述条件的 不同 四元组 (a, b, c, d) 的 数目 ：
+	* nums[a] + nums[b] + nums[c] == nums[d] ，且
+	* a < b < c < d
+* O(n^2)的优化：https://leetcode-cn.com/problems/count-special-quadruplets/solution/wei-rao-li-lun-ha-xi-biao-liang-shu-zhi-b6f7p/
+```go
+func countQuadruplets(nums []int) (res int) {
+  resMap := make(map[int]int)
+  n := len(nums)
+  for b := n-3; b >= 1; b-- {
+    c := b+1
+    for d := c+1; d < n; d++ {
+      resMap[nums[d]-nums[c]]++
+    }
+    for a := 0; a < b; a++ {
+      res += resMap[nums[a]+nums[b]]
+    }
+  }
+  return
+}
+```
