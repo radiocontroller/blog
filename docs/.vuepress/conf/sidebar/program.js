@@ -71,6 +71,14 @@ module.exports = [
         ]
     },
     {
+        title: '设计模式',
+        collapsable: false,
+        children: [
+            'design_pattern/facade',
+            'design_pattern/adapter',
+        ]
+    },
+    {
         title: '支付宝',
         collapsable: false,
         children: [
