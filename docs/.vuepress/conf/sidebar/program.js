@@ -67,6 +67,7 @@ module.exports = [
             'alogrithm/heap',
             'alogrithm/expand',
             'alogrithm/two_pointers',
+            'alogrithm/bit',
         ]
     },
     {
