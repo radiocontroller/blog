@@ -190,6 +190,40 @@ func search(arr []int, key int) int {
 }
 ```
 
+### [最长递增子序列长度](https://leetcode-cn.com/problems/longest-increasing-subsequence)
+
+* 该题可通过dp解决，时间复杂度是O(n^2)，在动态规划里有解
+* 不过通过二分还有更优的时间复杂度为O(nlogn)的解，思路就是维护一个递增数组，不断用nums[i]去二分查找数组中大于nums[i]的第一个元素，
+并用nums[i]去替换它，也就是不断的替换更小的值进来，虽然最后数组不一定是正确的子序列，但是长度是正确的
+
+```go
+func lengthOfLIS(nums []int) int {
+  cur := make([]int, 0)
+  for i := 0; i < len(nums); i++ {
+    idx := firstGt(cur, nums[i])
+    if idx == len(cur) {
+      cur = append(cur, nums[i])
+    } else {
+      cur[idx] = nums[i]
+    }
+  }
+  return len(cur)
+}
+
+func firstGt(arr []int, key int) int {
+  left, right := 0, len(arr)-1
+  for left <= right {
+    mid := (left+right)>>1
+    if arr[mid] > key {
+      right = mid-1
+    } else {
+      left = mid+1
+    }
+  }
+  return left
+}
+```
+
 ::: tip 相关链接
 
 [https://www.cnblogs.com/luoxn28/p/5767571.html](https://www.cnblogs.com/luoxn28/p/5767571.html)
