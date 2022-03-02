@@ -63,6 +63,7 @@ module.exports = [
             'alogrithm/lru',
             'alogrithm/list',
             'alogrithm/sort',
+            'alogrithm/seg_tree',
             'alogrithm/topological_sort',
             'alogrithm/heap',
             'alogrithm/expand',
