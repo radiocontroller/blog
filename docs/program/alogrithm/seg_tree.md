@@ -23,7 +23,7 @@ func buildTree(arr *[]int, tree *[]int, node, start, end int) {
   rightNode := 2 * node + 2
   buildTree(arr, tree, leftNode, start, mid)             // 构建左树
   buildTree(arr, tree, rightNode, mid+1, end)            // 构建右树
-  (*tree)[node] = (*tree)[leftNode] + (*tree)[rightNode] // 获取当前节点值
+  (*tree)[node] = (*tree)[leftNode] + (*tree)[rightNode] // 最终目的就是为了计算出node节点的值
 }
 ```
 
@@ -46,7 +46,7 @@ func updateTree(arr *[]int, tree *[]int, node, start, end, idx, val int) {
   } else {
     updateTree(arr, tree, rightNode, mid+1, end, idx, val)
   }
-  (*tree)[node] = (*tree)[leftNode] + (*tree)[rightNode]
+  (*tree)[node] = (*tree)[leftNode] + (*tree)[rightNode] // 最终目的就是为了修改node节点的值
 }
 ```
 
@@ -55,13 +55,10 @@ func updateTree(arr *[]int, tree *[]int, node, start, end, idx, val int) {
 ```go
 // l, r代表要找的范围，例如2, 5，也就是arr[2]+arr[3]+arr[4]+arr[5]
 func queryTree(arr *[]int, tree *[]int, node, start, end, l, r int) int {
-  if start == end {         // 找到叶子节点，返回该节点值
-    return (*tree)[node]
-  }
-  if r < start || end < l { // 查找范围和线段树上的范围没有交集，返回0
+  if r < start || end < l { // 查找范围和线段树的范围没有交集，返回0
     return 0
   }
-  if l <= start && end <= r { // 查找范围在线段树某个节点中，返回该节点值
+  if l <= start && end <= r { // 查找范围包含线段树某个节点，返回该节点值
     return (*tree)[node]
   }
   mid := (start + end) >> 1
