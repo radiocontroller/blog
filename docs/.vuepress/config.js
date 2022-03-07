@@ -13,6 +13,7 @@ module.exports = {
     '@vuepress/pagination',
     '@vuepress/medium-zoom',
     '@vuepress/back-to-top',
+    ['vuepress-plugin-code-copy', true]
   ],
   themeConfig: {
     repo: 'radiocontroller/motor',
