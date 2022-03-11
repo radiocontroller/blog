@@ -5,4 +5,4 @@
 ---
 
 #### 以下是我购买的商业险
-![商业险](http://motor.rcer666.cn/insurance.png)
+![商业险](/images/insurance.png)

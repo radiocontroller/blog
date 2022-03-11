@@ -1,6 +1,6 @@
 ---
 home: true
-heroImage: http://motor.rcer666.cn/guancai.jpg
+heroImage: /images/guancai.jpg
 heroText: 山路老头乐
 footer: MIT Licensed | Copyright © 2020
 ---

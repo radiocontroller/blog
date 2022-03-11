@@ -6,7 +6,7 @@
 主进程中做这个操作，否则主进程会阻塞导致无法响应客户端请求
 
 ### fork
-![fork](http://motor.rcer666.cn/program/redis/fork.png)
+![fork](/images/program/redis/fork.png)
 
 ```c
 int main() {

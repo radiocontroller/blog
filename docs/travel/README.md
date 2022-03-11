@@ -7,23 +7,23 @@
 
 :::
 
-![40](http://motor.rcer666.cn/40_009.jpg)
+![40](/images/40_009.jpg)
 
-![40](http://motor.rcer666.cn/40_003.jpg)
+![40](/images/40_003.jpg)
 
-![40](http://motor.rcer666.cn/40_005.jpg)
+![40](/images/40_005.jpg)
 
-![40](http://motor.rcer666.cn/40_004.jpg)
+![40](/images/40_004.jpg)
 
-![40](http://motor.rcer666.cn/40_006.jpg)
+![40](/images/40_006.jpg)
 
-![40](http://motor.rcer666.cn/40_008.jpg)
+![40](/images/40_008.jpg)
 
-![40](http://motor.rcer666.cn/40_007.jpg)
+![40](/images/40_007.jpg)
 
-![40](http://motor.rcer666.cn/40_010.jpg)
+![40](/images/40_010.jpg)
 
-![40](http://motor.rcer666.cn/40_011.jpg)
+![40](/images/40_011.jpg)
 
 
 ### 骑行视频

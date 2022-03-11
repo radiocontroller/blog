@@ -9,7 +9,7 @@
 
 * 举例：
 
-  ![read_uncommitted](http://motor.rcer666.cn/program/mysql/read_uncommitted.png)
+  ![read_uncommitted](/images/program/mysql/read_uncommitted.png)
 
 ### 2、读已提交（read committed）
 
@@ -17,7 +17,7 @@
 
 * 举例：
 
-  ![read_committed](http://motor.rcer666.cn/program/mysql/read_committed.png)
+  ![read_committed](/images/program/mysql/read_committed.png)
 
 * 产生的问题：在同一个事务中的两次相同查询结果可能会不一样，称为【不可重复读】。
 
@@ -30,7 +30,7 @@
   因此这里应该是本身快照读不可见的记录，由于自己修改过变成了快照读可见。**这种情况是mysql的一个feature，不应该认为是产生了不可重复读**。
 
 * 举例：
-  ![repeatable_read](http://motor.rcer666.cn/program/mysql/repeatable_read.png)
+  ![repeatable_read](/images/program/mysql/repeatable_read.png)
 
 * **该隔离级别下到底有没有解决幻读？**
 > 我认为是解决了的，并且是【当前读】的幻读，具体原因看【快照读与当前读】一章

@@ -3,7 +3,7 @@
 
 ### 主要流程图如下
 
-![](http://motor.rcer666.cn/program/https.png)
+![](/images/program/https.png)
 
 ### 数字证书验证细节分析
 * 首先CA机构拥有自己的 非对称加密 密钥，暂称为 CA.pri 和 CA.pub。而 CA.pub 可以通过浏览器（或操作系统）内置的根证书获取。

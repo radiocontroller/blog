@@ -3,7 +3,7 @@
 #### 线段树查找和更新的时间复杂度都是O(logn)
 ---
 
-![seg_tree](http://motor.rcer666.cn/program/alogrithom/seg_tree.png)
+![seg_tree](/images/program/alogrithom/seg_tree.png)
 
 ### 构造线段树
 * arr代表原数组

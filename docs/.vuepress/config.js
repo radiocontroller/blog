@@ -1,3 +1,5 @@
+const path = require('path')
+
 module.exports = {
   title: '山路老头乐',
   description: '联系邮箱：302643159@qq.com',

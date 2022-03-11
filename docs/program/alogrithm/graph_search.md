@@ -1,7 +1,7 @@
 # 图搜索算法(DFS, BFS)
 ---
 
-![](http://motor.rcer666.cn/program/alogrithom/graph.png)
+![](/images/program/alogrithom/graph.png)
 
 ### TreeNode定义
 ```go
