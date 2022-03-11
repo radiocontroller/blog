@@ -2,12 +2,20 @@
 ---
 
 ### 1、分页查询优化(通过覆盖索引 + join)
-* 原来：**select * from flows order by type limit 1000000,20;**
-* 现在：**select * from flows a inner join (select id from flows order by type limit 1000000,20) b on a.id = b.id;**
+```sql
+原来：select * from flows order by type limit 1000000,20;
+
+现在：select * from flows a inner join (select id from flows order by type limit 1000000,20) b on a.id = b.id;
+```
 
 ### 2、FROM子查询优化
-* 原来：**select count(*) from flows where type in ('Flow::Income', 'Flow::Expenditure', 'Flow::Points', 'Flow::PartRefund');**
-* 现在：**select sum(f.c) from (select type, count(*) as c from flows group by type) f where type in ('Flow::Income', 'Flow::Expenditure', 'Flow::Points', 'Flow::PartRefund');**
+* 因为type的枚举值很多，直接根据给定的枚举值统计很慢，因此先统计再过滤枚举值
+
+```sql
+原来：select count(*) from flows where type in ('Flow::Income', 'Flow::Expenditure', 'Flow::Points', 'Flow::PartRefund');
+
+现在：select sum(f.c) from (select type, count(*) as c from flows group by type) f where type in ('Flow::Income', 'Flow::Expenditure', 'Flow::Points', 'Flow::PartRefund');
+```
 
 ### 3、列为null带来的影响
 ```sql
@@ -170,3 +178,21 @@ ORDER BY conti_days DESC;
 </details>
 
 * 参考 [MySQL中row_number的实现](https://www.jianshu.com/p/32e8c40372b3)
+
+### 6、[查询第二高的薪水（不存在返回null）](https://leetcode-cn.com/problems/second-highest-salary/)
+* 薪水可能会重复，用distinct去重，然后使用limit 1, 1表示偏移量1，取1条
+
+```sql
+select ifNull((select distinct salary from Employee order by salary desc limit 1, 1), null) as SecondHighestSalary
+```
+
+### 6、[部门工资前三高的员工](https://leetcode-cn.com/problems/department-top-three-salaries)
+* 利用子查询查找比当前工资高2位的数量，再加上自身，就是前三高
+
+```sql
+select d.name as Department, e1.name as Employee, e1.salary as Salary
+from Employee e1 join Department d on e1.departmentId = d.id
+where 3 > (
+	select count(distinct e2.salary) from Employee e2 where e1.departmentId = e2.departmentId and e1.salary < e2.salary
+)
+```

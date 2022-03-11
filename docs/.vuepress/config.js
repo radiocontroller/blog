@@ -16,7 +16,7 @@ module.exports = {
     ['vuepress-plugin-code-copy', true]
   ],
   themeConfig: {
-    repo: 'radiocontroller/motor',
+    repo: 'radiocontroller',
     // editLinks: true,
     // docsRepo: 'radiocontroller/moto',
     docsDir: 'docs',
