@@ -186,7 +186,7 @@ ORDER BY conti_days DESC;
 select ifNull((select distinct salary from Employee order by salary desc limit 1, 1), null) as SecondHighestSalary
 ```
 
-### 6、[部门工资前三高的员工](https://leetcode-cn.com/problems/department-top-three-salaries)
+### 7、[部门工资前三高的员工](https://leetcode-cn.com/problems/department-top-three-salaries)
 * 利用子查询查找比当前工资高2位的数量，再加上自身，就是前三高
 
 ```sql
@@ -195,4 +195,30 @@ from Employee e1 join Department d on e1.departmentId = d.id
 where 3 > (
 	select count(distinct e2.salary) from Employee e2 where e1.departmentId = e2.departmentId and e1.salary < e2.salary
 )
+```
+
+### 8、[分数排名](https://leetcode-cn.com/problems/rank-scores/)
+
+```sql
+这种是用变量写的
+select r.score, cast(r.rank as unsigned) as 'rank' from (
+    select s.score, @row_num := case
+                                    when @prev_score != -1 and @prev_score != s.score
+                                        then @row_num + 1
+                                    else @row_num
+                                end as 'rank', @prev_score := s.score
+    from Scores s, (select @row_num := 1, @prev_score := -1) t
+    order by s.score desc
+) r
+
+比较直接，但有性能问题
+SELECT Score,
+ (SELECT count(DISTINCT score) FROM Scores WHERE score >= s.score) AS 'rank'
+FROM Scores s
+ORDER BY Score DESC;
+
+最后可以用mysql高版本的四大排名函数中的dense_rank
+SELECT Score,
+dense_rank() over(order by Score desc) as 'rank'
+FROM Scores
 ```
