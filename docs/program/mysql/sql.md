@@ -200,14 +200,13 @@ where 3 > (
 ### 8、[分数排名](https://leetcode-cn.com/problems/rank-scores/)
 
 ```sql
-这种是用变量写的
+变量写法
 select r.score, cast(r.rank as unsigned) as 'rank' from (
-    select s.score, @row_num := case
-                                    when @prev_score != -1 and @prev_score != s.score
-                                        then @row_num + 1
-                                    else @row_num
-                                end as 'rank', @prev_score := s.score
-    from Scores s, (select @row_num := 1, @prev_score := -1) t
+	select 
+		s.score,
+		@row_num := if(@score != -1 and @score != s.score, @row_num+1, @row_num) as 'rank',
+	  @score := s.score
+    from Scores s, (select @row_num := 1, @score := -1) init
     order by s.score desc
 ) r
 
@@ -221,4 +220,23 @@ ORDER BY Score DESC;
 SELECT Score,
 dense_rank() over(order by Score desc) as 'rank'
 FROM Scores
+```
+
+### 9、[连续出现的数字](https://leetcode-cn.com/problems/consecutive-numbers/)
+
+```sql
+变量写法
+select distinct(l.num) as ConsecutiveNums
+from (
+	select num,
+		@cnt := if(@num = num, @cnt+1, 1) as cnt,
+		@num := num
+	from Logs, (select @cnt := 0, @num := '') init
+) l
+where l.cnt > 2;
+
+直接写法
+select distinct(l1.num) as ConsecutiveNums
+from Logs l1, Logs l2, Logs l3
+where l1.id = l2.id-1 and l2.id = l3.id-1 and l1.num = l2.num and l2.num = l3.num;
 ```
