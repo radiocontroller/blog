@@ -116,8 +116,8 @@ mysql> select * from shebao;
 SELECT user_id, COUNT(conti_group) AS count, MIN(dt) AS start_date, MAX(dt) AS end_date
 FROM (
   SELECT user_id,
-  	@conti_day := if(@user_id = user_id AND DATEDIFF(date, @date) = 1, @conti_day+1, 1) AS conti_days,
-    @conti_group := if(@conti_day = 1, @conti_group+1, @conti_group) AS conti_group,
+  	@conti_days := if(@user_id = user_id AND DATEDIFF(date, @date) = 1, @conti_days+1, 1) AS conti_days,
+    @conti_group := if(@conti_days = 1, @conti_group+1, @conti_group) AS conti_group,
   	@user_id := user_id, @date := date AS dt
   FROM (
   	SELECT user_id, date
@@ -126,7 +126,7 @@ FROM (
   ) t, (SELECT @user_id := '', @date := '', @conti_days := 0, @conti_group := 0) init
 ) s
 GROUP BY user_id, conti_group
-HAVING COUNT(conti_group) > 2
+HAVING COUNT(conti_group) > 4
 ORDER BY COUNT(conti_group) DESC;
 
 内部子查询结果为
@@ -135,14 +135,14 @@ ORDER BY COUNT(conti_group) DESC;
 +---------+------------+-------------+---------------------+------------+
 |       1 |          1 | 1           |                   1 | 2021-02-01 |
 |       1 |          1 | 2           |                   1 | 2021-03-02 |
-|       1 |       NULL | 2           |                   1 | 2021-03-03 |
-|       1 |       NULL | 2           |                   1 | 2021-03-04 |
-|       1 |       NULL | 2           |                   1 | 2021-03-05 |
-|       1 |       NULL | 2           |                   1 | 2021-03-06 |
+|       1 |          2 | 2           |                   1 | 2021-03-03 |
+|       1 |          3 | 2           |                   1 | 2021-03-04 |
+|       1 |          4 | 2           |                   1 | 2021-03-05 |
+|       1 |          5 | 2           |                   1 | 2021-03-06 |
 |       2 |          1 | 3           |                   2 | 2021-03-10 |
-|       2 |       NULL | 3           |                   2 | 2021-03-11 |
-|       2 |       NULL | 3           |                   2 | 2021-03-12 |
-|       2 |       NULL | 3           |                   2 | 2021-03-13 |
+|       2 |          2 | 3           |                   2 | 2021-03-11 |
+|       2 |          3 | 3           |                   2 | 2021-03-12 |
+|       2 |          4 | 3           |                   2 | 2021-03-13 |
 |       2 |          1 | 4           |                   2 | 2021-03-15 |
 +---------+------------+-------------+---------------------+------------+
 
