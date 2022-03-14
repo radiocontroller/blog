@@ -87,6 +87,9 @@ mysql> select cast('a123abc' as signed);
 
 ### 5、查询用户连续日期超过多少天（例如：超过4天）
 * 可用于场景：查询最近3年内连续24个月缴纳社保的用户
+* DATEDIFF(date1, date2)：date1 - date2的天数，可为负数
+* 整体思路为：先按user_id和date同时升序，然后利用conti_days变量对连续的日期做+1记录，如果不连续则从1重新开始，
+conti_group变量用来记录同一批升序日期的分组，该变量可以查询连续的天数
 
 <details>
 
@@ -97,82 +100,58 @@ mysql> select * from shebao;
 +----+---------+------------+
 | id | user_id | date       |
 +----+---------+------------+
-|  1 |       1 | 2021-03-01 |
+|  1 |       1 | 2021-02-01 |
 |  2 |       1 | 2021-03-02 |
 |  3 |       1 | 2021-03-03 |
 |  4 |       1 | 2021-03-04 |
 |  5 |       1 | 2021-03-05 |
-|  6 |       1 | 2021-02-01 |
-|  7 |       1 | 2021-03-07 |
-|  8 |       1 | 2021-03-08 |
-|  9 |       1 | 2021-03-09 |
-| 10 |       1 | 2021-03-10 |
+|  6 |       1 | 2021-03-06 |
 | 11 |       2 | 2021-03-10 |
 | 12 |       2 | 2021-03-11 |
 | 13 |       2 | 2021-03-12 |
 | 14 |       2 | 2021-03-13 |
-| 15 |       2 | 2021-03-14 |
-| 16 |       2 | 2021-03-15 |
-| 17 |       2 | 2021-03-15 |
+| 15 |       2 | 2021-03-15 |
 +----+---------+------------+
 
-SELECT user_id, max(days) AS conti_days, min(dt) AS start_date
-	, max(dt) AS end_date
+SELECT user_id, COUNT(conti_group) AS count, MIN(dt) AS start_date, MAX(dt) AS end_date
 FROM (
-	SELECT user_id
-		, @conti_day := CASE
-			WHEN @last_uid = user_id
-				AND DATEDIFF(date, @last_dt) = 1
-			THEN @conti_day + 1
-			WHEN @last_uid = user_id
-				AND DATEDIFF(date, @last_dt) < 1
-			THEN @conti_day + 0
-			ELSE 1
-		END AS days
-		, @conti_count := @conti_count + IF(@conti_day = 1, 1, 0) AS conti_count
-		, @last_uid := user_id, @last_dt := date AS dt
-	FROM (
-		SELECT user_id, date
-		FROM shebao
-		ORDER BY user_id, date
-	) t, (
-			SELECT @last_uid := '', @last_dt := '', @conti_count := 0, @conti_day := 0
-		) t1
-) t2
-GROUP BY user_id, conti_count
-HAVING conti_days > 4
-ORDER BY conti_days DESC;
+  SELECT user_id,
+  	@conti_day := if(@user_id = user_id AND DATEDIFF(date, @date) = 1, @conti_day+1, 1) AS conti_days,
+    @conti_group := if(@conti_day = 1, @conti_group+1, @conti_group) AS conti_group,
+  	@user_id := user_id, @date := date AS dt
+  FROM (
+  	SELECT user_id, date
+  	FROM shebao
+  	ORDER BY user_id, date
+  ) t, (SELECT @user_id := '', @date := '', @conti_days := 0, @conti_group := 0) init
+) s
+GROUP BY user_id, conti_group
+HAVING COUNT(conti_group) > 2
+ORDER BY COUNT(conti_group) DESC;
 
 内部子查询结果为
-+---------+------+-------------+----------------------+------------+
-| user_id | days | conti_count | @last_uid := user_id | dt         |
-+---------+------+-------------+----------------------+------------+
-|       1 |    1 |           1 |                    1 | 2021-02-01 |
-|       1 |    1 |           2 |                    1 | 2021-03-01 |
-|       1 |    2 |           2 |                    1 | 2021-03-02 |
-|       1 |    3 |           2 |                    1 | 2021-03-03 |
-|       1 |    4 |           2 |                    1 | 2021-03-04 |
-|       1 |    5 |           2 |                    1 | 2021-03-05 |
-|       1 |    1 |           3 |                    1 | 2021-03-07 |
-|       1 |    2 |           3 |                    1 | 2021-03-08 |
-|       1 |    3 |           3 |                    1 | 2021-03-09 |
-|       1 |    4 |           3 |                    1 | 2021-03-10 |
-|       2 |    1 |           4 |                    2 | 2021-03-10 |
-|       2 |    2 |           4 |                    2 | 2021-03-11 |
-|       2 |    3 |           4 |                    2 | 2021-03-12 |
-|       2 |    4 |           4 |                    2 | 2021-03-13 |
-|       2 |    5 |           4 |                    2 | 2021-03-14 |
-|       2 |    6 |           4 |                    2 | 2021-03-15 |
-|       2 |    6 |           4 |                    2 | 2021-03-15 |
-+---------+------+-------------+----------------------+------------+
++---------+------------+-------------+---------------------+------------+
+| user_id | conti_days | conti_group | @user_id := user_id | dt         |
++---------+------------+-------------+---------------------+------------+
+|       1 |          1 | 1           |                   1 | 2021-02-01 |
+|       1 |          1 | 2           |                   1 | 2021-03-02 |
+|       1 |       NULL | 2           |                   1 | 2021-03-03 |
+|       1 |       NULL | 2           |                   1 | 2021-03-04 |
+|       1 |       NULL | 2           |                   1 | 2021-03-05 |
+|       1 |       NULL | 2           |                   1 | 2021-03-06 |
+|       2 |          1 | 3           |                   2 | 2021-03-10 |
+|       2 |       NULL | 3           |                   2 | 2021-03-11 |
+|       2 |       NULL | 3           |                   2 | 2021-03-12 |
+|       2 |       NULL | 3           |                   2 | 2021-03-13 |
+|       2 |          1 | 4           |                   2 | 2021-03-15 |
++---------+------------+-------------+---------------------+------------+
 
 最终查询结果为
-+---------+------------+------------+------------+
-| user_id | conti_days | start_date | end_date   |
-+---------+------------+------------+------------+
-|       2 |          6 | 2021-03-10 | 2021-03-15 |
-|       1 |          5 | 2021-03-01 | 2021-03-05 |
-+---------+------------+------------+------------+
++---------+-------+------------+------------+
+| user_id | count | start_date | end_date   |
++---------+-------+------------+------------+
+|       1 |     5 | 2021-03-02 | 2021-03-06 |
++---------+-------+------------+------------+
 ```
 
 </details>
@@ -202,7 +181,7 @@ where 3 > (
 ```sql
 变量写法
 select r.score, cast(r.rank as unsigned) as 'rank' from (
-	select 
+	select
 		s.score,
 		@row_num := if(@score != -1 and @score != s.score, @row_num+1, @row_num) as 'rank',
 	  @score := s.score
