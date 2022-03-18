@@ -49,6 +49,14 @@ module.exports = [
         ]
     },
     {
+        title: 'RabbitMQ',
+        collapsable: false,
+        children: [
+            'rabbitmq/faq',
+            'rabbitmq/base',
+        ]
+    },
+    {
         title: '算法',
         collapsable: false,
         children: [
