@@ -33,7 +33,7 @@ int main() {
 * docker：基于一个image启动多个Container，让所有的容器共享image的文件系统，所有数据都从image中读取，只有当要对文件进行写操作时，
 才从image里把要写的文件复制到自己的文件系统进行修改，这样可以有效的提高磁盘的利用率
 
-::: tip 相关链接
+::: tip 参考链接
 
 [为什么 Redis 快照使用子进程](https://draveness.me/whys-the-design-redis-bgsave-fork/)
 

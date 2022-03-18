@@ -31,7 +31,7 @@
 * 个人觉得：使用场景还是要看你的需求，例如：两个管理员同时更新一条库存，你如果希望其中一个成功，一个失败，那么用乐观锁；如果希望两个都成功，
 那么用悲观锁
 
-::: tip 相关链接
+::: tip 参考链接
 
 [https://www.cnblogs.com/kismetv/p/10787228.html](https://www.cnblogs.com/kismetv/p/10787228.html)
 

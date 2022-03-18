@@ -51,7 +51,7 @@ Last-Modified、Pragma。如果想拿到其他字段，就必须在 Access-Contr
   * 在domain = a.com下设置Cookie时，Secure设置为true（表示通过https才能发送）同时上https，然后SameSite设置为None
 
 
-::: tip 相关链接
+::: tip 参考链接
 
 [跨域资源共享 CORS 详解](https://www.ruanyifeng.com/blog/2016/04/cors.html)
 

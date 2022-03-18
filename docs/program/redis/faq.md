@@ -87,7 +87,7 @@
 * 整数集合 intset
 * 压缩列表 ziplist
 
-::: tip 相关链接
+::: tip 参考链接
 
 [https://juejin.cn/post/6844903604998914055](https://juejin.cn/post/6844903604998914055)
 

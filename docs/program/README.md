@@ -185,7 +185,7 @@ included, self: Foo2, base: Host
 included, self: Bar, base: Host
 ```
 
-::: tip 相关链接
+::: tip 参考链接
 
 [http://xiewenwei.github.io/blog/2014/01/13/how-activesupport-corncern-work/](http://xiewenwei.github.io/blog/2014/01/13/how-activesupport-corncern-work/)
 [https://gist.github.com/uzbekjon/34eb00c52668c2049ded](https://gist.github.com/uzbekjon/34eb00c52668c2049ded)

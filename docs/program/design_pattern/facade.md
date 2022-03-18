@@ -20,7 +20,7 @@
 ## go实现例子
 * [https://refactoringguru.cn/design-patterns/facade/go/example](https://refactoringguru.cn/design-patterns/facade/go/example)
 
-::: tip 相关链接
+::: tip 参考链接
 
 [https://refactoringguru.cn/design-patterns/facade](https://refactoringguru.cn/design-patterns/facade)
 

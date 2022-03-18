@@ -86,7 +86,7 @@
   * 3. 范围查找会锁住符合查找条件的所有记录，并锁住第一条不满足该条件的记录。
     * 例如select * from t where t_id >= 50 for update；**锁住>=50记录的同时还会锁住50左边第一个不满足记录的区间（闭区间）**
 
-::: tip 相关链接
+::: tip 参考链接
 
 [https://www.cnblogs.com/rongdi/p/13378892.html](https://www.cnblogs.com/rongdi/p/13378892.html)
 

@@ -92,7 +92,7 @@ func main() {
 }
 ```
 
-::: tip 相关链接
+::: tip 参考链接
 
 [https://www.bilibili.com/video/BV1cb411t7AM](https://www.bilibili.com/video/BV1cb411t7AM)
 

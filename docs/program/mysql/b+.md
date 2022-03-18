@@ -34,7 +34,7 @@
 
   ![](/images/program/mysql/index2.png)
 
-::: tip 相关链接
+::: tip 参考链接
 
 [https://juejin.cn/post/6844903692802457607](https://juejin.cn/post/6844903692802457607)
 

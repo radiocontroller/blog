@@ -144,7 +144,7 @@ func heapifyBottomToUp(arr []int, i int) {
 }
 ```
 
-::: tip 相关链接
+::: tip 参考链接
 
 [https://www.bilibili.com/video/av47196993/](https://www.bilibili.com/video/av47196993/)
 

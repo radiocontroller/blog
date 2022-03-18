@@ -47,7 +47,7 @@
  
 * **事务的两阶段提交，目的是为了保证redo log和binlog一致（假设binlog开启）**
 
-::: tip 相关链接
+::: tip 参考链接
 
 [https://gsmtoday.github.io/2019/02/08/how-update-executes-in-mysql/](https://gsmtoday.github.io/2019/02/08/how-update-executes-in-mysql/)
 

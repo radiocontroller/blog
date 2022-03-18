@@ -17,7 +17,7 @@
 * Rails中有个cookie-based session的概念，它的session是存在cookie中的，这样就没有sessionId的概念了，直接从cookie中拿数据就可以了，
 但是这样做要保证cookie的安全性，也就是服务端用于加密cookie的secret_key不能泄露。
 
-::: tip 相关链接
+::: tip 参考链接
 
 [https://segmentfault.com/a/1190000017831088](https://segmentfault.com/a/1190000017831088)
 

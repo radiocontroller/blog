@@ -83,7 +83,7 @@ openssl pkcs8 -topk8 -inform PEM -in xx.pem -outform PEM -nocrypt
 # pkcs8转pkcs1
 openssl rsa -in pkcs8.pem -out pkcs1.pem 
 
-# 相关链接
+# 参考链接
 https://blog.iany.me/zh/2017/11/read-various-rsa-keys-in-ruby/
 https://www.cnblogs.com/LiuYanYGZ/p/12518002.html
 ```
@@ -97,7 +97,7 @@ https://www.cnblogs.com/LiuYanYGZ/p/12518002.html
 # 加了lazy后，按顺序处理，如果获取到了前5个就直接退出（注意：假设只能取到4个，取不到第5个，也会一直跑下去）
 (1..Float::INFINITY).lazy.select { |i| i % 3 == 0 }.reject(&:even?).first(5)
 
-# 相关链接
+# 参考链接
 https://www.junmajinlong.com/ruby/ruby_enumerator/
 https://bigbinary.com/blog/ruby-2-7-adds-enumerator-lazy-eager
 ```

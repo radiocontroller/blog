@@ -19,7 +19,7 @@
 * **特别说明一下**：现在很多服务端设计了rest api，它是用cookie中的token去获取用户信息的，这种方式本来就能防范CSRF。
 假设token存储在cookie的键值叫token_demo，后台验证的Header键值为Authorization，这样伪造的请求到了后台，就取不到token
 
-::: tip 相关链接
+::: tip 参考链接
 
 [https://blog.techbridge.cc/2017/02/25/csrf-introduction/](https://blog.techbridge.cc/2017/02/25/csrf-introduction/docs/.vuepress/conf/sidebar/program.js)
 

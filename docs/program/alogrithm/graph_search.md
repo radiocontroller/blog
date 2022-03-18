@@ -112,7 +112,7 @@ func main() {
 }
 ```
 
-::: tip 相关链接
+::: tip 参考链接
 
 [https://www.bilibili.com/video/BV1Ks411579J/?spm_id_from=333.788.recommend_more_video.0](https://www.bilibili.com/video/BV1Ks411579J/?spm_id_from=333.788.recommend_more_video.0)
 
