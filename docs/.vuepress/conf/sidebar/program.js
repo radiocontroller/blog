@@ -54,6 +54,7 @@ module.exports = [
         children: [
             'rabbitmq/faq',
             'rabbitmq/base',
+            'rabbitmq/delay_queue',
         ]
     },
     {
