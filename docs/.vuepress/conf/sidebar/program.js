@@ -11,6 +11,7 @@ module.exports = [
             'web/30x',
             'web/get_post',
             'web/gc',
+            'web/oom',
         ]
     },
     {
@@ -117,6 +118,13 @@ module.exports = [
         collapsable: false,
         children: [
             'linux/shell',
+        ]
+    },
+    {
+        title: 'OS',
+        collapsable: false,
+        children: [
+            'os/process_thread',
         ]
     }
 ];
