@@ -19,6 +19,7 @@ module.exports = [
         children: [
             '',
             'rails/doorkeeper',
+            'ruby/mutex',
             'ruby/utils',
         ]
     },

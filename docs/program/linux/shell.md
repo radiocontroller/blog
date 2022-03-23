@@ -75,3 +75,8 @@ ubuntu：du -h --max-depth=1 .
 ```
 grep -v "xx"
 ```
+
+#### 15. mac蓝牙重启
+```
+sudo kill `ps -ef | grep bluetoothd | head -n 1 | awk '{ print $2; }'`
+```
