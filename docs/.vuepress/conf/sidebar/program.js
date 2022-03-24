@@ -21,6 +21,7 @@ module.exports = [
             '',
             'rails/doorkeeper',
             'ruby/mutex',
+            'ruby/gil',
             'ruby/utils',
         ]
     },
