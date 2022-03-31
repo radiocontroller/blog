@@ -7,17 +7,15 @@
 
 * 假设（a，b）字段建立联合索引，以下sql：select id, b from t where a = 1；会用到覆盖索引，
 
-* **注：遇到以下情况，执行计划不会选择覆盖查询**
-  * 1.select选择的字段中含有不在索引中的字段。
-  * 2.where条件中不能含有对索引进行like的操作。
-
 ### 2、Mysql中ACID的D是如何实现的
-* 例如update t set name = 'xx' where id = 1这么一条数据Mysql是如何写到数据库中的
+* 例如 update t set name = 'xx' where id = 1 这么一条数据Mysql是如何写到数据库中的
 
-* 首先读取id为1所在页的数据到内存，然后修改内存中的数据，并写入到redo log中，这时就认为写入完成。
-然后等到空闲的时候再刷到数据库中，这其中有一些优化，要比直接往库中写快一些，本质上还是提高磁盘IO效率。
+* 首先读取id为1所在页的数据到内存中(如果内存中不存在)，然后修改内存中的数据，并写入到redo log中，这时就认为写入完成。
+然后等到空闲的时候再刷到磁盘中。
 
 ### 3、Mysql中的MRR是什么
+* 简单说：MRR 通过把「随机磁盘读」，转化为「顺序磁盘读」，从而提高了索引查询的性能。
+
 * [https://zhuanlan.zhihu.com/p/110154066](https://zhuanlan.zhihu.com/p/110154066)
 
 ### 4、索引下推
@@ -31,8 +29,8 @@
 * explain中extra列为：Using Index Condition
 
 ### 5、SQL中过滤条件放在on和where中的区别
-* on是在生成临时表时过滤，而where是在生成临时表之后过滤，所以where一定会过滤
-* 对于inner join它们都一样。对于左连接，始终会得到左表的所有数据，on不会过滤左表数据，但是on会过滤右表信息。右连接同理
+* on是在生成临时表时过滤，而where是在生成临时表之后过滤。
+* 对于inner join它们都一样。但是对于左连接，on始终会得到左表的所有数据，on只会过滤右表数据(右连接同理)，而此时where会过滤条件不符合的数据，只保留条件符合的数据。
 
 * [https://pigfly88.github.io/mysql/2020/06/30/mysql-on-vs-where.html](https://pigfly88.github.io/mysql/2020/06/30/mysql-on-vs-where.html)
 

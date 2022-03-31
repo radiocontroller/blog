@@ -12,7 +12,7 @@
 如果在集群的情况下，RabbitMQ会立即将这个消息推送给在线的其他消费者。这种机制保证了在消费者服务端故障的时候，不丢失任何消息和任务。
 
 ### 3. ACK机制的开发注意事项
-* 如果忘记了ACK，那么后果很严重。当consumer退出时候，message会一直重新分发。然后RabbitMQ会占用越来越多的内容，由于RabbitMQ会长时间运行，因此这个"内存泄漏"是致命的。
+* 如果忘记了ACK，那么后果很严重。当consumer退出时候，message会一直重新分发。然后RabbitMQ会占用越来越多的内存，由于RabbitMQ会长时间运行，因此这个"内存泄漏"是致命的。
 
 ### 4. prefetch
 * prefetch允许为每个consumer指定最大的unacked messages数目。一旦缓冲区满了，RabbitMQ将会停止投递新的message到该consumer中，直到它发出ack。
