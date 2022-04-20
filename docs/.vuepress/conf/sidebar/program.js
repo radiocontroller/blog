@@ -93,6 +93,13 @@ module.exports = [
         ]
     },
     {
+        title: '遇到问题及解决方案',
+        collapsable: false,
+        children: [
+            'problems/mysql_es',
+        ]
+    },
+    {
         title: '支付宝',
         collapsable: false,
         children: [

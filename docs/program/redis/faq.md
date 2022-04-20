@@ -16,17 +16,15 @@
     [HyperLogLog](https://segmentfault.com/a/1190000020523110)、Geo、Pub/Sub。**
 
 ### 3、Redis持久化机制（默认机制是RDB）
-* RDB做镜像全量持久化，AOF做增量持久化。
-  * RDB持久化也分两种：save和bgsave。
+* RDB持久化分两种：save和bgsave。
   * save是阻塞式的，执行时redis的主进程把内存里的数据写入到RDB文件中，直到该文件创建完毕的这段时间内redis将不能处理任何命令请求；
   * bgsave属于非阻塞式，它会创建一个子进程专门去把内存中的数据写入RDB文件里，同时主进程还可以处理客户端的请求。
-    但子进程基本是复制的父进程，这等于两个相同大小的redis进程在系统上运行，会造成内存使用率的大幅增加。
 
 * AOF的持久化是通过命令追加、文件写入和文件同步三个步骤实现的。
   * 当redis开启AOF后，服务端每执行一次写操作（如set、sadd、rpush）就会把该条命令追加到一个单独的AOF缓冲区的末尾，然后把AOF缓冲区的内容写入AOF文件里。
   * 而何时进行文件同步则是根据配置的appendfsync来进行，appendfsync有三个选项：always、everysec（默认值）和no
-  
-* Redis AOF文件过大？AOF重写的作用？
+
+* Redis AOF文件过大？
   * 随着命令不断的写入数据，AOF文件会越来越大。为了解决这个问题，redis引入了AOF文件重写机制，以便压缩AOF体积。
   * AOF重写的作用：减少磁盘占用量、加速恢复速度（AOF重写会整合一下，比如三条set改为一条）
 
