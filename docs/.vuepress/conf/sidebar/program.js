@@ -19,6 +19,7 @@ module.exports = [
         collapsable: false,
         children: [
             '',
+            'rails/includes_where',
             'rails/doorkeeper',
             'ruby/mutex',
             'ruby/gil',
