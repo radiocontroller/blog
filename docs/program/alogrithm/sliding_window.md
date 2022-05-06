@@ -35,3 +35,26 @@ func Max(a, b int) int {
   return b
 }
 ```
+
+### [乘积小于 K 的子数组](https://leetcode-cn.com/problems/subarray-product-less-than-k/)
+* 思路：维护left到right的滑动窗口，统计以right结尾乘积 >= k的数组个数（right - left + 1），当不符合时，乘积除以left对应的值并且left右移
+* 参考题解：https://leetcode-cn.com/problems/subarray-product-less-than-k/solution/jian-dan-yi-dong-xiang-xi-zhu-jie-shuang-jvy3/
+```go
+func numSubarrayProductLessThanK(nums []int, k int) (res int) {
+    if k <= 1 {
+        return
+    }
+    var left, right int
+    sum := 1
+    for right < len(nums) {
+        sum *= nums[right]
+        for sum >= k {
+            sum /= nums[left]
+            left++
+        }
+        res += right - left + 1
+        right++
+    }
+    return
+}
+```
