@@ -18,15 +18,15 @@ func isValid(s string) bool {
         '}': '{',
     }
     for i := 0; i < len(s); i++ {
-        if pairs[s[i]] > 0 {
+        if pairs[s[i]] > 0 { // 遇到右括号，要找左括号
             if len(stack) == 0 || stack[len(stack)-1] != pairs[s[i]] {
-                return false
+                return false // 栈为空或者左括号不匹配
             }
-            stack = stack[:len(stack)-1]
+            stack = stack[:len(stack)-1] // 移除栈顶匹配的左括号
         } else {
-            stack = append(stack, s[i])
+            stack = append(stack, s[i]) // 遇到左括号，入栈
         }
     }
-    return len(stack) == 0
+    return len(stack) == 0 // 根据栈内元素判断结果
 }
 ```

@@ -1,7 +1,7 @@
 # 链表
 ---
 
-### 反转链表
+### [反转链表](https://leetcode.cn/problems/reverse-linked-list/)
 ```go
 type ListNode struct {
    Val int
@@ -20,7 +20,7 @@ func reverseList(cur *ListNode) *ListNode {
 }
 ```
 
-### 合并两个有序链表
+### [合并两个有序链表](https://leetcode.cn/problems/merge-two-sorted-lists/)
 ```go
 type ListNode struct {
    Val int

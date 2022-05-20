@@ -3,10 +3,6 @@
 
 ### 冒泡排序
 
-<details>
-
-<summary>点击展开go实现</summary>
-
 ```go
 func sort(arr []int) {
   for i := 0; i < len(arr)-1; i++ {
@@ -20,15 +16,9 @@ func sort(arr []int) {
 }
 ```
 
-</details>
-
 ### 快速排序
 
 * 最好情况每次中分，时间复杂度O(nlogn)，最坏情况数组已排好序，退化为冒泡排序，时间复杂度O(n^2)
-
-<details>
-
-<summary>点击展开go实现</summary>
 
 ```go
 func quickSort(arr []int, left int, right int) {
@@ -66,15 +56,9 @@ func exchange(arr []int, i, j int) {
 }
 ```
 
-</details>
-
 ### 归并排序
 
 * 时间复杂度O(nlogn)
-
-<details>
-
-<summary>点击展开go实现</summary>
 
 ```go
 func mergeSort(arr []int) []int {
@@ -104,5 +88,3 @@ func merge(left, right []int) (result []int) {
   return
 }
 ```
-
-</details>
