@@ -1,4 +1,5 @@
 # 排序
+#### 以升序为例
 ---
 
 ### 冒泡排序
@@ -20,7 +21,8 @@ func swap(arr []int, i, j int) {
 ```
 
 ### 快速排序
-
+* 快排原理：每次找一个基准点，然后把基准点左右两边的数字交换，就可以保证基准点左边小于基准点，基准点右边大于基准点，
+然后对左右区间重复以上过程。
 * 最好情况每次中分，时间复杂度O(nlogn)，最坏情况数组已排好序，退化为冒泡排序，时间复杂度O(n^2)
 
 ```go
@@ -29,27 +31,27 @@ func quickSort(arr []int, left int, right int) {
     return
   }
 
-  pivot := arr[left]
-  i, j := left+1, right
+  pivot := arr[left]                  // 每次选择第一个元素作为基准点
+  i, j := left+1, right               // 左右交换区间
   for {
-    for i < right && arr[i] < pivot {
+    for i < right && arr[i] < pivot { // 从左往右找到第一个大于基准点元素
       i++
     }
 
-    for j > left && arr[j] > pivot {
+    for j > left && arr[j] > pivot {  // 从右往左找到第一个小于基准点元素
       j--
     }
 
-    if i >= j {
+    if i >= j {                       
       break
     }
-    swap(arr, i, j)
+    swap(arr, i, j)                   // 交换两个元素
   }
-  swap(arr, left, j)
+  swap(arr, left, j)                  // 这个操作是把基准点移动到中间
   fmt.Println("arr: ", arr, "pivot: ", pivot)
 
-  quickSort(arr, left, j-1)
-  quickSort(arr, j+1, right)
+  quickSort(arr, left, j-1)           // 对左边区间重复以上操作
+  quickSort(arr, j+1, right)          // 对右边区间重复以上操作
 }
 
 func swap(arr []int, i, j int) {
@@ -74,7 +76,7 @@ func mergeSort(arr []int) []int {
 }
 
 func merge(left, right []int) (result []int) {
-  i, j := 0, 0
+  var i, j int
   for i < len(left) && j < len(right) {
     if left[i] < right[j] {
       result = append(result, left[i])
