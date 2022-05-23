@@ -5,14 +5,17 @@
 
 ```go
 func sort(arr []int) {
-  for i := 0; i < len(arr)-1; i++ {
+  for i := 0; i < len(arr)-1; i++ {   // 外层循环少一次，因为全部排好序之后，剩下那一个就不用排了
     for j := i+1; j < len(arr); j++ {
       if arr[i] > arr[j] {
         swap(arr, i, j)
       }
     }
   }
-  return
+}
+
+func swap(arr []int, i, j int) {
+  arr[i], arr[j] = arr[j], arr[i]
 }
 ```
 
@@ -40,19 +43,17 @@ func quickSort(arr []int, left int, right int) {
     if i >= j {
       break
     }
-    exchange(arr, i, j)
+    swap(arr, i, j)
   }
-  exchange(arr, left, j)
+  swap(arr, left, j)
   fmt.Println("arr: ", arr, "pivot: ", pivot)
 
   quickSort(arr, left, j-1)
   quickSort(arr, j+1, right)
 }
 
-func exchange(arr []int, i, j int) {
-  tmp := arr[i]
-  arr[i] = arr[j]
-  arr[j] = tmp
+func swap(arr []int, i, j int) {
+  arr[i], arr[j] = arr[j], arr[i]
 }
 ```
 
