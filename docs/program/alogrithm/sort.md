@@ -37,15 +37,15 @@ func quickSort(arr []int, left int, right int) {
     for i < right && arr[i] < pivot { // 从左往右找到第一个大于基准点元素
       i++
     }
-
     for j > left && arr[j] > pivot {  // 从右往左找到第一个小于基准点元素
       j--
     }
-
     if i >= j {                       
       break
     }
     swap(arr, i, j)                   // 交换两个元素
+    i++                               // 交换完成之后i和j移动，否则对于[3 3 3 3]这样的情况会死循环
+    j--
   }
   swap(arr, left, j)                  // 这个操作是把基准点移动到中间
   fmt.Println("arr: ", arr, "pivot: ", pivot)
