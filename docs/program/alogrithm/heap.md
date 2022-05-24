@@ -147,7 +147,7 @@ func heapifyBottomToUp(arr []int, i int) {
 ```
 
 ### [最后再提一点：快排也能实现寻找topK](https://leetcode.cn/problems/kth-largest-element-in-an-array/)
-* 原理就是
+* 原理就是：利用基准点，判断基准点的下标和k，以及数组长度的关系，如果满足：len(arr) - j == k，那么说明j就是要找的元素下标（第k大的元素）
 ```go
 func findKthLargest(arr []int, k int) int {
     quickSort(arr, 0, len(arr)-1, k)
