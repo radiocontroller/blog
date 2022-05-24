@@ -146,6 +146,51 @@ func heapifyBottomToUp(arr []int, i int) {
 }
 ```
 
+### [最后再提一点：快排也能实现寻找topK](https://leetcode.cn/problems/kth-largest-element-in-an-array/)
+* 原理就是
+```go
+func findKthLargest(arr []int, k int) int {
+    quickSort(arr, 0, len(arr)-1, k)
+    return arr[len(arr)-k]
+}
+
+func quickSort(arr []int, left, right, k int) {
+  if left >= right {
+    return
+  }
+
+  pivot := arr[left]
+  i, j := left+1, right
+  for {
+    for i < right && arr[i] < pivot {
+      i++
+    }
+    for j > left && arr[j] > pivot {
+      j--
+    }
+    if i >= j {
+      break
+    }
+    swap(arr, i, j)
+    i++
+    j--
+  }
+  swap(arr, left, j)                // 下标j是基准点的下标
+  if len(arr) - j == k {            // 如果j刚好在topK位置，直接return
+    return
+  } else if len(arr) - j > k {      // j的位置偏左，要在右边找
+    quickSort(arr, j+1, right, k)
+  } else {
+    quickSort(arr, left, j-1, k)    // j的位置偏右，要在左边找
+  }
+  return
+}
+
+func swap(arr []int, i, j int) {
+  arr[i], arr[j] = arr[j], arr[i]
+}
+```
+
 ::: tip 参考链接
 
 [https://www.bilibili.com/video/av47196993/](https://www.bilibili.com/video/av47196993/)
