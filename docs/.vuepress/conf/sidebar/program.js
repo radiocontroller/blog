@@ -86,6 +86,13 @@ module.exports = [
         ]
     },
     {
+        title: 'Nginx',
+        collapsable: false,
+        children: [
+            'nginx/conf',
+        ]
+    },
+    {
         title: '设计模式',
         collapsable: false,
         children: [
