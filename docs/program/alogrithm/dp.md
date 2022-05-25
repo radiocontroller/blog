@@ -118,3 +118,29 @@ func longestSubsequence(arr []int, difference int) (res int) {
   return
 }
 ```
+
+### [环绕字符串中唯一的子字符串](https://leetcode.cn/problems/unique-substrings-in-wraparound-string/)
+* 把字符串 s 看作是 “abcdefghijklmnopqrstuvwxyz” 的无限环绕字符串，所以 s 看起来是这样的：
+	* "...zabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcd...." .
+* 现在给定另一个字符串 p 。返回 s 中 唯一 的 p 的 非空子串 的数量 。
+* 思路：定义dp[n]为以字符ch-'a'结尾的最大字符串长度，最后累加dp中各项和
+* 例如"abcd"，dp[0] = 1, dp[1] = 2, dp[2] = 3, dp[3] = 4
+
+```go
+func findSubstringInWraproundString(p string) (res int) {
+  dp := make([]int, 26)
+  cnt := 1
+  for i, ch := range p {
+    if i > 0 && (byte(ch)-p[i-1]+26) % 26 == 1 {
+      cnt++
+    } else {
+      cnt = 1
+    }
+    dp[ch-'a'] = Max(dp[ch-'a'], cnt)
+  }
+  for _, num := range dp {
+    res += num
+  }
+  return
+}
+```

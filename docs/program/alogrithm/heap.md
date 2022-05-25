@@ -1,20 +1,17 @@
 # 堆
 #### 构造堆：从最后一个非叶子节点开始从下往上调整（heapify）
-#### 堆是完全二叉树，底层数据结构是数组，父元素和子元素下标有公式（注意：根节点下标必须从0开始，不能从1开始）
+#### 堆是完全二叉树，底层数据结构是数组，父元素和子元素下标有公式（注意：根节点下标必须从0开始）
 * 父元素下标为 i
 * 左子节点为 2*i + 1
 * 右子节点为 2*i + 2
 
-#### 堆排序：每次取出堆的根结点，然后将最后一个节点替换根节点，并对根节点进行堆调整。堆排序的时间等于建堆和进行堆调整的时间，所以堆排序的时间复杂度是O(nlog n + n) = O(nlog n)。
+#### 堆排序：每次取出堆的根结点，然后将最后一个节点替换根节点，并对根节点进行堆调整。堆排序的时间等于建堆和进行堆调整的时间，所以堆排序的时间复杂度是O(n + nlog n) = O(nlog n)。
 #### 构造堆时间复杂度O(n)，一次堆调整时间复杂度O(log n)
 ---
 
 ### 小根堆（小顶堆，根节点的值是最小的，每个结点的值都 <= 左右孩子结点的值）
-* **可用于场景：例如10亿个数，找出最大的10个。**
-* 先取前10个建立小根堆，第11个数开始每个数去和根节点比较
-* 如果小于根节点则忽略
-* 如果大于根节点就说明这10个数构成的堆不是最大的10个数，因此将该数替换根节点，然后对根节点进行堆化
-* 假设n为总数10亿，k为最大的10个数，时间复杂度为：O(nlog k)
+* **可用于场景：例如10亿个数，找出最大的k个。**
+* 维护大小为 k 的堆，依次将数组剩余元素入堆，小于根节点的跳过，大于根节点的放到最后，并向上调整，并把堆顶元素删除，相当于一换一，时间复杂度为：O(nlog k)
 
 ```go
 // 从倒数第一个非叶子节点开始，倒着建堆
@@ -65,19 +62,41 @@ func main() {
 // buildHeap:  [1 3 2 5 6 4 10]
 // heapSort:   [10 6 5 4 3 2 1]
 
-// 自底向上堆化，当向小根堆中添加元素时，添加在最后面，然后和父节点进行递归替换
-func heapifyBottomToUp(arr []int, i int) {
-  for i > 0 {
-    parent := (i-1) / 2
-    if arr[i] >= arr[parent] {
-      return
-    }
-    arr[i], arr[parent] = arr[parent], arr[i]
-    i = parent
-    heapifyBottomToUp(arr, i)
+// 例子：20个元素的数组中，寻找最大的5个
+func main() {
+  arr := []int{10, 4, 19, 3, 11, 13, 7, 17, 12, 2, 18, 16, 15, 9, 1, 8, 14, 5, 20, 6}
+  k := 5
+  heap := make([]int, k+1)
+  for i := 0; i < k; i++ {
+    heap[i+1] = arr[i]
   }
-  return
+  buildHeap(heap[1:])
+  for i := k; i < len(arr); i++ {
+    heap[0] = arr[i]
+    heapify(heap, 0)
+    fmt.Println("heap in: ", arr[i], ", out: ", heap[0], ", heap:", heap)
+  }
+  fmt.Println("result heap:", heap[1:])
 }
+
+// 输出
+// buildHeap:  [3 4 19 10 11]
+// heap in:  13 , out:  3 , heap: [3 10 4 19 13 11]
+// heap in:  7 , out:  4 , heap: [4 10 7 19 13 11]
+// heap in:  17 , out:  7 , heap: [7 10 11 19 13 17]
+// heap in:  12 , out:  10 , heap: [10 12 11 19 13 17]
+// heap in:  2 , out:  2 , heap: [2 12 11 19 13 17]
+// heap in:  18 , out:  11 , heap: [11 12 17 19 13 18]
+// heap in:  16 , out:  12 , heap: [12 13 17 19 16 18]
+// heap in:  15 , out:  13 , heap: [13 15 17 19 16 18]
+// heap in:  9 , out:  9 , heap: [9 15 17 19 16 18]
+// heap in:  1 , out:  1 , heap: [1 15 17 19 16 18]
+// heap in:  8 , out:  8 , heap: [8 15 17 19 16 18]
+// heap in:  14 , out:  14 , heap: [14 15 17 19 16 18]
+// heap in:  5 , out:  5 , heap: [5 15 17 19 16 18]
+// heap in:  20 , out:  15 , heap: [15 16 17 19 20 18]
+// heap in:  6 , out:  6 , heap: [6 16 17 19 20 18]
+// result heap: [16 17 19 20 18]
 ```
 
 ### 大根堆（大顶堆，根节点的值是最大的，每个节点的值都 >= 左右孩子结点的值）
@@ -130,24 +149,15 @@ func main() {
 // 输出
 // buildHeap:  [10 6 4 5 3 1 2]
 // heapSort:   [1 2 3 4 5 6 10]
-
-// 自底向上堆化，当向大根堆中添加元素时，添加在最后面，然后和父节点进行递归替换
-func heapifyBottomToUp(arr []int, i int) {
-  for i > 0 {
-    parent := (i-1) / 2
-    if arr[i] <= arr[parent] {
-      return
-    }
-    arr[i], arr[parent] = arr[parent], arr[i]
-    i = parent
-    heapifyBottomToUp(arr, i)
-  }
-  return
-}
 ```
 
-### [最后再提一点：快排也能实现寻找topK](https://leetcode.cn/problems/kth-largest-element-in-an-array/)
+### [快排也能实现寻找topK](https://leetcode.cn/problems/kth-largest-element-in-an-array/)
 * 原理就是：利用基准点，判断基准点的下标和k，以及数组长度的关系，如果满足：len(arr) - j == k，那么说明j就是要找的元素下标（第k大的元素）
+* 期望时间复杂度为 O(n)，最坏情况下的时间复杂度为 O(n^2)
+* 快排局限性
+  * 需要修改原数组，如果不能修改，那么复制数组会增加空间复杂度
+  * 需要保存所有数据，而基于堆的方法只需要维护 k 个数据
+
 ```go
 func findKthLargest(arr []int, k int) int {
     quickSort(arr, 0, len(arr)-1, k)
@@ -194,5 +204,7 @@ func swap(arr []int, i, j int) {
 ::: tip 参考链接
 
 [https://www.bilibili.com/video/av47196993/](https://www.bilibili.com/video/av47196993/)
+
+[Top K 的两种经典解法（堆/快排变形）与优劣比较](https://leetcode.cn/problems/zui-xiao-de-kge-shu-lcof/solution/tu-jie-top-k-wen-ti-de-liang-chong-jie-fa-you-lie-/)
 
 :::
