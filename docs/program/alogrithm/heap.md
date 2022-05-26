@@ -66,37 +66,33 @@ func main() {
 func main() {
   arr := []int{10, 4, 19, 3, 11, 13, 7, 17, 12, 2, 18, 16, 15, 9, 1, 8, 14, 5, 20, 6}
   k := 5
-  heap := make([]int, k+1)
+  heap := make([]int, k)
   for i := 0; i < k; i++ {
-    heap[i+1] = arr[i]
+    heap[i] = arr[i]
   }
-  buildHeap(heap[1:])
+  buildHeap(heap)
   for i := k; i < len(arr); i++ {
+    if arr[i] < heap[0] {
+      continue
+    }
     heap[0] = arr[i]
     heapify(heap, 0)
     fmt.Println("heap in: ", arr[i], ", out: ", heap[0], ", heap:", heap)
   }
-  fmt.Println("result heap:", heap[1:])
+  fmt.Println("result heap:", heap)
 }
 
 // 输出
 // buildHeap:  [3 4 19 10 11]
-// heap in:  13 , out:  3 , heap: [3 10 4 19 13 11]
-// heap in:  7 , out:  4 , heap: [4 10 7 19 13 11]
-// heap in:  17 , out:  7 , heap: [7 10 11 19 13 17]
-// heap in:  12 , out:  10 , heap: [10 12 11 19 13 17]
-// heap in:  2 , out:  2 , heap: [2 12 11 19 13 17]
-// heap in:  18 , out:  11 , heap: [11 12 17 19 13 18]
-// heap in:  16 , out:  12 , heap: [12 13 17 19 16 18]
-// heap in:  15 , out:  13 , heap: [13 15 17 19 16 18]
-// heap in:  9 , out:  9 , heap: [9 15 17 19 16 18]
-// heap in:  1 , out:  1 , heap: [1 15 17 19 16 18]
-// heap in:  8 , out:  8 , heap: [8 15 17 19 16 18]
-// heap in:  14 , out:  14 , heap: [14 15 17 19 16 18]
-// heap in:  5 , out:  5 , heap: [5 15 17 19 16 18]
-// heap in:  20 , out:  15 , heap: [15 16 17 19 20 18]
-// heap in:  6 , out:  6 , heap: [6 16 17 19 20 18]
-// result heap: [16 17 19 20 18]
+// heap in:  13 , out:  4 , heap: [4 10 19 13 11]
+// heap in:  7 , out:  7 , heap: [7 10 19 13 11]
+// heap in:  17 , out:  10 , heap: [10 11 19 13 17]
+// heap in:  12 , out:  11 , heap: [11 12 19 13 17]
+// heap in:  18 , out:  12 , heap: [12 13 19 18 17]
+// heap in:  16 , out:  13 , heap: [13 16 19 18 17]
+// heap in:  15 , out:  15 , heap: [15 16 19 18 17]
+// heap in:  20 , out:  16 , heap: [16 17 19 18 20]
+// result heap: [16 17 19 18 20]
 ```
 
 ### 大根堆（大顶堆，根节点的值是最大的，每个节点的值都 >= 左右孩子结点的值）

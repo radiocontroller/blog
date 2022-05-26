@@ -58,3 +58,34 @@ func numSubarrayProductLessThanK(nums []int, k int) (res int) {
     return
 }
 ```
+
+### [长度最小的子数组](https://leetcode.cn/problems/minimum-size-subarray-sum/)
+* 给定一个含有 n 个正整数的数组和一个正整数 target 。
+* 找出该数组中满足其和 ≥ target 的长度最小的 连续子数组 [numsl, numsl+1, ..., numsr-1, numsr] ，并返回其长度。如果不存在符合条件的子数组，返回 0 。
+```go
+func minSubArrayLen(target int, nums []int) int {
+  var l, r, sum int
+  res := len(nums)+1
+  for r < len(nums) {       // 右指针作为判断条件
+    sum += nums[r]          // 更新窗口信息
+    for sum >= target {     // 满足条件，l往后移动
+      res = Min(res, r-l+1) // 计算结果
+      // fmt.Println("l:", l, ", r:", r, ", res:", res)
+      sum -= nums[l]
+      l++
+    }
+    r++                     // 不满足条件，r往后移动
+  }
+  if res == len(nums)+1 {   // 排除无解的情况
+    return 0
+  }
+  return res
+}
+
+func Min(a, b int) int {
+  if a < b {
+      return a
+  }
+  return b
+}
+```
