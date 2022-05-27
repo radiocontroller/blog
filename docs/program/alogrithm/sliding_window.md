@@ -1,4 +1,20 @@
 # 滑动窗口
+
+#### 参考模板
+```go
+var l, r int
+for r < length {
+  更新窗口内信息
+
+  for 不满足条件时 {
+    缩小窗口（例如：l++）
+  }
+
+  更新结果（例如：res = Max(res, r-l+1)
+
+  r++
+}
+```
 ---
 
 ### [无重复字符的最长子串](https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/)
@@ -12,18 +28,19 @@ func lengthOfLongestSubstring(s string) int {
   if length <= 1 {
     return length
   }
-  var i, j, res int
+
+  var l, r, res int
   chrMap := map[byte]int{}
-  for j < length {
-    if idx, ok := chrMap[s[j]]; ok {
+  for r < length {
+    if idx, ok := chrMap[s[r]]; ok {
       // 这里要取最大值是因为idx+1有可能会小于i导致i后退
       // 例如：..a..b..a..a..b.. 当j遍历到第三个a时，i会跳到第二个a下标+1，
       // 当j遍历到第二个b时，如果不取最大值，直接取上一个b的下标+1，i就会倒退到第一个b下标+1
-      i = Max(idx+1, i)
+      l = Max(idx+1, l)
     }
-    chrMap[s[j]] = j
-    res = Max(res, j-i+1)
-    j++
+    chrMap[s[r]] = r
+    res = Max(res, r-l+1)
+    r++
   }
   return res
 }
@@ -44,16 +61,16 @@ func numSubarrayProductLessThanK(nums []int, k int) (res int) {
     if k <= 1 {
         return
     }
-    var left, right int
+    var l, r int
     sum := 1
-    for right < len(nums) {
-        sum *= nums[right]
+    for r < len(nums) {
+        sum *= nums[r]
         for sum >= k {
-            sum /= nums[left]
-            left++
+            sum /= nums[l]
+            l++
         }
-        res += right - left + 1
-        right++
+        res += r - l + 1
+        r++
     }
     return
 }
