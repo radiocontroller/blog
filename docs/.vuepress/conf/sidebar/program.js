@@ -32,6 +32,7 @@ module.exports = [
         children: [
             'redis/faq',
             'redis/cache',
+            'redis/transaction_vs_pipeline',
             'redis/expire',
             'redis/cow',
             'redis/cluster',
