@@ -4,13 +4,12 @@
 ```go
 var l, r int
 for r < length {
-  更新窗口内信息
+  更新窗口内信息（例如：sum += nums[r])
 
-  for 不满足条件时 {
-    缩小窗口（例如：l++）
+  for 满足条件时 {
+    更新结果（例如：res = Max(res, r-l+1)
+    缩小窗口（例如：res -= nums[l], l++）
   }
-
-  更新结果（例如：res = Max(res, r-l+1)
 
   r++
 }
@@ -19,7 +18,7 @@ for r < length {
 
 ### [无重复字符的最长子串](https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/)
 * 给定一个字符串 s ，请你找出其中不含有重复字符的 最长子串 的长度。
-* 核心思路：维护一个i到j的滑动窗口和一个遍历过的字符下标map，j每次后移一位，如果移动后发现map中存在，
+* 核心思路：维护一个l到r的滑动窗口和一个遍历过的字符下标map，r每次后移一位，如果移动后发现map中存在，
 则将start定位到上一个存在的下标+1位置，同时记录map
 
 ```go
@@ -33,9 +32,9 @@ func lengthOfLongestSubstring(s string) int {
   chrMap := map[byte]int{}
   for r < length {
     if idx, ok := chrMap[s[r]]; ok {
-      // 这里要取最大值是因为idx+1有可能会小于i导致i后退
-      // 例如：..a..b..a..a..b.. 当j遍历到第三个a时，i会跳到第二个a下标+1，
-      // 当j遍历到第二个b时，如果不取最大值，直接取上一个b的下标+1，i就会倒退到第一个b下标+1
+      // 这里要取最大值是因为idx+1有可能会小于l导致l后退
+      // 例如：..a..b..a..a..b.. 当r遍历到第三个a时，l会跳到第二个a下标+1，
+      // 当r遍历到第二个b时，如果不取最大值，直接取上一个b的下标+1，l就会倒退到第一个b下标+1
       l = Max(idx+1, l)
     }
     chrMap[s[r]] = r
@@ -54,7 +53,7 @@ func Max(a, b int) int {
 ```
 
 ### [乘积小于 K 的子数组](https://leetcode-cn.com/problems/subarray-product-less-than-k/)
-* 思路：维护left到right的滑动窗口，统计以right结尾乘积 >= k的数组个数（right - left + 1），当不符合时，乘积除以left对应的值并且left右移
+* 思路：维护l到r的滑动窗口，统计以r结尾乘积 >= k的数组个数（r - l + 1），当不符合时，乘积除以l对应的值并且l右移
 * 参考题解：https://leetcode-cn.com/problems/subarray-product-less-than-k/solution/jian-dan-yi-dong-xiang-xi-zhu-jie-shuang-jvy3/
 ```go
 func numSubarrayProductLessThanK(nums []int, k int) (res int) {
