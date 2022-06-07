@@ -1,4 +1,9 @@
-# 回溯
+# DFS
+#### Depth-First-Search（深度优先遍历）
+#### 三个重点
+* 剪枝
+* 向下递归
+* 往上回溯
 ---
 
 ### [复原 IP 地址](restore-ip-addresses)

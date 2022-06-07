@@ -1,4 +1,5 @@
-# LRU(Least Recently Used)
+# LRU
+#### Least Recently Used
 ---
 
 ### [LRU 缓存机制](https://leetcode-cn.com/problems/lru-cache/)
@@ -6,7 +7,7 @@
 * 利用链表 + 哈希表解决
 * 时间复杂度：对于 put 和 get 都是 O(1)
 * 空间复杂度：O(capacity)
- 
+
 
 <details>
 
