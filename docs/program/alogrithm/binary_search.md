@@ -1,7 +1,26 @@
 # 二分查找及变种
----
 
 * 假设数组arr已排好序（非递减顺序），key为查找目标
+
+* 模板
+```go
+func search(arr []int, key int) int {
+  left, right := 0, len(arr)-1
+  for left <= right {
+    mid := (left+right)>>1
+    if key ? arr[mid] {
+      // left = mid+1
+    } else {
+      // right = mid-1
+    }
+  }
+  return left or right
+}
+```
+
+* 因为模板中left <= right，当不满足条件时left在right右边，也就是[right, left]，可根据此判断最后返回left还是right
+
+---
 
 ### 1. 基础二分查找
 ```go
@@ -121,7 +140,7 @@ func main() {
 }
 ```
 
-### 6. 查找第一个 = key 的元素
+### 6. 查找第一个 = key 的元素（参照 >= key的逻辑去处理）
 * 查找第一个相等的元素，也就是说等于查找key值的元素有好多个，返回这些元素最左边的元素下标。
 ```go
 func firstEq(arr []int, key int) int {
@@ -170,23 +189,6 @@ func main() {
   arr := []int{1, 7, 7, 7, 15}
   fmt.Println(firstEq(arr, 7))   // 返回：3
   fmt.Println(firstEq(arr, 5))   // 返回：-1
-}
-```
-
-### 总结
-* 模板
-```go
-func search(arr []int, key int) int {
-  left, right := 0, len(arr)-1
-  for left <= right {
-    mid := (left+right)>>1
-    if key ? arr[mid] {
-      // left = mid+1
-    } else {
-      // right = mid-1
-    }
-  }
-  return left or right
 }
 ```
 
