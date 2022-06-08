@@ -1,5 +1,12 @@
 module.exports = [
     {
+        title: 'Linux',
+        collapsable: false,
+        children: [
+            'linux/shell',
+        ]
+    },
+    {
         title: 'Web相关',
         collapsable: false,
         children: [
@@ -88,10 +95,19 @@ module.exports = [
         ]
     },
     {
-        title: 'Nginx',
+        title: '遇到问题及解决方案',
         collapsable: false,
         children: [
-            'nginx/conf',
+            'problems/mysql_es',
+            'problems/mysql_connection',
+        ]
+    },
+    {
+        title: 'Git',
+        collapsable: false,
+        children: [
+            'git/alias',
+            'git/skill',
         ]
     },
     {
@@ -103,10 +119,17 @@ module.exports = [
         ]
     },
     {
-        title: '遇到问题及解决方案',
+        title: 'Nginx',
         collapsable: false,
         children: [
-            'problems/mysql_es',
+            'nginx/conf',
+        ]
+    },
+    {
+        title: 'OS',
+        collapsable: false,
+        children: [
+            'os/process_thread',
         ]
     },
     {
@@ -121,28 +144,6 @@ module.exports = [
         collapsable: false,
         children: [
             'wechat/oauth/'
-        ]
-    },
-    {
-        title: 'Git',
-        collapsable: false,
-        children: [
-            'git/alias',
-            'git/skill',
-        ]
-    },
-    {
-        title: 'Linux',
-        collapsable: false,
-        children: [
-            'linux/shell',
-        ]
-    },
-    {
-        title: 'OS',
-        collapsable: false,
-        children: [
-            'os/process_thread',
         ]
     }
 ];
