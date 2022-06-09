@@ -89,3 +89,58 @@ func productExceptSelf(nums []int) []int {
   return res
 }
 ```
+
+### [523. 连续的子数组和](https://leetcode.cn/problems/continuous-subarray-sum/)
+* 给你一个整数数组 nums 和一个整数 k ，编写一个函数来判断该数组是否含有同时满足下述条件的连续子数组：
+  * 子数组大小 至少为 2 ，且
+  * 子数组元素总和为 k 的倍数。
+  * 如果存在，返回 true ；否则，返回 false 。
+* 如果存在一个整数 n ，令整数 x 符合 x = n * k ，则称 x 是 k 的一个倍数。0 始终视为 k 的一个倍数。
+
+* 要解这题要先知道 **同余定理**
+
+```
+若 a - b = k * m
+
+则：a(mod m) = b(mod m）
+
+证明如下：
+
+设：
+a - b = k * m,
+
+则：
+a = k * m + b,
+
+两边对m取余得：
+a(mod m) = 0 + b(mod m）
+```
+
+* 解题思路：
+  * 先构造前缀和数组 sum
+  * 然后右端点 i 从 2 开始遍历（因为数组最小长度为 2 ）
+  * 每次往set中添加[左端点]前缀和对k的余数
+  * 如果[右端点]前缀和对k的余数在set中存在，则返回true，否则返回false
+  * 更直观的set添加举例：[a], [ab], [abc], [abcd], [abcde], [abcdef], [abcdefg]，如果[abc]和[abcde]余数相同，则答案为true
+
+```go
+type void struct{}
+var member void
+
+func checkSubarraySum(nums []int, k int) bool {
+  n := len(nums)
+  sum := make([]int, n+1)
+  for i := 1; i <= n; i++ {           // 构造前缀和数组
+    sum[i] = sum[i-1] + nums[i-1]
+  }
+
+  set := make(map[int]void)           // 前缀和余数set
+  for i := 2; i <= n; i++ {           // 数组长度 >= 2，且前缀和数组sum从1开始，因此这里i := 2
+    set[sum[i-2] % k] = member
+    if _, ok := set[sum[i] % k]; ok {
+      return true
+    }
+  }
+  return false
+}
+```
