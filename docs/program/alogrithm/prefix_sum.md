@@ -144,3 +144,43 @@ func checkSubarraySum(nums []int, k int) bool {
   return false
 }
 ```
+
+### [525. 连续数组](https://leetcode.cn/problems/contiguous-array/)
+* 给定一个二进制数组 nums , 找到含有相同数量的 0 和 1 的最长连续子数组，并返回该子数组的长度。
+
+* **思路：** 将数组 nums 中的 0 改成 -1，再去计算前缀和。这样的好处是，相同的 0 和 1 构成连续子数组，他们的和为 0。如果前缀和数组中，两个前缀和相等，
+那么他们之间数字的和就是 0，那么只要计算他们之间的距离即可。
+
+* [参考题解](https://leetcode.cn/problems/contiguous-array/solution/525lian-xu-shu-zu-qian-zhui-he-hashbiao-riqe2/)
+
+```go
+func findMaxLength(nums []int) (ans int) {
+  n := len(nums)
+  sum := make([]int, n+1)     // 前缀和数组
+  for i := 1; i <= n; i++ {
+    if nums[i-1] == 0 {
+      sum[i] = sum[i-1] - 1
+    } else {
+      sum[i] = sum[i-1] + 1
+    }
+  }
+  mp := map[int]int{}             // mp为{ 前缀和: 下标 }
+  for i := 2; i <= n; i++ {       // 连续子数组长度最小为 2
+    left := sum[i-2]
+    if _, ok := mp[left]; !ok {   // 计算左端点
+      mp[left] = i-2
+    }
+    if idx, ok := mp[sum[i]]; ok {  // 如果sum[i]在mp中存在，说明下标 i 和下标 mp[sum[i]] 之间数值的和为 0，即题目要求的结果
+      ans = Max(ans, i - idx)       // 只要计算他们之间的距离即可: i - idx
+    }
+  }
+  return
+}
+
+func Max(a, b int) int {
+  if a > b {
+    return a
+  }
+  return b
+}
+```
