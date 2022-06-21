@@ -201,3 +201,47 @@ func main() {
 ```
 
 </details>
+
+### [508. 出现次数最多的子树元素和](https://leetcode.cn/problems/most-frequent-subtree-sum/)
+
+```go
+func findFrequentTreeSum(root *TreeNode) (ans []int) {
+ cntMap := map[int]int{}
+ var maxCnt int
+ postorder(root, &cntMap, &maxCnt)
+
+ for sum, cnt := range cntMap {
+   if cnt < maxCnt {
+     delete(cntMap, sum)
+   }
+ }
+ for sum, _ := range cntMap {
+   ans = append(ans, sum)
+ }
+
+ return
+}
+
+// 后序遍历（先访问左右节点，再访问根节点）
+func postorder(root *TreeNode, cntMap *map[int]int, maxCnt *int) int {
+  if root == nil {
+    return 0
+  }
+
+  left := postorder(root.Left, cntMap, maxCnt)   // 如果没有左节点，会返回0
+  right := postorder(root.Right, cntMap, maxCnt) // 如果没有右节点，会返回0
+
+  sum := root.Val + left + right         // 统计当前节点 + 左节点 + 右节点的总和
+  (*cntMap)[sum]++                       // 存储sum到cntMap中
+  *maxCnt = Max(*maxCnt, (*cntMap)[sum]) // 记录出现次数最大值
+
+  return sum                             // 返回当前子树节点总和
+}
+
+func Max(a, b int) int {
+  if a > b {
+    return a
+  }
+  return b
+}
+```
