@@ -28,10 +28,10 @@ module MyModule
   def self.included(base)
     puts "IN 'included':  #{base.instance_methods.include? :some_method}"
   end
-  
+
   def some_method() end
 end
- 
+
 class MyClass
   include MyModule
 end
@@ -51,18 +51,18 @@ end
 ```rb
 module Concern
   def self.extended(base)
-    puts "extended, self: #{self}, base: #{base}"
+    puts "#{base} extended #{self}, #{base} set :@_dependencies = []"
     base.instance_variable_set(:@_dependencies, [])
   end
 
   def append_features(base)
-    puts "append_features, self: #{self}, base: #{base}"
     if base.instance_variable_defined?(:@_dependencies)
+      puts "append_features, #{base} @_dependencies << #{self}"
       base.instance_variable_get(:@_dependencies) << self
       false
     else
       return false if base < self
-      @_dependencies.each { |dep| base.include(dep) }
+      @_dependencies.each { |dep| puts "append_features, #{base}.include #{dep}"; base.include(dep) }
       super
       base.extend const_get(:ClassMethods) if const_defined?(:ClassMethods)
       base.class_eval(&@_included_block) if instance_variable_defined?(:@_included_block)
@@ -70,7 +70,6 @@ module Concern
   end
 
   def included(base = nil, &block)
-    puts "included, self: #{self}, base: #{base}"
     if base.nil?
       if instance_variable_defined?(:@_included_block)
         if @_included_block.source_location != block.source_location
@@ -94,8 +93,7 @@ module Concern
 end
 ```
 
-* 首先分析extended这个钩子方法，当一个模块去extend ActiveSupport::Concern便会触发，这时候base是这个模块，然后给这个模块
-设置了一个@_dependencies变量，值为空数组（后面会用来存放它涉及到的依赖）
+* 首先分析extended这个钩子方法，当一个模块去extend ActiveSupport::Concern便会触发，这时候base是当前模块，然后给这个模块设置@_dependencies变量，值为空数组（后面会用来存放它涉及到的依赖）
 
 * 然后我们分析included，触发它有两种情况
 
@@ -103,23 +101,23 @@ end
      ```rb
      klass.include(module)
      ```
-     这个时候base就是这个klass，然后执行super（ruby中定义的included本身是空方法，其实这里不调用super也可以，但是为了完整性还是加上）
-    
+     这个时候base就是klass，然后执行super，相当于什么都没做。（ruby中定义的included本身是空方法，其实这里不调用super也可以，但是为了完整性还是加上）
+
   2. 另一种是
      ```rb
      included do
-       
+
      end
      ```
      这个时候走上面的逻辑，设置@_included_block变量，值为传递的block（后面会调用这个block）
 
 * 然后我们分析append_features，也是最关键的，它有两个逻辑分支
-    
+
   1. 第一种，如果base定义了@_dependencies变量，就把自己加到base的@_dependencies中。也就是说如果：Bar include Foo，那么Bar中
-     @_dependencies变量就会添加Foo，以此类推。
-    
-  2. 第二种，如果base没有定义@_dependencies变量，其实base就是最终的类。然后base循环去include @_dependencies中的模块，
-     然后走super，把变量，方法，常量等加载到当前类中，最后定义base的类方法，把之前模块上保存@_included_block变量放到base class_eval中执行
+     @_dependencies变量就会添加Foo。
+
+  2. 第二种，如果base没有定义@_dependencies变量（其实base就是最终的类，对应下面的Host）。然后base循环去include 当前模块@_dependencies中的模块，
+     然后走super，把变量，方法，常量等加载到当前类中，最后定义base的类方法，把之前模块上保存的@_included_block变量放到base class_eval中执行
 
   3. 解释     
      1. return false if base < self 这行代码是为了避免重复include，所以判断了一下祖先链的一个继承关系
@@ -165,24 +163,18 @@ end
 
 ```rb
 --------------Foo1 Module--------------
-extended, self: Concern, base: Foo1
-included, self: Foo1, base:
+Foo1 extended Concern, Foo1 set :@_dependencies = []
 --------------Foo2 Module--------------
-extended, self: Concern, base: Foo2
-append_features, self: Foo1, base: Foo2
-included, self: Foo1, base: Foo2
+Foo2 extended Concern, Foo2 set :@_dependencies = []
+append_features, Foo2 @_dependencies << Foo1
 --------------Bar Module--------------
-extended, self: Concern, base: Bar
-append_features, self: Foo2, base: Bar
-included, self: Foo2, base: Bar
-included, self: Bar, base:
+Bar extended Concern, Bar set :@_dependencies = []
+append_features, Bar @_dependencies << Foo2
 --------------Host Class--------------
-append_features, self: Bar, base: Host
-append_features, self: Foo2, base: Host
-append_features, self: Foo1, base: Host
-included, self: Foo1, base: Host
-included, self: Foo2, base: Host
-included, self: Bar, base: Host
+append_features, Host.include Foo2
+append_features, Host.include Foo1
+Host call Foo1 @_included_block
+Host call Bar @_included_block
 ```
 
 ::: tip 参考链接
