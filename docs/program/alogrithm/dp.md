@@ -144,3 +144,31 @@ func findSubstringInWraproundString(p string) (res int) {
   return
 }
 ```
+
+### [1262. 可被三整除的最大和](https://leetcode.cn/problems/greatest-sum-divisible-by-three/)
+* 给你一个整数数组 nums，请你找出并返回能被三整除的元素最大和。
+* 该题虽然没有dp数组，但是也是动态规划的思想
+* **思路：**因为是除以3，因此余数可能为0, 1, 2。维护空间大小为3的数组remainder，代表余数为0, 1, 2时的最大和。
+不断的去更新remainder值，最后remainder[0]就是结果。
+
+```go
+func maxSumDivThree(nums []int) int {
+  remainder := make([]int, 3)
+  for _, n := range nums {
+    a := remainder[0] + n
+    b := remainder[1] + n
+    c := remainder[2] + n
+    remainder[a%3] = Max(remainder[a%3], a)
+    remainder[b%3] = Max(remainder[b%3], b)
+    remainder[c%3] = Max(remainder[c%3], c)
+  }
+  return remainder[0]
+}
+
+func Max(a, b int) int {
+  if a > b {
+    return a
+  }
+  return b
+}
+```
