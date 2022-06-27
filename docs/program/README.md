@@ -113,16 +113,35 @@ end
 
 * 然后我们分析append_features，也是最关键的，它有两个逻辑分支
 
-  1. 第一种，如果base定义了@_dependencies变量，就把自己加到base的@_dependencies中。也就是说如果：Bar include Foo，那么Bar中
-     @_dependencies变量就会添加Foo。
+  1. 第一种，如果base定义了@_dependencies变量（也就是extend Concern)，就把自己加到base的@_dependencies中。
+     ```rb
+     module A
+       extend Concern
+       include B
+     end
+     # 这时候 A 的 @_dependencies = [B]
+     ```
 
-  2. 第二种，如果base没有定义@_dependencies变量（其实base就是最终的类，对应下面的Host）。然后base循环去include 当前模块@_dependencies中的模块，
-     然后走super，把变量，方法，常量等加载到当前类中，最后定义base的类方法，把之前模块上保存的@_included_block变量放到base class_eval中执行
+  2. 第二种，如果base没有定义@_dependencies变量（即没有extend Concern，其实base就是最终的类，对应下面的A）。
+     ```rb
+     class A
+       include B
+     end
+     # 这时候循环 B 中的 @_dependencies，A一个个去include dep，然后走super，
+     # 把 dep 里面的变量，方法，常量等加载到 A 中，
+     # 最后把 dep 模块中的 ClassMethods 定义成 A 的类方法，
+     # 再把 dep 模块上保存的 @_included_block 变量放到 A class_eval中执行
+     ```
 
   3. 解释     
      1. return false if base < self 这行代码是为了避免重复include，所以判断了一下祖先链的一个继承关系
-     2. append_features中super是不会沿着祖先链往上去调用之前include进来的模块的append_features的，因为模块和模块之间include的时候，
-        虽然调用了append_features，但是没有调用super，所以他们之间是不会产生继承关系的。
+     ```rb
+     class A
+       include B
+     end
+     # A.ancestors => [A, B, Object, PP::ObjectMixin, Kernel, BasicObject]
+     # 所以 A < B 返回 true
+     ```
 
 * 最后是我测试的用例，加了puts输出
 
