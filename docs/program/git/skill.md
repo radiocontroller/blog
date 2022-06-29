@@ -1,4 +1,4 @@
-# 奇淫技巧
+# 小技巧
 ---
 
 #### 1. .git/info/exclude
@@ -16,3 +16,8 @@
 
 #### 4. 删除远程分支
 * git push origin --delete feature/login
+
+#### 5. git log匹配message
+```
+git log --grep=message
+```
