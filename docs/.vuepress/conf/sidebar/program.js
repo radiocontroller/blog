@@ -27,7 +27,7 @@ module.exports = [
         children: [
             '',
             'rails/includes_where',
-            'rails/before_action',
+            'ruby/before_action',
             'rails/doorkeeper',
             'ruby/mutex',
             'ruby/gil',
