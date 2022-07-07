@@ -29,6 +29,7 @@ module.exports = [
             'rails/includes_where',
             'ruby/before_action',
             'rails/doorkeeper',
+            'ruby/rest_client',
             'ruby/mutex',
             'ruby/gil',
             'ruby/utils',
