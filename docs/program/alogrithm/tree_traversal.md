@@ -21,6 +21,21 @@ func preorder(root *TreeNode) {
   preorder(root.Right)
   return
 }
+
+// 迭代法
+func preorderTraversal(root *TreeNode) (ans []int) {
+  stack := []*TreeNode{}
+  for root != nil || len(stack) > 0 {
+    for root != nil {
+      ans = append(ans, root.Val)
+      stack = append(stack, root)
+      root = root.Left
+    }
+    root = stack[len(stack)-1].Right
+    stack = stack[:len(stack)-1]
+  }
+  return
+}
 ```
 ---
 
@@ -33,6 +48,22 @@ func inorder(root *TreeNode) {
   inorder(root.Left)
   fmt.Printf("%d ", root.Val)
   inorder(root.Right)
+  return
+}
+
+// 迭代法，维护一个栈，每次一直往左查下去，查不到了再往右
+func inorderTraversal(root *TreeNode) (ans []int) {
+  stack := []*TreeNode{}
+  for root != nil || len(stack) > 0 {
+    for root != nil {
+      stack = append(stack, root)
+      root = root.Left
+    }
+    last := stack[len(stack)-1]
+    stack = stack[:len(stack)-1]
+    ans = append(ans, last.Val)
+    root = last.Right
+  }
   return
 }
 ```
