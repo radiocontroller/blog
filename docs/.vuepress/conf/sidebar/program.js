@@ -3,6 +3,7 @@ module.exports = [
         title: 'Linux',
         collapsable: false,
         children: [
+            'linux/kafka_cli',
             'linux/shell',
         ]
     },
