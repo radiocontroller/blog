@@ -1,6 +1,29 @@
 # 动态规划
 ---
 
+### [最大连续子数组和](https://leetcode.cn/problems/maximum-subarray/)
+* 给你一个整数数组 nums ，请你找出一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。
+* dp[i]定义：以下标i结尾的最大连续子数组和
+```go
+	func maxSubArray(nums []int) int {
+	  dp := make([]int, len(nums))
+	  dp[0] = nums[0]
+	  max := nums[0]
+	  for i := 1; i < len(nums); i++ {
+	    dp[i] = Max(dp[i-1] + nums[i], nums[i])
+	    max = Max(max, dp[i])
+	  }
+	  return max
+	}
+
+	func Max(a, b int) int {
+	  if a > b {
+	    return a
+	  }
+	  return b
+	}
+```
+
 ### [爬楼梯](https://leetcode-cn.com/problems/climbing-stairs/)
 * 假设你正在爬楼梯。需要 n 阶你才能到达楼顶。每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？
 * 解：要想达到 n 阶，那么你前一次肯定是在n - 1阶或 n - 2 阶，因此将这两种的方法相加即可
