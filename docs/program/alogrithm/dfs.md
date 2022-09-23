@@ -152,6 +152,7 @@ func TransferResult(chess [][]int, res *[][]string) {
 ### [划分为k个相等的子集](https://leetcode.cn/problems/partition-to-k-equal-sum-subsets/)
 * 思路：想象有k个桶，不断把num往里加，如果加不进去则不满足，否则能划分为k个相等子集（区别于以上的dfs模版）
 * 题解：https://leetcode.cn/problems/partition-to-k-equal-sum-subsets/solution/by-lcbin-92ll/
+
 ```go
 func canPartitionKSubsets(nums []int, k int) bool {
   var sum int
