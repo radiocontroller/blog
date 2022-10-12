@@ -1,6 +1,6 @@
 module.exports = [
     {
-        title: 'Linux',
+        title: 'Linux & Mac',
         collapsable: false,
         children: [
             'linux/kafka_cli',

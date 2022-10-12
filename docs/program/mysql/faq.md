@@ -43,7 +43,7 @@
 
 ### 6、SQL中过滤条件放在on和where中的区别
 * on是在生成临时表时过滤，而where是在生成临时表之后过滤。
-* 对于inner join它们都一样。但是对于左连接，on始终会得到左表的所有数据，on只会过滤右表数据(右连接同理)，而此时where会过滤条件不符合的数据，只保留条件符合的数据。
+* 对于inner join它们都一样。但是对于左连接，on始终会得到左表的所有数据，右表没数据则为null(右连接同理)，而此时where会过滤条件不符合的数据，只保留条件符合的数据。
 
 * [https://pigfly88.github.io/mysql/2020/06/30/mysql-on-vs-where.html](https://pigfly88.github.io/mysql/2020/06/30/mysql-on-vs-where.html)
 
