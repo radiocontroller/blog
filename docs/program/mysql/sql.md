@@ -170,18 +170,23 @@ ORDER BY COUNT(conti_group) DESC;
 * 薪水可能会重复，用distinct去重，然后使用limit 1, 1表示偏移量1，取1条
 
 ```sql
-select ifNull((select distinct salary from Employee order by salary desc limit 1, 1), null) as SecondHighestSalary
+select ifNull(
+  (select distinct salary from Employee order by salary desc limit 1, 1), null
+) as SecondHighestSalary
 ```
 
 ### 7、[部门工资前三高的员工](https://leetcode-cn.com/problems/department-top-three-salaries)
-* 利用子查询查找比当前工资高2位的数量，再加上自身，就是前三高
+* 外层每一条数据都在子查询中查找
+* 子查询查找比外层薪资高并且总数 < 3的，也就是0,1,2，表示外层是第1高，第二高，第三高
 
 ```sql
-select d.name as Department, e1.name as Employee, e1.salary as Salary
-from Employee e1 join Department d on e1.departmentId = d.id
-where 3 > (
-	select count(distinct e2.salary) from Employee e2 where e1.departmentId = e2.departmentId and e1.salary < e2.salary
-)
+select dep.name as Department, e1.name as Employee, e1.salary as Salary
+from Employee e1 join Department dep on e1.departmentId = dep.id
+where (
+	select count(distinct e2.salary) from Employee e2
+  where e1.departmentId = e2.departmentId and e2.salary > e1.salary
+) < 3
+order by dep.name, salary desc;
 ```
 
 ### 8、[分数排名](https://leetcode-cn.com/problems/rank-scores/)
