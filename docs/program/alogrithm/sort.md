@@ -91,3 +91,30 @@ func merge(left, right []int) (result []int) {
   return
 }
 ```
+
+### [桶排序](https://leetcode.cn/problems/top-k-frequent-elements/)
+* 要求数据尽可能平均，利用数组的天然有序性进行排序
+* http://data.biancheng.net/view/115.html
+
+```go
+func topKFrequent(nums []int, k int) (ans []int) {
+  cntMap := map[int]int{}
+  for _, n := range nums {
+    cntMap[n]++
+  }
+  // key-value按value存到数组对应下标中，然后倒序处理
+  arr := make([][]int, len(nums)+1)
+  for k, v := range cntMap {
+    arr[v] = append(arr[v], k)
+  }
+  for i := len(arr)-1; i >= 0; i-- {
+    for _, a := range arr[i] {
+      ans = append(ans, a)
+      if len(ans) == k {
+        return
+      }
+    }
+  }
+  return
+}
+```
