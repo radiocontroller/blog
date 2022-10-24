@@ -81,7 +81,7 @@ grep -v "xx"
 sudo kill `ps -ef | grep bluetoothd | head -n 1 | awk '{ print $2; }'`
 ```
 
-#### 16. kafka查看本地消息命令
+#### 16. searchkick后台更新索引
 ```
-kafka-console-consumer --bootstrap-server localhost:9092 --topic yourTopic --from-beginning
+bundle exec rake searchkick:reindex CLASS=[YourModel] &
 ```
