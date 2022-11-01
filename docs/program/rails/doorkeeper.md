@@ -1,7 +1,7 @@
 # doorkeeper使用
 ---
 
-### 前置说明 
+### 前置说明
 * config/initializers/doorkeeper.rb添加以下配置，支持四种模式
 ```ruby
 grant_flows %w[authorization_code client_credentials password implicit]
@@ -89,3 +89,18 @@ resp.parsed # => 得到json解析后结果
 * 在controller中通过doorkeeper_authorize!进行认证
 * 创建application时，其中的scope是和doorkeeper_authorize!(:xx)配合使用的
 
+#### 七、controller helpers的应用
+* 在controller中经常会用到以下几个方法
+```ruby
+doorkeeper_authorize! # 用来校验Authorization token是否有效
+doorkeeper_token      # 用来获取token对应的对象(Doorkeeper::AccessToken)
+```
+* 下面这两个方法的引入逻辑
+  * helpers文件所在位置：[lib/doorkeeper/rails/helpers.rb](https://github.com/doorkeeper-gem/doorkeeper/blob/main/lib/doorkeeper/rails/helpers.rb)
+  * 引入helpers文件逻辑：[lib/doorkeeper/engine.rb](https://github.com/doorkeeper-gem/doorkeeper/blob/main/lib/doorkeeper/engine.rb)
+    ```
+    # 关键代码
+    ActiveSupport.on_load(:action_controller) do
+      include Doorkeeper::Rails::Helpers
+    end
+    ```
