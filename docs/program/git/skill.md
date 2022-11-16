@@ -5,7 +5,7 @@
 * .gitignore可以忽略你不想提交的文件，但是.gitignore文件产生修改，并且可能会提交上去。因此如果你想针对本地忽略一些文件，可以在.git/info/exclude中写上
 * **只适用未被 git 追踪的文件，如果要想忽略看下面第2点**
 
-#### git update-index --assume-unchanged path/to/file 和 git update-index --skip-worktree path/to/file 区别
+#### git update-index 两种用法区别
 * **--assume-unchanged** is the flag which means the files should not change locally.
 * **--skip-worktree** is the flag which means the files should change locally. **一般情况下都用这个**
 * [How to ignore files already managed with Git locally](https://dev.to/nishina555/how-to-ignore-files-already-managed-with-git-locally-19oo)
@@ -26,3 +26,5 @@ git log --grep=message
 ```
 git revert <id> -m 1
 ```
+
+#### [Restoring deleted files in Git](https://www.git-tower.com/learn/git/faq/restoring-deleted-files)
