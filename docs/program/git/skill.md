@@ -1,23 +1,28 @@
 # 小技巧
 ---
 
-#### 1. .git/info/exclude
+#### .git/info/exclude
 * .gitignore可以忽略你不想提交的文件，但是.gitignore文件产生修改，并且可能会提交上去。因此如果你想针对本地忽略一些文件，可以在.git/info/exclude中写上
 * **只适用未被 git 追踪的文件，如果要想忽略看下面第2点**
 
-#### 2. git update-index --assume-unchanged path/to/file 和 git update-index --skip-worktree path/to/file 区别
+#### git update-index --assume-unchanged path/to/file 和 git update-index --skip-worktree path/to/file 区别
 * **--assume-unchanged** is the flag which means the files should not change locally.
 * **--skip-worktree** is the flag which means the files should change locally. **一般情况下都用这个**
 * [How to ignore files already managed with Git locally](https://dev.to/nishina555/how-to-ignore-files-already-managed-with-git-locally-19oo)
 * [https://fallengamer.livejournal.com/93321.html](https://fallengamer.livejournal.com/93321.html)
 
-#### 3. git stash apply --index
+#### git stash apply --index
 * --index 可以回到stash时的状态，如果不加，那么都是unstaged状态
 
-#### 4. 删除远程分支
+#### 删除远程分支
 * git push origin --delete feature/login
 
-#### 5. git log匹配message
+#### git log匹配message
 ```
 git log --grep=message
+```
+
+#### 撤销某个merge
+```
+git revert <id> -m 1
 ```
