@@ -95,6 +95,7 @@ module.exports = [
             'alogrithm/two_pointers',
             'alogrithm/sliding_window',
             'alogrithm/bit',
+            'alogrithm/interesting',
         ]
     },
     {
