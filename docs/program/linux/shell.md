@@ -1,6 +1,32 @@
 # 常用命令
 ---
 
+#### 命令行添加/清空DNS
+```
+networksetup -setdnsservers Wi-Fi 10.1.1.30
+networksetup -setdnsservers Wi-Fi "Empty"
+```
+
+#### 解决rails console多行加载太慢
+```
+rails console -- --nomultiline
+```
+
+#### 解决ruby irb多行加载太慢
+```
+irb --nomultiline
+```
+
+#### docker进入容器可编辑中文
+```
+docker exec -it xxx env LANG=C.UTF-8 /bin/bash
+```
+
+#### mac蓝牙重启
+```
+sudo kill `ps -ef | grep bluetoothd | head -n 1 | awk '{ print $2; }'`
+```
+
 #### gz文件解压
 ```
 gunzip filename.gz
@@ -16,16 +42,6 @@ grep -C 5 foo file
 : > access.log
 ```
 
-#### 解决rails console多行加载太慢
-```
-rails console -- --nomultiline
-```
-
-#### 解决ruby irb多行加载太慢
-```
-irb --nomultiline
-```
-
 #### 覆盖文件
 ```
 cat > filename.txt <<EOF
@@ -36,11 +52,6 @@ EOF
 #### 提取文本中数字
 ```
 cat tag |grep -oE '[0-9]+'
-```
-
-#### docker进入容器可编辑中文
-```
-docker exec -it xxx env LANG=C.UTF-8 /bin/bash
 ```
 
 #### 查看内存消耗最多的前 10 个进程
@@ -72,18 +83,7 @@ ubuntu：du -h --max-depth=1 .
 grep -v "xx"
 ```
 
-#### 命令行添加/清空DNS
-```
-networksetup -setdnsservers Wi-Fi 8.8.8.8
-networksetup -setdnsservers Wi-Fi "Empty"
-```
-
 #### searchkick后台更新索引
 ```
 bundle exec rake searchkick:reindex CLASS=[YourModel] &
-```
-
-#### mac蓝牙重启
-```
-sudo kill `ps -ef | grep bluetoothd | head -n 1 | awk '{ print $2; }'`
 ```
