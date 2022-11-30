@@ -1,6 +1,15 @@
 # 小技巧
 ---
 
+#### [revert of the revert](https://mirrors.edge.kernel.org/pub/software/scm/git/docs/howto/revert-a-faulty-merge.txt)
+* 设想一种场景，你开发了A分支，然后A分支merge进master，然后你发现这个merge有问题，于你进行revert，但是revert之后，
+如果你再merge A分支进master的话，你会发现没有任何改变，也就是说A分支不会合并进来，因此你要对revert进行revert。
+
+#### 撤销某个merge
+```
+git revert <id> -m 1
+```
+
 #### .git/info/exclude
 * .gitignore可以忽略你不想提交的文件，但是.gitignore文件产生修改，并且可能会提交上去。因此如果你想针对本地忽略一些文件，可以在.git/info/exclude中写上
 * **只适用未被 git 追踪的文件，如果要想忽略看下面第2点**
@@ -20,11 +29,6 @@
 #### git log匹配message
 ```
 git log --grep=message
-```
-
-#### 撤销某个merge
-```
-git revert <id> -m 1
 ```
 
 #### [Restoring deleted files in Git](https://www.git-tower.com/learn/git/faq/restoring-deleted-files)
