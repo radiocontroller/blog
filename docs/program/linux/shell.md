@@ -82,8 +82,3 @@ ubuntu：du -h --max-depth=1 .
 ```
 grep -v "xx"
 ```
-
-#### searchkick后台更新索引
-```
-bundle exec rake searchkick:reindex CLASS=[YourModel] &
-```
