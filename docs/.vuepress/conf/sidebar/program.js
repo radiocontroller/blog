@@ -31,6 +31,7 @@ module.exports = [
             'ruby/before_action',
             'rails/doorkeeper',
             'ruby/rest_client',
+            'rails/searchkick',
             'ruby/mutex',
             'ruby/gil',
             'ruby/utils',
