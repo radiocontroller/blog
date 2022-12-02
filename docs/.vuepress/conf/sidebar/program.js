@@ -8,21 +8,6 @@ module.exports = [
         ]
     },
     {
-        title: 'Web相关',
-        collapsable: false,
-        children: [
-            'web/xss_csrf',
-            'web/cors',
-            'web/https',
-            'web/post',
-            'web/session_and_cookie',
-            'web/30x',
-            'web/get_post',
-            'web/gc',
-            'web/oom',
-        ]
-    },
-    {
         title: 'Ruby On Rails',
         collapsable: false,
         children: [
@@ -71,6 +56,21 @@ module.exports = [
             'rabbitmq/faq',
             'rabbitmq/base',
             'rabbitmq/delay_queue',
+        ]
+    },
+    {
+        title: 'Web相关',
+        collapsable: false,
+        children: [
+            'web/xss_csrf',
+            'web/cors',
+            'web/https',
+            'web/post',
+            'web/session_and_cookie',
+            'web/30x',
+            'web/get_post',
+            'web/gc',
+            'web/oom',
         ]
     },
     {
