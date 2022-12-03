@@ -50,6 +50,7 @@ func main() {
 
 ### 2. 查找第一个 >= key 的元素
 * 查找第一个 >= key 的元素，也就是说等于查找key值的元素有好多个，返回这些元素最左边的元素下标；如果没有等于key值的元素，则返回大于key的最左边元素下标。
+* 返回值可能会取到len(arr)，需判断越界问题
 ```go
 func firstGteq(arr []int, key int) int {
   left, right := 0, len(arr)-1
@@ -66,13 +67,15 @@ func firstGteq(arr []int, key int) int {
 
 func main() {
   arr := []int{1, 7, 7, 15}
-  fmt.Println(firstGteq(arr, 7))  // 返回：1
-  fmt.Println(firstGteq(arr, 10)) // 返回：3
+  fmt.Println(firstGteq(arr, 7))   // 返回：1
+  fmt.Println(firstGteq(arr, 10))  // 返回：3
+  fmt.Println(firstGteq(arr, 100)) // 返回：4
 }
 ```
 
 ### 3. 查找第一个 > key 的元素
 * 查找第一个 > key 的元素，也就是说返回大于key的最左边元素下标。
+* 返回值可能会取到len(arr)，需判断越界问题
 ```go
 func firstGt(arr []int, key int) int {
   left, right := 0, len(arr)-1
@@ -89,12 +92,14 @@ func firstGt(arr []int, key int) int {
 
 func main() {
   arr := []int{1, 7, 7, 15}
-  fmt.Println(firstGt(arr, 5))  // 返回：1
-  fmt.Println(firstGt(arr, 10)) // 返回：3
+  fmt.Println(firstGt(arr, 5))   // 返回：1
+  fmt.Println(firstGt(arr, 10))  // 返回：3
+  fmt.Println(firstGt(arr, 100)) // 返回：4
 }
 ```
 ### 4. 查找最后一个 <= key 的元素
 * 查找最后一个 <= key的元素，也就是说等于查找key值的元素有好多个，返回这些元素最右边的元素下标；如果没有等于key值的元素，则返回小于key的最右边元素下标。
+* 返回值可能会取到-1，需判断越界问题
 ```go
 func lastLteq(arr []int, key int) int {
   left, right := 0, len(arr)-1
@@ -114,10 +119,12 @@ func main() {
   fmt.Println(lastLteq(arr, 7))   // 返回：2
   fmt.Println(lastLteq(arr, 10))  // 返回：2
   fmt.Println(lastLteq(arr, 5))   // 返回：0
+  fmt.Println(lastLteq(arr, 0))   // 返回：-1
 }
 ```
 
 ### 5. 查找最后一个 < key 的元素
+* 返回值可能会取到-1，需判断越界问题
 ```go
 func lastLt(arr []int, key int) int {
   left, right := 0, len(arr)-1
@@ -137,6 +144,7 @@ func main() {
   fmt.Println(lastLt(arr, 7))   // 返回：0
   fmt.Println(lastLt(arr, 10))  // 返回：2
   fmt.Println(lastLt(arr, 5))   // 返回：0
+  fmt.Println(lastLt(arr, 0))   // 返回：-1
 }
 ```
 
