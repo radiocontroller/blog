@@ -46,6 +46,8 @@ module.exports = [
             'mysql/buffer_pool',
             'mysql/log',
             'mysql/lock',
+            'mysql/dead_lock',
+            'mysql/in_and_exists',
             'mysql/sql',
         ]
     },
