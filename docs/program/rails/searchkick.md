@@ -11,11 +11,11 @@ class Account < ApplicationRecord
              searchable: %i[name],              # searchable用在搜索关键字的时候
              filterable: %i[region],            # filterable用在where过滤的时候
              batch_size: 5000,                  # 批量reindex的数量
-             settings: { number_of_shards: 3 }, # 分片数量
+             settings: { number_of_shards: 3, number_of_replicas: 5 }, # 分片数量，副本数量
              callbacks: false,                  # 关闭自动同步，用下面的手动同步
              language: "chinese"                # 语言
 
-  scope :search_import, -> { includes(:idcard) } # 批量建立索引时避免N+1          
+  scope :search_import, -> { includes(:point) } # 批量建立索引时避免N+1
 
   after_commit do
     # :async表示异步建立索引，会通过ReindexV2Job执行，注意配置sidekiq queue
