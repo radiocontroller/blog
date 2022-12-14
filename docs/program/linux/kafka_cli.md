@@ -1,6 +1,11 @@
 # kafka常用命令
 ---
 
+### 查看版本
+```shell
+kafka-topics --version
+```
+
 ### [Topics CLI](https://www.conduktor.io/kafka/kafka-topics-cli-tutorial)
 ```shell
 # 查看topic list
