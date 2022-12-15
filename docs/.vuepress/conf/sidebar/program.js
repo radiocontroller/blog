@@ -45,6 +45,7 @@ module.exports = [
             'mysql/read',
             'mysql/buffer_pool',
             'mysql/log',
+            'mysql/metadata_lock',
             'mysql/lock',
             'mysql/dead_lock',
             'mysql/in_and_exists',
