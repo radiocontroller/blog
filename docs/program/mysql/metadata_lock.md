@@ -12,7 +12,7 @@ MDL锁的主要作用是维护表 **元数据** 的数据一致性。当表上�
 不可以对元数据（即表结构）进行 **任何修改** 操作。
 * PS：**MDL共享锁 = MDL读锁 = MDL S锁， MDL排他锁 = MDL写锁 = MDL X锁**，**S锁和S锁共享，S锁和X锁互斥**
 
-![mvcc](/images/program/mysql/metadata_lock1.png)
+![mvcc](/images/program/mysql/metadata_lock.png)
 
 * 简单来说，**DDL操作** 会申请对应表上的的 **MDL X锁**，一旦申请成功，该表上的其他所有操作都无法进行（包括**DDL、DML、DQL**），因为无法再申请到该表上的MDL锁，直到 **DDL操作** 申请的 **MDL X锁** 释放为止。
 
