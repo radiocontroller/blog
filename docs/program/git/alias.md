@@ -22,6 +22,8 @@ git config --global alias.lg log
 git config --global alias.df diff
 
 git config --global alias.cp cherry-pick
+
+git config --global pager.branch false
 ```
 
 ### 搭配terminal

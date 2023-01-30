@@ -79,3 +79,8 @@ ORDER BY (data_length + index_length) DESC;
 
 ### 12、ON_DUPLICATE_KEY_UPDATE
 * [https://www.jianshu.com/p/bd32a8a56b0f](https://www.jianshu.com/p/bd32a8a56b0f)
+
+### 13、显示全部数据库编码和排序规则
+```sql
+SELECT SCHEMA_NAME, default_character_set_name 'charset', DEFAULT_COLLATION_NAME 'collation' FROM information_schema.SCHEMATA;
+```
