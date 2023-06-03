@@ -25,4 +25,7 @@
   * 大事务拆小。大事务更倾向于死锁，如果业务允许，将大事务拆小。
   * 为表添加合理的索引。如果不走索引将会为表的每一行记录添加上锁，死锁的概率大大增大。
   * 不用外键
-  * show engine innnodb status可排查死锁日志
+  * show engine innodb status可排查死锁日志(Rails可通过以下命令打印)
+    ```
+    ActiveRecord::Base.connection.execute("SHOW ENGINE INNODB STATUS").each{|row| puts row}
+    ```
