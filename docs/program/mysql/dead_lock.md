@@ -1,14 +1,13 @@
 # MySQL死锁原因与解决方案
 ---
 
-#### 1. 两个事务交替更新
+#### 1. 两个事务交替更新导致的死锁
 * 例如事务A先更新记录1，再更新记录2，而事务B先更新记录2，再更新记录1，此时事务B发生死锁直到超时
 
 #### 2. 索引不当导致的死锁
 * 如果在事务中执行了一条不满足条件的语句，执行全表扫描，把行级锁上升为表级锁，多个这样的事务执行后，就很容易产生死锁和阻塞。
 
-#### 3. 外键也有可能导致死锁
-* 报错类型：Mysql2::Error: Deadlock found when trying to get lock; try restarting transaction
+#### 3. 使用外键导致的死锁
 * 发生过程如下
   1. session1插入ignores记录，其中operator_id是关联users表id的外键，因为有外键，此时会对用户id: 9加S锁
   ```
@@ -20,12 +19,19 @@
   ```
   3. session1再对operator_id: 9进行更新，此时S锁会升级为X锁，但是因为session2在等session1，因此session1又会等session2，最终发生死锁，session2报错
 
-#### 4. [避免死锁方式](https://www.jianshu.com/p/7401cb087651)
+#### 4. 插入意向锁和X锁导致的死锁
+* user_id是普通索引，加锁过程在[快照读和当前读](/program/mysql/read.html)这一章里有
+![insert_dead_lock](/images/program/mysql/insert_dead_lock.png)
+
+#### 5. [避免死锁方式](https://www.jianshu.com/p/7401cb087651)
   * 以固定的顺序进行更新，这样就不会造成互相等待锁的场面。
   * 大事务拆小。大事务更倾向于死锁，如果业务允许，将大事务拆小。
   * 为表添加合理的索引。如果不走索引将会为表的每一行记录添加上锁，死锁的概率大大增大。
   * 不用外键
-  * show engine innodb status可排查死锁日志(Rails可通过以下命令打印)
+  * 注意删除和插入的并发
+
+#### 6. 排查死锁方式
+  * show engine innodb status \G; 可以打印出最近发生的死锁信息 (Rails可通过以下命令打印)
     ```
-    ActiveRecord::Base.connection.execute("SHOW ENGINE INNODB STATUS").each{|row| puts row}
+    ActiveRecord::Base.connection.execute("SHOW ENGINE INNODB STATUS").each{|row| puts row};nil
     ```
