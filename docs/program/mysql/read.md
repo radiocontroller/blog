@@ -75,16 +75,16 @@
   * **delete from table where ?**
 
 * 当前读使用next-key锁，即：行锁 + gap锁。行锁防止别的事务修改或删除，gap锁防止别的事务新增，行锁和gap锁结合**共同解决了rr级别下写数据时的幻读问题**。
-![gap_lock](/images/program/mysql/gap_lock.png)
-从图中可以看到，左边的事务通过当前读t_id >= 50的数据，然后锁住了30-50和50-70的区间；因此右边的事务插入t_id=29能成功，但是插入t_id=30会阻塞，
-然后左边再次通过当前读t_id >= 50，得到了相同的数据
 
 * **加锁规则**
-  * 1. 加锁的单位是 next-key 锁。
-  * 2. 如果等值查询数据存在，则进化为record(行)锁，如果不存在则退化为 gap（间隙）锁
-    * 例如select * from t where t_id = 50 for update；**如果50这条记录存在，那么只锁这一条记录；如果不存在，那就锁住50左右两边区间的数据（闭区间）**
-  * 3. 范围查找会锁住符合查找条件的所有记录，并锁住第一条不满足该条件的记录。
-    * 例如select * from t where t_id >= 50 for update；**锁住>=50记录的同时还会锁住50左边第一个不满足记录的区间（闭区间）**
+  * 唯一非空索引（锁某一行，记录存在，退化为行锁，没有间隙锁）
+  ![uniq_index_lock1](/images/program/mysql/uniq_index_lock1.png)
+  * 唯一非空索引（锁某一行，记录不存在，退化为间隙锁。锁住左右两边区间，闭区间。如果两边都有数据，则为开区间）
+  ![uniq_index_lock1](/images/program/mysql/uniq_index_lock2.png)
+  * 普通非空索引（锁某一行，记录存在，行锁+间隙锁，左右两边区间也会锁住，左闭右开）
+  ![index_lock1](/images/program/mysql/index_lock1.png)
+  * 普通非空索引（锁某一行，记录不存在，加间隙锁，左右两边区间也会锁住，左闭右开）
+  ![index_lock2](/images/program/mysql/index_lock2.png)
 
 ::: tip 参考链接
 
@@ -93,4 +93,6 @@
 [https://juejin.cn/post/6844903844573380621](https://juejin.cn/post/6844903844573380621)
 
 [https://www.liritian.com/archives/819](https://www.liritian.com/archives/819)
+
+[https://mp.weixin.qq.com/s/Zh7GSzXJg_zt2ug3X5TwEQ](https://mp.weixin.qq.com/s/Zh7GSzXJg_zt2ug3X5TwEQ)
 :::
