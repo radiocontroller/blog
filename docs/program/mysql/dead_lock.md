@@ -32,16 +32,14 @@ update t set col = "xx" where a = 2 and b = 1;
 ```
 * 看似两条sql毫无关联，但仔细分析一下，如果b = 1查出来的记录和a = 1查出来有交集，b = 2的记录和a = 2查出来有交集，那么双方不就互相等待导致死锁了？
 
-#### 6. 批量update导致的死锁
-
-#### 7. [避免死锁方式](https://www.jianshu.com/p/7401cb087651)
+#### 6. [避免死锁方式](https://www.jianshu.com/p/7401cb087651)
   * 以固定的顺序进行更新，这样就不会造成互相等待锁的场面。
   * 大事务拆小。大事务更倾向于死锁，如果业务允许，将大事务拆小。
   * 为表添加合理的索引。如果不走索引将会为表的每一行记录添加上锁，死锁的概率大大增大。
   * 不用外键
   * 注意删除和插入的并发
 
-#### 8. 排查死锁方式
+#### 7. 排查死锁方式
   * show engine innodb status \G; 可以打印出最近发生的死锁信息 (Rails可通过以下命令打印)
     ```
     ActiveRecord::Base.connection.execute("SHOW ENGINE INNODB STATUS").each{|row| puts row};nil

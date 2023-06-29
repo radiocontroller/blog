@@ -59,10 +59,9 @@ cat tag |grep -oE '[0-9]+'
 ps auxw|head -1;ps auxw|sort -rn -k4|head -10  
 ```
 
-#### 查看各目录占用大小
+#### 查看目录下各文件夹的占用空间大小
 ```
-mac：du -h -d 1 .
-ubuntu：du -h --max-depth=1 .
+sudo du -sh /*
 ```
 
 #### tar 打包
