@@ -46,7 +46,7 @@ MDL锁的主要作用是维护表 **元数据** 的数据一致性。当表上�
 
 * **session A** 执行 DDL 到一半，**session B** 打开事务查询，这时候 **session A和session B**都会阻塞。
 因为 **session A** 申请到了 **MDL X锁** 后降级为 **MDL S锁**，然后开始执行 DDL操作，**session B** 也拿到了 **MDL S锁** 进行 DML操作，这时候大家都是持有的 **MDL S锁**，并不存在冲突。
-* 过了一会当 **session A DDL操作** 完成后，想要从 **MDL S锁** 升级到 **MDL X锁** 进行 COMMIT 时，发现无法申请到，因为这时候SELECT查询还占用着 **MDL S锁**，所以处于Waiting for table metadata lock状态。
+* 过了一会当 **session A DDL操作** 完成后，想要从 **MDL S锁** 升级到 **MDL X锁** 进行 COMMIT 时，发现无法申请到，因为这时候SELECT查询还占用着 **MDL S锁**，所以处于Waiting for table metadata lock状态。**这时候session A要等session B提交才能再获取MDL X锁来进行提交**
 ---
 
 #### 四. Online DDL
