@@ -1,20 +1,30 @@
 # 常用命令
 ---
 
+#### rsync断点续传
+```
+rsync -P --rsh=ssh 'Model 3.zip' remote:/home/deploy/import
+```
+
+#### chrome关闭cors检查
+```
+open -n -a /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --args --user-data-dir="/tmp/chrome_dev_test" --disable-web-security
+```
+
+#### mac删除文件行首字符和行尾字符
+* 删除行首字符
+```
+sed 's/.//' tmp.txt
+```
+* 删除行尾字符
+```
+sed 's/.//' tmp.txt
+```
+
 #### 命令行添加/清空DNS
 ```
 networksetup -setdnsservers Wi-Fi 10.1.1.30
 networksetup -setdnsservers Wi-Fi "Empty"
-```
-
-#### 解决rails console多行加载太慢
-```
-rails console -- --nomultiline
-```
-
-#### 解决ruby irb多行加载太慢
-```
-irb --nomultiline
 ```
 
 #### docker进入容器可编辑中文
